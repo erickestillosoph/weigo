@@ -3,74 +3,232 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    @font-face {
+        font-family: "Chromatic";
+        src: url("../../frontend/src/assets/fonts/Chromatic_Mono_Pro_Bold.ttf");
+      }
+    @font-face {
+        font-family: "Inter";
+        src: url("../../frontend/src/assets/fonts/Inter-Regular.ttf");
+      }
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 222.2 84% 4.9%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 222.2 84% 4.9%;
 
-    --primary: 216 96% 54%;
-    --primary-foreground: 210 40% 98%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 222.2 84% 4.9%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+        --primary: 216 96% 54%;
+        --primary-foreground: 210 40% 98%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+        --secondary: 210 40% 96.1%;
+        --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 215.4 16.3% 46.9%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+        --accent: 210 40% 96.1%;
+        --accent-foreground: 222.2 47.4% 11.2%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 210 40% 98%;
 
-    --radius: 0.5rem;
-  }
+        --border: 214.3 31.8% 91.4%;
+        --input: 214.3 31.8% 91.4%;
+        --ring: 222.2 84% 4.9%;
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+        --radius: 0.5rem;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+        /* My Custom Colors */
+        --w_primary: #1A72FA;
+        --w_secondary: #64748B;
+        --w_neutrals_1: #64748B;
+        --w_neutrals_2: #495164;
+        --w_neutrals_3: #F1F5F9;
+        --w_border_c1: #EFEFEF;
+        --w_border_c2: #64748B;
+        --w_input_bg: #EFEFEF;
+        --w_input_bdr: #E7E7E7;
+        --w_bg_panel: #BFBFBF;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+        /* My Custom Fonts */
+        --w_font_family_body: 'Inter', sans-serif;
+        --w_font_family_heading: 'Chromatic', sans-serif;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+        /* My Custom Font Sizes */
+        --w_font_size_xs: 12px;
+        --w_font_size_sm: 14px;
+        --w_font_size_base: 16px;
+        --w_font_size_lg: 18px;
+        --w_font_size_xl: 20px;
+        --w_font_size_2xl: 24px;
+        --w_font_size_3xl: 30px;
+        --w_font_size_4xl: 36px;
+        --w_font_size_5xl: 40px;
+        --w_font_size_6xl: 48px;
+        --w_font_size_7xl: 56px;
+        --w_font_size_8xl: 60px;
+        --w_font_size_9xl: 210px;
+        --w_font_size_10xl: 450px;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+        /* My Custom Font Weights */
+        --w_font_weight_light: 300;
+        --w_font_weight_normal: 400;
+        --w_font_weight_medium: 500;
+        --w_font_weight_semibold: 600;
+        --w_font_weight_bold: 700;
+        --w_font_weight_extrabold: 800;
+        --w_font_weight_black: 900;
+        
+        /* My Custom Line Heights */
+        --w_line_height_base: 1.5;
+        --w_line_height_relaxed: 1.625;
+        --w_line_height_tight: 1.375;
+        
+        /* My Custom Letter Spacing */
+        --w_letter_spacing_tight: -0.05em;
+        --w_letter_spacing_normal: 0;
+        --w_letter_spacing_wide: 0.05em;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+        /* My Custom Spacing */
+        --w_spacing_0: 0;
+        --w_spacing_1: 4px;
+        --w_spacing_2: 8px;
+        --w_spacing_3: 12px;
+        --w_spacing_4: 14px;
+        --w_spacing_5: 16px;
+        --w_spacing_6: 20px;
+        --w_spacing_8: 24px;
+        --w_spacing_10: 28px;
+        --w_spacing_12: 32px;
+        --w_spacing_13: 40px;
+        --w_spacing_14: 80px;
+        --w_spacing_15: 140px;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    }
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    .dark {
+        --background: 222.2 84% 4.9%;
+        --foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-  }
+        --card: 222.2 84% 4.9%;
+        --card-foreground: 210 40% 98%;
+
+        --popover: 222.2 84% 4.9%;
+        --popover-foreground: 210 40% 98%;
+
+        --primary: 210 40% 98%;
+        --primary-foreground: 222.2 47.4% 11.2%;
+
+        --secondary: 217.2 32.6% 17.5%;
+        --secondary-foreground: 210 40% 98%;
+
+        --muted: 217.2 32.6% 17.5%;
+        --muted-foreground: 215 20.2% 65.1%;
+
+        --accent: 217.2 32.6% 17.5%;
+        --accent-foreground: 210 40% 98%;
+
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 210 40% 98%;
+
+        --border: 217.2 32.6% 17.5%;
+        --input: 217.2 32.6% 17.5%;
+        --ring: 212.7 26.8% 83.9%;
+    }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
 }
+
+@layer components {
+    /* Font Family */
+    body, p, a, span {
+        font-family: 'Inter';
+    }
+    
+    h1,h2,h3,h4,h5,h6 {
+        font-family: 'Chromatic';
+    }
+    .font_inter{
+        font-family: 'Inter';
+    }
+    /* Texts */
+    .w_text_color {
+        color: var(--w_neutrals_1);
+    }
+    .w_active_bg {
+        background-color: var(--w_neutrals_3);
+    }
+    .w_hover_bg {
+        background-color: var(--w_neutrals_3);
+    }
+
+    .w_heading_primary {
+        color: var(--w_primary);
+    }
+
+    /* Font Sizes */
+    .medium_text {
+        margin-top: 20px;
+        font-size: var(--w_font_size_9xl) !important;
+        line-height: 0.2 !important;
+    }
+    .super_text_lg {
+        font-size: min(calc(32px + 16 * ((400vw - 568px) / (300))), 450px)  !important;
+    }
+    .super_text_md {
+        font-size: 200px  !important;
+    }
+    .text_stroke_h1 {
+        color: transparent;
+        -webkit-text-stroke: 6px var(--w_neutrals_3) !important;
+    }
+    .text_stroke_medium_text {
+        color: transparent;
+        -webkit-text-stroke: 4px var(--w_primary) !important;
+    }
+    p { 
+        font-size: var(--w_font_size_base);
+     }
+    
+     .text_hero_clamp{
+        font-size: clamp(50px, 5vw, 80px);
+        line-height: clamp(60px, 5vw, 90px);
+     }
+
+     .text_xs {
+        font-size: var(--w_font_size_xs) !important;
+     }
+
+     /* Borders */
+     .border_c1 {
+        border: 1px solid var(--w_border_c1) !important;
+     }
+     
+     /* Bakground Color */
+    .bg_panel {
+        background-color: var(--w_bg_panel);
+    }
+
+    /* Inputs Text */
+    .input_bdr {
+        color: var(--w_neutrals_1);
+    }
+
+    /* Overflow Scroller */
+    .overflow_bg {
+        color: var(--w_neutrals_3);
+    }
+}
+
