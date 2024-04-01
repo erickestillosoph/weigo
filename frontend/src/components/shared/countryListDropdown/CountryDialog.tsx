@@ -4,6 +4,9 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import ReactCountryFlag from "react-country-flag";
 import { countryCode } from "../../../lib/countryCode";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
+import { useEffect, useState } from "react";
+import { cn } from "@/utils/cn";
+
 function CountryDialog() {
     const countryCodeStyle = {
         fontSize: "1.5em",
@@ -14,6 +17,53 @@ function CountryDialog() {
         height: "3em",
     };
 
+    const [deviceType, setDeviceType] = useState("h-[50vh]");
+
+    useEffect(() => {
+        const handleResize = () => {
+            const height = window.innerHeight;
+            const width = window.innerWidth;
+            if (width <= 280 && height <= 653) {
+                setDeviceType("h-[35vh]");
+            } else if (width <= 360 && height <= 740) {
+                setDeviceType("h-[45vh]");
+            } else if (width <= 375 && height <= 667) {
+                setDeviceType("h-[42vh]");
+            } else if (width <= 390 && height <= 844) {
+                setDeviceType("h-[48vh]");
+            } else if (width <= 412 && height <= 914) {
+                setDeviceType("h-[51vh]");
+            } else if (width <= 414 && height <= 896) {
+                setDeviceType("h-[50vh]");
+            } else if (width <= 430 && height <= 932) {
+                setDeviceType("h-[49vh]");
+            } else if (width <= 540 && height <= 720) {
+                setDeviceType("h-[47vh]");
+            } else if (width <= 768 && height <= 1024) {
+                setDeviceType("h-[56vh]");
+            } else if (width <= 820 && height <= 1180) {
+                setDeviceType("h-[58vh]");
+            } else if (width <= 912 && height <= 1368) {
+                setDeviceType("h-[60vh]");
+            } else if (width <= 1020 && height <= 800) {
+                setDeviceType("h-[46vh]");
+            } else if (width <= 1024 && height <= 600) {
+                setDeviceType("h-[46vh]");
+            } else if (width <= 1024 && height <= 1366) {
+                setDeviceType("h-[58vh]");
+            } else {
+                setDeviceType("h-[54vh]");
+            }
+        };
+
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        // Cleanup function to remove event listener
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
     return (
         <div className="flex text-center">
             <Dialog.Root>
@@ -35,7 +85,12 @@ function CountryDialog() {
                             You can make it to your destination by selecting
                         </Dialog.Description>
 
-                        <ScrollArea.Root className="w-[100%] h-[50vh] rounded overflow-hidden ">
+                        <ScrollArea.Root
+                            className={cn(
+                                "w-[100%] h-[50vh] rounded overflow-hidden ",
+                                deviceType,
+                            )}
+                        >
                             <ScrollArea.Viewport className="w-full h-full rounded pb-2 pr-4">
                                 <div className="grid  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-6 ">
                                     {countryCode.map((variable) => (

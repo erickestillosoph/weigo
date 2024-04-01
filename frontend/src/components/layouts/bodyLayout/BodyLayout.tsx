@@ -5,9 +5,11 @@ import ServiceImage from "../../../assets/images/service/service-section.png";
 import Product from "@/components/sections/productSection";
 import Activity from "@/components/sections/activitySection";
 import LogoSection from "@/components/sections/logoSection";
+import VisaCarRentalSection from "@/components/sections/visaCarRentalSection";
+
 function BodyLayout() {
     return (
-        <div className="flex flex-col gap-[140px]">
+        <div className="flex  flex-col gap-[140px]">
             <HeroSection />
             <ServiceSection
                 image={ServiceImage}
@@ -17,6 +19,7 @@ function BodyLayout() {
             <Product />
             <Activity />
             <LogoSection />
+            <VisaCarRentalSection />
         </div>
     );
 }

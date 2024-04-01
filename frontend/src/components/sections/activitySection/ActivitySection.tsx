@@ -1,14 +1,17 @@
-import CardListThree from "@/components/shared/card";
+import { CardListThree } from "@/components/shared/card";
 import { activity } from "@/lib/placeholders/activity";
 
 function Activity() {
     return (
         <div className="flex flex-col w-[100%] container gap-[28px]">
             <div className="flex justify-between items-end">
-                <h1 className="uppercase w_heading_primary section_heading_h3">
+                <h1 className="uppercase w_heading_primary text_section_h3_clamp">
                     Activity
                 </h1>
-                <a className="w_heading_primary font-semibold" href="#">
+                <a
+                    className="w_heading_primary font-semibold text_section_link_clamp"
+                    href="#"
+                >
                     View more
                 </a>
             </div>
