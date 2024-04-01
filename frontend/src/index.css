@@ -198,6 +198,9 @@
         color: transparent;
         -webkit-text-stroke: 4px var(--w_primary) !important;
     }
+    .section_heading_h3{
+        font-size: var(--w_font_size_7xl) !important;
+    }
     p { 
         font-size: var(--w_font_size_base);
      }
@@ -207,6 +210,9 @@
         line-height: clamp(60px, 5vw, 90px);
      }
 
+     .text_sm {
+        font-size: var(--w_font_size_sm) !important;
+     }
      .text_xs {
         font-size: var(--w_font_size_xs) !important;
      }
@@ -229,6 +235,14 @@
     /* Overflow Scroller */
     .overflow_bg {
         color: var(--w_neutrals_3);
+    }
+
+    /* Gaps */
+    .gap_28{
+        gap: var(--w_spacing_15);
+    }
+    .gap_140{
+        gap: var(--w_spacing_15);
     }
 }
 
