@@ -4,7 +4,7 @@ export function LogoSection() {
     return (
         <div className="">
             <div className="container flex justify-center items-end mb-14">
-                <h1 className="uppercase w_heading_primary section_heading_h3">
+                <h1 className="uppercase w_heading_primary text_section_h3_clamp text-center">
                     LEADERS CHOOSING WEIGO
                 </h1>
             </div>
@@ -14,6 +14,7 @@ export function LogoSection() {
                     direction="right"
                     speed="normal"
                     cardType="image"
+                    className="z-4"
                 />
             </div>
         </div>

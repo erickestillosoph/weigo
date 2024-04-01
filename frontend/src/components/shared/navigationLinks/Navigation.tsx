@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import Logo from "../../../assets/images/weigo-company-logo.svg";
+import Logo from "../../../assets/images/weigo-logo.png";
 
 import { useGSAP } from "@gsap/react";
 
@@ -76,7 +76,7 @@ function Navigation() {
 
     const screenMobile = () => {
         return (
-            <div className="bg-white w-[100%]">
+            <div className="bg_header w-[100%] fixed">
                 {!isOpenMobile && (
                     <div
                         className={cn(
@@ -87,27 +87,29 @@ function Navigation() {
                 )}
                 <div className="flex flow-col justify-between p-4 items-center">
                     <div className="w_logo">
-                        <img
-                            src={Logo}
-                            alt="Company Logo"
-                            className="w-[150px] h-[50px] object-cover"
-                        />
+                        <a href="#">
+                            <img
+                                src={Logo}
+                                alt="Company Logo"
+                                className=" w-[100%] h-[50px] "
+                            />
+                        </a>
                     </div>
                     <button
-                        className="w_text_color hover:bg-blue-3007 focus:shadow-blue-3007 top-[20px] right-[20px] inline-flex h-[40px] w-[40px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
+                        className="w_text_color hover:bg-blue-3007 border-2 border-white focus:shadow-blue-3007 top-[20px] right-[20px] inline-flex h-[40px] w-[40px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
                         aria-label="Close"
                         onClick={toggleMobileMenu}
                     >
                         <HamburgerMenuIcon
                             width={20}
                             height={20}
-                            className="w_text_color"
+                            className="text-white rounded-full"
                         />
                     </button>
                 </div>
                 <div
                     id="mobile-menu"
-                    className="flex flex-col w-[100%] justify-center gap-4 bg-white absolute top-0 z-20 pb-8 pt-20 translate-y-[-600px]"
+                    className="flex flex-col w-[100%] justify-center gap-4 bg-white absolute top-0 z-50 pb-8 pt-20 translate-y-[-600px]"
                 >
                     <button
                         className="w_text_color hover:bg-blue-3007 focus:shadow-blue-3007 absolute top-[30px] right-[24px] inline-flex h-[40px] w-[40px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
@@ -135,6 +137,7 @@ function Navigation() {
                         <Button
                             className="w-[100%] justify-center"
                             onClick={toggleMobileMenu}
+                            size="sm"
                         >
                             Book Now
                         </Button>
@@ -164,7 +167,7 @@ function Navigation() {
                         <HamburgerMenuIcon
                             width={24}
                             height={24}
-                            className="w_text_color"
+                            className="text-white"
                         />
                     </button>
                 </div>

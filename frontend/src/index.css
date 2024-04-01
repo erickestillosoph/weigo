@@ -192,7 +192,7 @@
         font-size: min(calc(32px + 16 * ((400vw - 568px) / (300))), 450px)  !important;
     }
     .super_text_md {
-        font-size: 200px  !important;
+        font-size: 160px  !important;
     }
     .text_stroke_h1 {
         color: transparent;
@@ -214,6 +214,18 @@
         font-size: clamp(50px, 5vw, 80px);
         line-height: clamp(60px, 5vw, 90px);
      }
+     .text_section_h3_clamp{
+        font-size: clamp(32px, 5vw, var(--w_font_size_7xl));
+        line-height: clamp(40px, 5vw, 60px);
+     }
+     .text_section_h5_clamp{
+        font-size: clamp(24px, 5vw, var(--w_font_size_5xl));
+        line-height: clamp(32px, 5vw, 44px);
+     }
+     .text_section_link_clamp{
+        font-size: clamp(12px, 5vw, var(--w_font_size_base));
+        line-height: clamp(20px, 5vw, 20px);
+     }
 
      .text_sm {
         font-size: var(--w_font_size_sm) !important;
@@ -221,7 +233,9 @@
      .text_xs {
         font-size: var(--w_font_size_xs) !important;
      }
-
+     .text_h5 {
+        font-size: var(--w_font_size_5xl) !important;
+     }
      /* Borders */
      .border_c1 {
         border: 1px solid var(--w_border_c1) !important;
