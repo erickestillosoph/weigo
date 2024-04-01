@@ -26,9 +26,12 @@ function Header() {
         headerVisibible = true;
     }
     return (
-        <div className="relative">
+        <div className="sticky top-[-65px] z-20">
             {headerVisibible && <NavigationEssential></NavigationEssential>}
-            <Navigation></Navigation>
+
+            <div className="bg_header">
+                <Navigation></Navigation>
+            </div>
         </div>
     );
 }

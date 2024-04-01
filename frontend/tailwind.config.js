@@ -130,6 +130,11 @@ module.exports = {
                     from: { opacity: "1" },
                     to: { opacity: "0" },
                 },
+                scroll: {
+                    to: {
+                        transform: "translate(calc(-50% - 0.5rem))",
+                    },
+                },
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
@@ -142,6 +147,7 @@ module.exports = {
                 enterFromRight: "enterFromRight 250ms ease",
                 exitToLeft: "exitToLeft 250ms ease",
                 exitToRight: "exitToRight 250ms ease",
+                scroll: "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
             },
         },
     },
