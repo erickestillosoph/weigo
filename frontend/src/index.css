@@ -147,6 +147,7 @@
         @apply border-border;
     }
     body {
+        scroll-behavior: smooth;
         @apply bg-background text-foreground;
     }
 }
@@ -161,7 +162,7 @@
         font-family: 'Chromatic';
     }
     .font_inter{
-        font-family: 'Inter';
+        font-family: 'Inter' !important;
     }
     /* Texts */
     .w_text_color {
@@ -176,6 +177,9 @@
 
     .w_heading_primary {
         color: var(--w_primary);
+    }
+    .w_heading_secondary {
+        color: var(--w_secondary);
     }
 
     /* Font Sizes */
@@ -200,9 +204,10 @@
     }
     .section_heading_h3{
         font-size: var(--w_font_size_7xl) !important;
+        line-height: 1 !important;
     }
     p { 
-        font-size: var(--w_font_size_base);
+        font-size: var(--w_font_size_sm) !important;
      }
     
      .text_hero_clamp{
@@ -243,6 +248,14 @@
     }
     .gap_140{
         gap: var(--w_spacing_15);
+    }
+
+    /* Background Colors */
+    .bg_header {
+        background-color: var(--w_primary);
+    }
+    .hover_background {
+        background-color: #0143a5 ;
     }
 }
 

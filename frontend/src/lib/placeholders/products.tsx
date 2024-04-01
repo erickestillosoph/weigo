@@ -1,0 +1,42 @@
+export const products = [
+    {
+        id: 1,
+        title: "Laser Quest Bukit Batok",
+        subTitle: "Singapore",
+        activity: "Tours, Sightseeing, and Activities",
+        experience: "Nolvety and Speciality Tours",
+        src: "/src/assets/images/product/singapore-placeholder.png",
+    },
+    {
+        id: 2,
+        title: "Laser Quest Bukit Batok",
+        subTitle: "Singapore",
+        activity: "Tours, Sightseeing, and Activities",
+        experience: "Nolvety and Speciality Tours",
+        src: "/src/assets/images/product/singapore-placeholder.png",
+    },
+    {
+        id: 3,
+        title: "Laser Quest Bukit Batok",
+        subTitle: "Singapore",
+        activity: "Tours, Sightseeing, and Activities",
+        experience: "Nolvety and Speciality Tours",
+        src: "/src/assets/images/product/singapore-placeholder.png",
+    },
+    {
+        id: 4,
+        title: "Laser Quest Bukit Batok",
+        subTitle: "Singapore",
+        activity: "Tours, Sightseeing, and Activities",
+        experience: "Nolvety and Speciality Tours",
+        src: "/src/assets/images/product/singapore-placeholder.png",
+    },
+    {
+        id: 5,
+        title: "Laser Quest Bukit Batok",
+        subTitle: "Singapore",
+        activity: "Tours, Sightseeing, and Activities",
+        experience: "Nolvety and Speciality Tours",
+        src: "/src/assets/images/product/singapore-placeholder.png",
+    },
+];

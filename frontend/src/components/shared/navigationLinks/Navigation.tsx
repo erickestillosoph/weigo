@@ -215,11 +215,11 @@ function Navigation() {
         return (
             <div className="2xl:container xl:container md:container pt-4 pb-4">
                 <NavigationMenu.Root className="relative z-[1] flex justify-start">
-                    <NavigationMenu.List className="center m-0 flex list-none bg-white p-1">
+                    <NavigationMenu.List className="center m-0 flex list-none text-white p-1">
                         {navLinks.map((variable, index) => (
                             <NavigationMenu.Item key={index}>
                                 <NavigationMenu.Link
-                                    className="w_text_color hover:w_hover_bg active:w_active_bg focus:w_hover_bg block select-none rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none no-underline outline-none focus:shadow-[0_0_0_2px]"
+                                    className="text-white hover:hover_background active:hover_background focus:hover_background block select-none rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none no-underline outline-none focus:shadow-[0_0_0_2px]"
                                     href={variable.links}
                                 >
                                     {variable.name}
