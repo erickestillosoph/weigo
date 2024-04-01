@@ -1,0 +1,26 @@
+import CardListThree from "@/components/shared/card";
+import { activity } from "@/lib/placeholders/activity";
+
+function Activity() {
+    return (
+        <div className="flex flex-col w-[100%] container gap-[28px]">
+            <h1 className="uppercase w_heading_primary section_heading_h3">
+                Activity
+            </h1>
+            <div className="grid 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 w-[100%] gap-[32px] flex-wrap">
+                {activity.slice(0, 3).map((activity) => (
+                    <CardListThree
+                        type="activity"
+                        key={activity.id}
+                        src={activity.src}
+                        title={activity.title}
+                        subTitle={activity.subTitle}
+                        description={activity.description}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
+
+export default Activity;

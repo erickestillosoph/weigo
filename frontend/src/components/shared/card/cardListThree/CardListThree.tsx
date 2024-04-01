@@ -50,8 +50,10 @@ function CardListThree({
             )) ||
                 (type === "activity" && (
                     <CardContent className="flex flex-col gap-[16px]">
-                        <div className="flex flex-col gap-[4px]">
-                            <p className="w_text_color">{description}</p>
+                        <div className="flex flex-col gap-[4px]  overflow-hidden">
+                            <p className="w_text_color truncate text-wrap line-clamp-5">
+                                {description}
+                            </p>
                         </div>
                     </CardContent>
                 ))}

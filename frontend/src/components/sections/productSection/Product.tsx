@@ -7,7 +7,7 @@ function Product() {
             <h1 className="uppercase w_heading_primary section_heading_h3">
                 Product
             </h1>
-            <div className="flex flex-row flex-1 w-[100%] gap-[32px]">
+            <div className="grid 2xl:grid-cols-3 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 w-[100%] gap-[32px]">
                 {products.slice(0, 3).map((product) => (
                     <CardListThree
                         type="product"
