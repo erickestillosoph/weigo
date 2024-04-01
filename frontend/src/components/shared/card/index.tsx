@@ -1,2 +1,3 @@
 import CardListThree from "./cardListThree/CardListThree";
-export default CardListThree;
+import CardTextOverImageCard from "./cardTextOverImage/CardTextOverImage";
+export { CardListThree, CardTextOverImageCard };

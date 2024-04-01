@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { ImagesSlider } from "../../ui/acertenity/image-slider";
 import { Button } from "@/components/ui/button";
 import { CountryListDropdown } from "@/components/shared/countryListDropdown";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 function HeroSection() {
     // const images = [
@@ -14,11 +16,42 @@ function HeroSection() {
     // ];
     const countryCode = "SG";
     const images = [heroImage, heroImage2, heroImage3];
+
+    const [deviceType, setDeviceType] = useState("block");
+
+    useEffect(() => {
+        const handleResize = () => {
+            const height = window.innerHeight;
+            const width = window.innerWidth;
+            if (width <= 375) {
+                setDeviceType("hidden");
+            } else if (width >= 376 && height >= 654) {
+                setDeviceType("block");
+            } else if (width >= 1024 && height >= 600) {
+                setDeviceType("opacity-0");
+            } else {
+                setDeviceType("block");
+            }
+        };
+
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        // Cleanup function to remove event listener
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
     return (
         <div className="relative ">
             <div className="flex justify-center ">
-                <div className="flex flex-col absolute mt-14 sm:flex-row ml-auto mr-auto z-10 sm:gap-10 gap-1 pl-4 pr-4 justify-center items-center align-middle">
-                    <div className="lg:w-[381px] w-[100%] p-5  rounded-3xl border border_c1 sm:bg-none bg-white/35">
+                <div className="flex flex-col absolute lg:mt-14 mt-24 sm:flex-row ml-auto mr-auto z-10 sm:gap-10 gap-1 pl-4 pr-4 justify-center items-center align-middle">
+                    <div
+                        className={cn(
+                            "lg:w-[381px] w-[100%] p-5  rounded-3xl border border_c1 sm:bg-none bg-white/35",
+                            deviceType,
+                        )}
+                    >
                         <p className="lg:w_text_color text-white  text-[12px]">
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Maxime mollitia, molestiae quas vel sint
@@ -69,7 +102,7 @@ function HeroSection() {
                 </div>
                 <div className="lg:w-[50%] md:w-[100%] sm:w-[100%] w-[100%] order-1">
                     <ImagesSlider
-                        className="h-[85vh]"
+                        className="h-[85vh] md:justify-start justify-center"
                         images={images}
                         autoplay={true}
                     >
@@ -85,9 +118,9 @@ function HeroSection() {
                             transition={{
                                 duration: 0.6,
                             }}
-                            className="z-50 flex flex-col justify-start items-start"
+                            className="z-50 flex flex-col md:justify-start justify-center md:items-start items-center"
                         >
-                            <motion.div className="pl-10">
+                            <motion.div className="md:pl-10 pl-0">
                                 <h1 className="lg:super_text_lg super_text_md text_stroke_h1 font-black leading-[1.2em]">
                                     {countryCode}
                                 </h1>

@@ -97,7 +97,7 @@ export const InfiniteMovingCards = ({
                     pauseOnHover && "hover:[animation-play-state:paused]",
                 )}
             >
-                {items.map((item) => {
+                {items.map((item, index) => {
                     return (
                         (cardType === "text" && (
                             <li
@@ -106,7 +106,7 @@ export const InfiniteMovingCards = ({
                                     background:
                                         "linear-gradient(180deg, var(--slate-800), var(--slate-900)",
                                 }}
-                                key={item.name}
+                                key={index}
                             >
                                 <blockquote>
                                     <div
@@ -130,7 +130,7 @@ export const InfiniteMovingCards = ({
                             </li>
                         )) ||
                         (cardType === "image" && (
-                            <li key={item.name} className="">
+                            <li key={index} className="">
                                 <img
                                     src={item.src}
                                     alt="image"
@@ -139,7 +139,7 @@ export const InfiniteMovingCards = ({
                             </li>
                         )) ||
                         (cardType === "imageText" && (
-                            <li key={item.name}>
+                            <li key={index}>
                                 <div className="w-[350px] max-w-full relative rounded-2xl border border-b-0 flex-shrink-0 border-slate-700 px-8 py-6 md:w-[450px]">
                                     <img
                                         src={item.src}
