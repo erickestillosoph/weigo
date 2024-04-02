@@ -46,6 +46,7 @@ function HeroSection() {
             <div className="flex justify-center ">
                 <div className="flex flex-col absolute lg:mt-14 mt-24 sm:flex-row ml-auto mr-auto z-10 sm:gap-10 gap-1 pl-4 pr-4 justify-center items-center align-middle">
                     <CountryListDropdown></CountryListDropdown>
+                    <CountryListDropdown></CountryListDropdown>
                     <div className="mt-10">
                         <h1 className="medium_text sm:block hidden md:text-6xl text_stroke_medium_text fill-none stroke-white stroke-2">
                             *
