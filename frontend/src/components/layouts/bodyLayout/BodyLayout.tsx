@@ -9,7 +9,7 @@ import VisaCarRentalSection from "@/components/sections/visaCarRentalSection";
 
 function BodyLayout() {
     return (
-        <div className="flex  flex-col gap-[140px]">
+        <div className="flex  flex-col gap_200_clamp">
             <HeroSection />
             <ServiceSection
                 image={ServiceImage}
