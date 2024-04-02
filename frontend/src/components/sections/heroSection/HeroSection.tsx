@@ -5,8 +5,7 @@ import { motion } from "framer-motion";
 import { ImagesSlider } from "../../ui/acertenity/image-slider";
 import { Button } from "@/components/ui/button";
 import { CountryListDropdown } from "@/components/shared/countryListDropdown";
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+// import { useEffect, useState } from "react";
 
 function HeroSection() {
     // const images = [
@@ -17,48 +16,36 @@ function HeroSection() {
     const countryCode = "SG";
     const images = [heroImage, heroImage2, heroImage3];
 
-    const [deviceType, setDeviceType] = useState("block");
+    // const [deviceType, setDeviceType] = useState("block");
 
-    useEffect(() => {
-        const handleResize = () => {
-            const height = window.innerHeight;
-            const width = window.innerWidth;
-            if (width <= 375) {
-                setDeviceType("hidden");
-            } else if (width >= 376 && height >= 654) {
-                setDeviceType("block");
-            } else if (width >= 1024 && height >= 600) {
-                setDeviceType("opacity-0");
-            } else {
-                setDeviceType("block");
-            }
-        };
+    // useEffect(() => {
+    //     const handleResize = () => {
+    //         const height = window.innerHeight;
+    //         const width = window.innerWidth;
+    //         if (width <= 375) {
+    //             setDeviceType("hidden");
+    //         } else if (width >= 376 && height >= 654) {
+    //             setDeviceType("block");
+    //         } else if (width >= 1024 && height >= 600) {
+    //             setDeviceType("opacity-0");
+    //         } else {
+    //             setDeviceType("block");
+    //         }
+    //     };
 
-        handleResize();
-        window.addEventListener("resize", handleResize);
+    //     handleResize();
+    //     window.addEventListener("resize", handleResize);
 
-        // Cleanup function to remove event listener
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    //     // Cleanup function to remove event listener
+    //     return () => {
+    //         window.removeEventListener("resize", handleResize);
+    //     };
+    // }, []);
     return (
         <div className="relative ">
             <div className="flex justify-center ">
                 <div className="flex flex-col absolute lg:mt-14 mt-24 sm:flex-row ml-auto mr-auto z-10 sm:gap-10 gap-1 pl-4 pr-4 justify-center items-center align-middle">
-                    <div
-                        className={cn(
-                            "lg:w-[381px] w-[100%] p-5  rounded-3xl border border_c1 sm:bg-none bg-white/35",
-                            deviceType,
-                        )}
-                    >
-                        <p className="lg:w_text_color text-white  text-[12px]">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Maxime mollitia, molestiae quas vel sint
-                            commodi repudiandae consequuntur voluptatum laborum
-                            numquam blanditiis harum
-                        </p>
-                    </div>
+                    <CountryListDropdown></CountryListDropdown>
                     <div className="mt-10">
                         <h1 className="medium_text sm:block hidden md:text-6xl text_stroke_medium_text fill-none stroke-white stroke-2">
                             *
