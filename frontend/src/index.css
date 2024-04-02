@@ -107,7 +107,7 @@
         --w_spacing_12: 32px;
         --w_spacing_13: 40px;
         --w_spacing_14: 80px;
-        --w_spacing_15: 140px;
+        --w_spacing_15: 200px;
 
     }
 
@@ -264,12 +264,27 @@
         gap: var(--w_spacing_15);
     }
 
+    .gap_200_clamp{
+        gap: clamp(80px, 8vw, var(--w_spacing_15));
+        
+     }
+   
+
     /* Background Colors */
     .bg_header {
+        background-color: var(--w_primary);
+    }
+    .bg_footer {
         background-color: var(--w_primary);
     }
     .hover_background {
         background-color: #0143a5 ;
     }
+
+    /* Margin */
+    .margin_top_200_clamp{
+        margin-top: clamp(80px, 8vw, var(--w_spacing_15));
+        
+     }
 }
 

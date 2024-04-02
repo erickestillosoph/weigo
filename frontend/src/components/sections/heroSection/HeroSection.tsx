@@ -69,7 +69,7 @@ function HeroSection() {
             </div>
             <div className="flex flex-col xl:flex-row 2xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between items-end">
                 <div className="lg:w-[50%] xl:w-[50%] 2xl:w-[50%] md:w-[100%] sm:w-[100%]  flex justify-end pr-10 pl-12 g:w-[50%] mt-14 lg:order-1 order-2">
-                    <div className="lg:w-[610px] md:w-[100%] sm:w-[100%]  mb-16">
+                    <div className="lg:w-[610px] md:w-[100%] sm:w-[100%] ">
                         <div className="flex flex-col gap-10 text-left">
                             <h1 className="w_heading_primary font-bold text_hero_clamp">
                                 LET LIFE ENJOY TRAVEL NOW!

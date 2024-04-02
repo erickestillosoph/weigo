@@ -4,7 +4,7 @@ import { activity } from "@/lib/placeholders/activity";
 function Activity() {
     return (
         <div className="flex flex-col w-[100%] container gap-[28px]">
-            <div className="flex justify-between items-end">
+            <div className="flex sm:justify-between justify-center sm:items-end sm:flex-row flex-col sm:gap-4 gap-6">
                 <h1 className="uppercase w_heading_primary text_section_h3_clamp">
                     Activity
                 </h1>
