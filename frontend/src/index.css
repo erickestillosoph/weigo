@@ -286,5 +286,10 @@
         margin-top: clamp(80px, 8vw, var(--w_spacing_15));
         
      }
+
+     /* Line heights */
+     .currency_h3_lineheight{
+        line-height: 1em !important;
+     }
 }
 

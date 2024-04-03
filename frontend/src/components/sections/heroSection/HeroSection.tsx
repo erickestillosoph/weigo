@@ -5,7 +5,8 @@ import { motion } from "framer-motion";
 import { ImagesSlider } from "../../ui/acertenity/image-slider";
 import { Button } from "@/components/ui/button";
 import { CountryListDropdown } from "@/components/shared/countryListDropdown";
-// import { useEffect, useState } from "react";
+import { Currency } from "@/components/shared/currency";
+import { Input } from "@/components/ui/input";
 
 function HeroSection() {
     // const images = [
@@ -16,43 +17,26 @@ function HeroSection() {
     const countryCode = "SG";
     const images = [heroImage, heroImage2, heroImage3];
 
-    // const [deviceType, setDeviceType] = useState("block");
-
-    // useEffect(() => {
-    //     const handleResize = () => {
-    //         const height = window.innerHeight;
-    //         const width = window.innerWidth;
-    //         if (width <= 375) {
-    //             setDeviceType("hidden");
-    //         } else if (width >= 376 && height >= 654) {
-    //             setDeviceType("block");
-    //         } else if (width >= 1024 && height >= 600) {
-    //             setDeviceType("opacity-0");
-    //         } else {
-    //             setDeviceType("block");
-    //         }
-    //     };
-
-    //     handleResize();
-    //     window.addEventListener("resize", handleResize);
-
-    //     // Cleanup function to remove event listener
-    //     return () => {
-    //         window.removeEventListener("resize", handleResize);
-    //     };
-    // }, []);
     return (
         <div className="relative ">
-            <div className="flex justify-center ">
-                <div className="flex flex-col absolute lg:mt-14 mt-24 sm:flex-row ml-auto mr-auto z-10 sm:gap-10 gap-1 pl-4 pr-4 justify-center items-center align-middle">
-                    <CountryListDropdown></CountryListDropdown>
-                    <CountryListDropdown></CountryListDropdown>
+            <div className="flex flex-col justify-center absolute w-full gap-16 lg:top-8 md:top-8 top-24">
+                <div className="2xl:w-[35%] lg:w-[70%] md:w-[80%] sm:w-[80%] w-[80%] flex flex-col mr-auto ml-auto  justify-center z-10">
+                    <h3 className="text-[32px] w_heading_primary">
+                        SEARCH HERE
+                    </h3>
+                    <Input
+                        type="search"
+                        className="bg-black/20 focus:outline-white active:out=none focus:shadow-[1_1_1_1px] text-white"
+                    ></Input>
+                </div>
+                <div className="flex flex-col  sm:flex-row ml-auto mr-auto z-10 sm:gap-10 gap-1 pl-4 pr-4 justify-center items-center align-middle">
+                    <Currency />
                     <div className="mt-10">
                         <h1 className="medium_text sm:block hidden md:text-6xl text_stroke_medium_text fill-none stroke-white stroke-2">
                             *
                         </h1>
                     </div>
-                    <CountryListDropdown></CountryListDropdown>
+                    <CountryListDropdown />
                 </div>
             </div>
             <div className="flex flex-col xl:flex-row 2xl:flex-row lg:flex-row md:flex-col sm:flex-col justify-between items-end">
