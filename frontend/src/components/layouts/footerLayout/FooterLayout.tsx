@@ -38,11 +38,8 @@ function FooterLayout({ className }: FooterLayoutProps) {
                     </div>
                     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
                         {navLinks.map((navLink, index) => (
-                            <div className="flex">
-                                <p
-                                    className=" text-white text-[14px] pl-6 pr-6 pt-3 pb-3 min-w-[200px] hover:hover_background rounded-md cursor-pointer"
-                                    key={index}
-                                >
+                            <div className="flex" key={index}>
+                                <p className=" text-white text-[14px] pl-6 pr-6 pt-3 pb-3 min-w-[200px] hover:hover_background rounded-md cursor-pointer">
                                     {navLink.name}
                                 </p>
                             </div>
