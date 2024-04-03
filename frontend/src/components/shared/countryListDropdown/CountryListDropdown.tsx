@@ -58,7 +58,6 @@ function CountryListDropdown() {
                     <CountryDialog />
                 </div>
             </div>
-            <div className="w-[145px] lg:block hidden">&nbsp;&nbsp;</div>
         </div>
     );
 }
