@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Logo from "../../../assets/images/weigo-logo.png";
-
+import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
@@ -15,15 +15,19 @@ function Navigation() {
     const [isOpenTablet, setIsOpenTablet] = useState(true);
 
     const navLinks = [
-        { name: "Home", links: "#" },
-        { name: "Domestic Packages", links: "#" },
-        { name: "International Packages", links: "#" },
-        { name: "Activities", links: "#" },
-        { name: "Insurance", links: "#" },
-        { name: "Visa", links: "#" },
-        { name: "Car Rental", links: "#" },
-        { name: "About Us", links: "#" },
-        { name: "Contact", links: "#" },
+        { name: "Home", links: "#", route: "/" },
+        { name: "Domestic Packages", links: "#", route: "domestic-packages" },
+        {
+            name: "International Packages",
+            links: "#",
+            route: "international-packages",
+        },
+        { name: "Activities", links: "#", route: "activities" },
+        { name: "Insurance", links: "#", route: "insurance" },
+        { name: "Visa", links: "#", route: "visa" },
+        { name: "Car Rental", links: "#", route: "car-rental" },
+        { name: "About Us", links: "#", route: "about-us" },
+        { name: "Contact", links: "#", route: "contact" },
     ];
     let navDisplay: JSX.Element | null = null;
     const [screenSize, setScreenSize] = useState({
@@ -128,9 +132,11 @@ function Navigation() {
                             key={index}
                             onClick={toggleMobileMenu}
                         >
-                            <p className="w_text_color focus:shadow-[0_0_0_2px]">
-                                {variable.name}
-                            </p>
+                            <Link to={variable.route}>
+                                <p className="w_text_color focus:shadow-[0_0_0_2px]">
+                                    {variable.name}
+                                </p>
+                            </Link>
                         </div>
                     ))}
                     <div className="w-[100%] justify-start mt-2 pl-6 pr-6 ">
@@ -190,15 +196,16 @@ function Navigation() {
                     </button>
                     <div className="flex flex-col items-end justify-start p-3 mt-14">
                         {navLinks.map((variable, index) => (
-                            <div
-                                className="w-[300px] p-3 w_text_color hover:w_hover_bg rounded-lg cursor-pointer"
-                                key={index}
-                                onClick={toggleSideMenu}
-                            >
-                                <p className="pl-2 pr-2 w_text_color focus:shadow-[0_0_0_2px]">
-                                    {variable.name}
-                                </p>
-                            </div>
+                            <Link to={variable.route} key={index}>
+                                <div
+                                    className="w-[300px] p-3 w_text_color hover:w_hover_bg rounded-lg cursor-pointer"
+                                    onClick={toggleSideMenu}
+                                >
+                                    <p className="pl-2 pr-2 w_text_color focus:shadow-[0_0_0_2px]">
+                                        {variable.name}
+                                    </p>
+                                </div>
+                            </Link>
                         ))}
                         <div className="w-[300px] justify-start mt-8">
                             <Button
@@ -223,7 +230,7 @@ function Navigation() {
                             <NavigationMenu.Item key={index}>
                                 <NavigationMenu.Link
                                     className="text-white hover:hover_background active:hover_background focus:hover_background block select-none rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none no-underline outline-none focus:shadow-[0_0_0_2px]"
-                                    href={variable.links}
+                                    href={variable.route}
                                 >
                                     {variable.name}
                                 </NavigationMenu.Link>
