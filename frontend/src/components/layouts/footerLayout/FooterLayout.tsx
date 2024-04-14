@@ -1,22 +1,26 @@
 import { Instagram, Twitter } from "@/assets/icons/Icons";
 import LogoText from "../../../assets/images/weigo-logo.png";
 import { cn } from "@/lib/utils";
-
+import { NavLink } from "react-router-dom";
 type FooterLayoutProps = {
     className?: string;
 };
 
 function FooterLayout({ className }: FooterLayoutProps) {
     const navLinks = [
-        { name: "Home", links: "#" },
-        { name: "Domestic Packages", links: "#" },
-        { name: "International Packages", links: "#" },
-        { name: "Activities", links: "#" },
-        { name: "Insurance", links: "#" },
-        { name: "Visa", links: "#" },
-        { name: "Car Rental", links: "#" },
-        { name: "About Us", links: "#" },
-        { name: "Contact", links: "#" },
+        { name: "Home", links: "#", route: "/" },
+        { name: "Domestic Packages", links: "#", route: "/domestic-packages" },
+        {
+            name: "International Packages",
+            links: "#",
+            route: "/international-packages",
+        },
+        { name: "Activities", links: "#", route: "/activities" },
+        { name: "Insurance", links: "#", route: "/insurance" },
+        { name: "Visa", links: "#", route: "/visa" },
+        { name: "Car Rental", links: "#", route: "/car-rental" },
+        { name: "About Us", links: "#", route: "/about-us" },
+        { name: "Contact", links: "#", route: "/contact" },
     ];
     return (
         <div className={cn("bg_footer", className)}>
@@ -39,9 +43,11 @@ function FooterLayout({ className }: FooterLayoutProps) {
                     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
                         {navLinks.map((navLink, index) => (
                             <div className="flex" key={index}>
-                                <p className=" text-white text-[14px] pl-6 pr-6 pt-3 pb-3 min-w-[200px] hover:hover_background rounded-md cursor-pointer">
-                                    {navLink.name}
-                                </p>
+                                <NavLink to={navLink.route}>
+                                    <p className=" text-white text-[14px] pl-6 pr-6 pt-3 pb-3 min-w-[200px] hover:hover_background rounded-md cursor-pointer">
+                                        {navLink.name}
+                                    </p>
+                                </NavLink>
                             </div>
                         ))}
                     </div>
