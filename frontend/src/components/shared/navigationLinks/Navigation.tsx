@@ -5,7 +5,7 @@ import { gsap } from "gsap";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Logo from "../../../assets/images/weigo-logo.png";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
@@ -16,20 +16,20 @@ function Navigation() {
 
     const navLinks = [
         { name: "Home", links: "#", route: "/" },
-        { name: "Domestic Packages", links: "#", route: "domestic-packages" },
+        { name: "Domestic Packages", links: "#", route: "/domestic-packages" },
         {
             name: "International Packages",
             links: "#",
-            route: "international-packages",
+            route: "/international-packages",
         },
-        { name: "Activities", links: "#", route: "activities" },
-        { name: "Insurance", links: "#", route: "insurance" },
-        { name: "Visa", links: "#", route: "visa" },
-        { name: "Car Rental", links: "#", route: "car-rental" },
-        { name: "About Us", links: "#", route: "about-us" },
-        { name: "Contact", links: "#", route: "contact" },
+        { name: "Activities", links: "#", route: "/activities" },
+        { name: "Insurance", links: "#", route: "/insurance" },
+        { name: "Visa", links: "#", route: "/visa" },
+        { name: "Car Rental", links: "#", route: "/car-rental" },
+        { name: "About Us", links: "#", route: "/about-us" },
+        { name: "Contact", links: "#", route: "/contact" },
     ];
-    let navDisplay: JSX.Element | null = null;
+    let navDisplay: JSX.Element;
     const [screenSize, setScreenSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight,
@@ -132,11 +132,11 @@ function Navigation() {
                             key={index}
                             onClick={toggleMobileMenu}
                         >
-                            <Link to={variable.route}>
+                            <NavLink to={variable.route}>
                                 <p className="w_text_color focus:shadow-[0_0_0_2px]">
                                     {variable.name}
                                 </p>
-                            </Link>
+                            </NavLink>
                         </div>
                     ))}
                     <div className="w-[100%] justify-start mt-2 pl-6 pr-6 ">
@@ -196,7 +196,7 @@ function Navigation() {
                     </button>
                     <div className="flex flex-col items-end justify-start p-3 mt-14">
                         {navLinks.map((variable, index) => (
-                            <Link to={variable.route} key={index}>
+                            <NavLink to={variable.route} key={index}>
                                 <div
                                     className="w-[300px] p-3 w_text_color hover:w_hover_bg rounded-lg cursor-pointer"
                                     onClick={toggleSideMenu}
@@ -205,7 +205,7 @@ function Navigation() {
                                         {variable.name}
                                     </p>
                                 </div>
-                            </Link>
+                            </NavLink>
                         ))}
                         <div className="w-[300px] justify-start mt-8">
                             <Button
@@ -228,12 +228,12 @@ function Navigation() {
                     <NavigationMenu.List className="center m-0 flex list-none text-white p-1">
                         {navLinks.map((variable, index) => (
                             <NavigationMenu.Item key={index}>
-                                <NavigationMenu.Link
+                                <NavLink
                                     className="text-white hover:hover_background active:hover_background focus:hover_background block select-none rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none no-underline outline-none focus:shadow-[0_0_0_2px]"
-                                    href={variable.route}
+                                    to={variable.route}
                                 >
                                     {variable.name}
-                                </NavigationMenu.Link>
+                                </NavLink>
                             </NavigationMenu.Item>
                         ))}
                     </NavigationMenu.List>
