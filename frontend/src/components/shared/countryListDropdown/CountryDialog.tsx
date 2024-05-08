@@ -6,10 +6,6 @@ import { countryCode } from "../../../lib/countryCode";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 
 function CountryDialog() {
-    const countryCodeStyle = {
-        fontSize: "1.5em",
-        lineHeight: "1em",
-    };
     const countrySvgStyle = {
         width: "3em",
         height: "3em",
@@ -26,9 +22,9 @@ function CountryDialog() {
                     ></ChevronDownIcon>
                 </Dialog.Trigger>
                 <Dialog.Portal>
-                    <Dialog.Overlay className="z-20 bg-black/50 data-[state=open]:animate-overlayShow fixed inset-0" />
+                    <Dialog.Overlay className="z-[60] bg-black/50 data-[state=open]:animate-overlayShow fixed inset-0" />
 
-                    <Dialog.Content className="z-20 h-[70vh] inline-block overflow-hidden   w-[90%] min-w-[150px] fixed inset-0 rounded-[16px] m-auto bg-gray-100 p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
+                    <Dialog.Content className="z-[60] h-[70vh] inline-block overflow-hidden   w-[90%] min-w-[150px] fixed inset-0 rounded-[16px] m-auto bg-gray-100 p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
                         <Dialog.Title className="w_heading_primary font_inter m-0 text-[20px] font-medium sm:mt-0 mt-8">
                             Select your Destination
                         </Dialog.Title>
@@ -38,7 +34,7 @@ function CountryDialog() {
 
                         <ScrollArea.Root className="w-[100%] rounded overflow-hidden">
                             <ScrollArea.Viewport className="w-full max-h-[60vh] inline-block overflow-auto  rounded  pr-4 mb-4 ">
-                                <div className="grid  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-5 mb-8">
+                                <div className="grid  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-5 mb-16">
                                     {countryCode.map((variable) => (
                                         <div
                                             className="w-[100%]"
@@ -62,14 +58,10 @@ function CountryDialog() {
                                                                     variable.country
                                                                 }
                                                             </p>
-                                                            <ReactCountryFlag
-                                                                countryCode={
-                                                                    variable.code
-                                                                }
-                                                                style={
-                                                                    countryCodeStyle
-                                                                }
-                                                            ></ReactCountryFlag>
+
+                                                            <h3 className="leading-[1em] text-[1.5em] text-gray-600">
+                                                                {variable.code}
+                                                            </h3>
                                                         </div>
                                                     </div>
                                                     <div className="grid">
@@ -83,20 +75,13 @@ function CountryDialog() {
                                                                     countrySvgStyle
                                                                 }
                                                             ></ReactCountryFlag>
-                                                            <ReactCountryFlag
-                                                                countryCode={
-                                                                    variable.code
-                                                                }
-                                                                style={{
-                                                                    fontSize:
-                                                                        "3em",
-                                                                    lineHeight:
-                                                                        "0.7em",
-                                                                }}
-                                                            ></ReactCountryFlag>
+
+                                                            <h3 className="leading-[1.1em] text-[2.6em] text-gray-500">
+                                                                {variable.code}
+                                                            </h3>
                                                         </div>
 
-                                                        <p className="text_xs">
+                                                        <p className="text_xs text-gray-500">
                                                             {variable.country}
                                                         </p>
                                                     </div>

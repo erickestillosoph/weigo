@@ -26,7 +26,7 @@ function Header() {
         headerVisibible = true;
     }
     return (
-        <div className="sticky top-[-65px] z-20">
+        <div className="sticky top-[-65px] z-[60]">
             {headerVisibible && <NavigationEssential></NavigationEssential>}
 
             <div className="bg_header">

@@ -5,19 +5,21 @@ import { cn } from "@/lib/utils";
 
 function CountryListDropdown() {
     const countryCode = "SG";
-    const [isSVGSize, setSVGSize] = useState("4em");
-    const [isGapMobile, setIsGapMobile] = useState("gap-[14px]");
+    const [isFontSize, setFontSize] = useState("text-[4em]");
+    const [isSVGSize, setSvgSize] = useState("4em");
+    const [isGapMobile, setIsGapMobile] = useState("gap-[0px]");
 
     useEffect(() => {
         const handleResize = () => {
-            // const height = window.innerHeight;
             const width = window.innerWidth;
             if (width <= 375) {
-                setSVGSize("2em");
+                setSvgSize("2em");
+                setFontSize("text-[2em]");
                 setIsGapMobile("gap-[4px]");
             } else {
-                setSVGSize("4em");
-                setIsGapMobile("gap-[14px]");
+                setSvgSize("4em");
+                setFontSize("text-[4em]");
+                setIsGapMobile("gap-[4px]");
             }
         };
 
@@ -44,17 +46,15 @@ function CountryListDropdown() {
                         svg
                         style={{ width: isSVGSize, height: isSVGSize }}
                     />
-                    <ReactCountryFlag
-                        countryCode={countryCode}
-                        style={{
-                            fontSize: isSVGSize,
-                            fontFamily: "Chromatic, sans-serif",
-                            fontWeight: "bold",
-                            color: "#fff",
-                            lineHeight: "0.2em",
-                            marginTop: "-0.2em",
-                        }}
-                    />
+
+                    <h1
+                        className={cn(
+                            "text-white mt-[-2px] currency_h3_lineheight font-bold ",
+                            isFontSize,
+                        )}
+                    >
+                        {countryCode}
+                    </h1>
                     <CountryDialog />
                 </div>
             </div>
