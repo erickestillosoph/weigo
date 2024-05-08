@@ -23,7 +23,7 @@ function DomesticPackages() {
     //     init();
     // }, []);
     return (
-        <div className="flex flex-col sm:gap-10 gap-32   h-[100%]">
+        <div className="flex flex-col sm:gap-10 gap-32 h-[100%]">
             <TitleSection img={image} title="Domestic Packages"></TitleSection>
             <div className="container lg:flex-row flex flex-col gap-[32px]">
                 <div className="lg:w-[70%] w-[100%] h-[296px] relative rounded-[16px] bg-black/20 ">
