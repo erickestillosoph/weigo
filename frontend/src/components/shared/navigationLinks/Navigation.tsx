@@ -5,27 +5,16 @@ import { gsap } from "gsap";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Logo from "../../../assets/images/weigo-logo.png";
-
+import { NavLink } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
-
+import { navLinks } from "@/lib/navigationLinks";
 gsap.registerPlugin(useGSAP);
 
 function Navigation() {
     const [isOpenMobile, setIsOpenMobile] = useState(true);
     const [isOpenTablet, setIsOpenTablet] = useState(true);
 
-    const navLinks = [
-        { name: "Home", links: "#" },
-        { name: "Domestic Packages", links: "#" },
-        { name: "International Packages", links: "#" },
-        { name: "Activities", links: "#" },
-        { name: "Insurance", links: "#" },
-        { name: "Visa", links: "#" },
-        { name: "Car Rental", links: "#" },
-        { name: "About Us", links: "#" },
-        { name: "Contact", links: "#" },
-    ];
-    let navDisplay: JSX.Element | null = null;
+    let navDisplay: JSX.Element;
     const [screenSize, setScreenSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight,
@@ -128,9 +117,11 @@ function Navigation() {
                             key={index}
                             onClick={toggleMobileMenu}
                         >
-                            <p className="w_text_color focus:shadow-[0_0_0_2px]">
-                                {variable.name}
-                            </p>
+                            <NavLink to={variable.route}>
+                                <p className="w_text_color focus:shadow-[0_0_0_2px]">
+                                    {variable.name}
+                                </p>
+                            </NavLink>
                         </div>
                     ))}
                     <div className="w-[100%] justify-start mt-2 pl-6 pr-6 ">
@@ -190,15 +181,16 @@ function Navigation() {
                     </button>
                     <div className="flex flex-col items-end justify-start p-3 mt-14">
                         {navLinks.map((variable, index) => (
-                            <div
-                                className="w-[300px] p-3 w_text_color hover:w_hover_bg rounded-lg cursor-pointer"
-                                key={index}
-                                onClick={toggleSideMenu}
-                            >
-                                <p className="pl-2 pr-2 w_text_color focus:shadow-[0_0_0_2px]">
-                                    {variable.name}
-                                </p>
-                            </div>
+                            <NavLink to={variable.route} key={index}>
+                                <div
+                                    className="w-[300px] p-3 w_text_color hover:w_hover_bg rounded-lg cursor-pointer"
+                                    onClick={toggleSideMenu}
+                                >
+                                    <p className="pl-2 pr-2 w_text_color focus:shadow-[0_0_0_2px]">
+                                        {variable.name}
+                                    </p>
+                                </div>
+                            </NavLink>
                         ))}
                         <div className="w-[300px] justify-start mt-8">
                             <Button
@@ -221,12 +213,12 @@ function Navigation() {
                     <NavigationMenu.List className="center m-0 flex list-none text-white p-1">
                         {navLinks.map((variable, index) => (
                             <NavigationMenu.Item key={index}>
-                                <NavigationMenu.Link
+                                <NavLink
                                     className="text-white hover:hover_background active:hover_background focus:hover_background block select-none rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none no-underline outline-none focus:shadow-[0_0_0_2px]"
-                                    href={variable.links}
+                                    to={variable.route}
                                 >
                                     {variable.name}
-                                </NavigationMenu.Link>
+                                </NavLink>
                             </NavigationMenu.Item>
                         ))}
                     </NavigationMenu.List>

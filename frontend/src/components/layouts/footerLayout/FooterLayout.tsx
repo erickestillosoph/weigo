@@ -1,23 +1,13 @@
 import { Instagram, Twitter } from "@/assets/icons/Icons";
 import LogoText from "../../../assets/images/weigo-logo.png";
 import { cn } from "@/lib/utils";
-
+import { NavLink } from "react-router-dom";
+import { navLinks } from "@/lib/navigationLinks";
 type FooterLayoutProps = {
     className?: string;
 };
 
 function FooterLayout({ className }: FooterLayoutProps) {
-    const navLinks = [
-        { name: "Home", links: "#" },
-        { name: "Domestic Packages", links: "#" },
-        { name: "International Packages", links: "#" },
-        { name: "Activities", links: "#" },
-        { name: "Insurance", links: "#" },
-        { name: "Visa", links: "#" },
-        { name: "Car Rental", links: "#" },
-        { name: "About Us", links: "#" },
-        { name: "Contact", links: "#" },
-    ];
     return (
         <div className={cn("bg_footer", className)}>
             <div className="container  pt-12 pb-12">
@@ -39,9 +29,11 @@ function FooterLayout({ className }: FooterLayoutProps) {
                     <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 ">
                         {navLinks.map((navLink, index) => (
                             <div className="flex" key={index}>
-                                <p className=" text-white text-[14px] pl-6 pr-6 pt-3 pb-3 min-w-[200px] hover:hover_background rounded-md cursor-pointer">
-                                    {navLink.name}
-                                </p>
+                                <NavLink to={navLink.route}>
+                                    <p className=" text-white text-[14px] pl-6 pr-6 pt-3 pb-3 min-w-[200px] hover:hover_background rounded-md cursor-pointer">
+                                        {navLink.name}
+                                    </p>
+                                </NavLink>
                             </div>
                         ))}
                     </div>

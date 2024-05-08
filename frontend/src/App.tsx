@@ -1,9 +1,9 @@
 import "./App.css";
 import { RecoilRoot } from "recoil";
 import { Header } from "./components/layouts/headerLayout";
-import { BodyLayout } from "./components/layouts/bodyLayout";
 import { FooterLayout } from "./components/layouts/footerLayout";
 
+import { BodyLayout } from "./components/layouts/bodyLayout";
 function App() {
     return (
         <div style={{ position: "relative" }}>
