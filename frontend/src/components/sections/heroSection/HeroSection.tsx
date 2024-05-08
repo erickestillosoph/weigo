@@ -1,6 +1,6 @@
-import heroImage from "../../../assets/images/hero/heroImage.png";
-import heroImage2 from "../../../assets/images/hero/heroImage2.png";
-import heroImage3 from "../../../assets/images/hero/heroImage3.png";
+import heroImage from "@/assets/images/hero/heroImage.png";
+import heroImage2 from "@/assets/images/hero/heroImage2.png";
+import heroImage3 from "@/assets/images/hero/heroImage3.png";
 import { motion } from "framer-motion";
 import { ImagesSlider } from "../../ui/acertenity/image-slider";
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,7 @@ function HeroSection() {
 
     return (
         <div className="relative ">
-            <div className="flex flex-col justify-center absolute w-full gap-16 lg:top-8 md:top-8 top-24">
+            <div className="flex flex-col justify-center absolute w-full gap-6 lg:top-8 md:top-8 top-24">
                 <div className="2xl:w-[35%] lg:w-[70%] md:w-[80%] sm:w-[80%] w-[80%] flex flex-col mr-auto ml-auto  justify-center z-10">
                     <h3 className="text-[32px] w_heading_primary">
                         SEARCH HERE

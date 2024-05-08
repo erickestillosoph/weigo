@@ -7,28 +7,13 @@ import { Button } from "@/components/ui/button";
 import Logo from "../../../assets/images/weigo-logo.png";
 import { NavLink } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
-
+import { navLinks } from "@/lib/navigationLinks";
 gsap.registerPlugin(useGSAP);
 
 function Navigation() {
     const [isOpenMobile, setIsOpenMobile] = useState(true);
     const [isOpenTablet, setIsOpenTablet] = useState(true);
 
-    const navLinks = [
-        { name: "Home", links: "#", route: "/" },
-        { name: "Domestic Packages", links: "#", route: "/domestic-packages" },
-        {
-            name: "International Packages",
-            links: "#",
-            route: "/international-packages",
-        },
-        { name: "Activities", links: "#", route: "/activities" },
-        { name: "Insurance", links: "#", route: "/insurance" },
-        { name: "Visa", links: "#", route: "/visa" },
-        { name: "Car Rental", links: "#", route: "/car-rental" },
-        { name: "About Us", links: "#", route: "/about-us" },
-        { name: "Contact", links: "#", route: "/contact" },
-    ];
     let navDisplay: JSX.Element;
     const [screenSize, setScreenSize] = useState({
         width: window.innerWidth,
