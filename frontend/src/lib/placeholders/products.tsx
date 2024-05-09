@@ -39,4 +39,12 @@ export const products = [
         experience: "Nolvety and Speciality Tours",
         src: "/src/assets/images/product/singapore-placeholder.png",
     },
+    {
+        id: 6,
+        title: "Laser Quest Bukit Batok",
+        subTitle: "Singapore",
+        activity: "Tours, Sightseeing, and Activities",
+        experience: "Nolvety and Speciality Tours",
+        src: "/src/assets/images/product/singapore-placeholder.png",
+    },
 ];
