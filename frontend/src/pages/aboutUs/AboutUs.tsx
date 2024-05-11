@@ -153,10 +153,13 @@ const List = styled.li`
         content: "";
         position: absolute;
         display: block;
-        border-top: 70px solid #e2e2e2;
+        border-top: 66px solid #e2e2e2;
         width: 1px;
         left: -35px;
-        top: 50px;
+        top: 56px;
+    }
+    &:last-child::after {
+        border-top: none !important;
     }
     @media (max-width: 1280px) {
         &::before {
