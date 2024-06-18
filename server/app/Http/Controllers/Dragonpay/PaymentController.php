@@ -9,6 +9,7 @@ use App\Models\Payment;
 use Inertia\Inertia;
 use App\Http\Resources\PaymentResource;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
 
 class PaymentController extends Controller
 {
@@ -37,7 +38,7 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePaymentRequest $request)
+    public function store(StorePaymentRequest $request): JsonResponse
     {
         //
     $payments = Payment::create($request->validated());
@@ -47,10 +48,14 @@ class PaymentController extends Controller
         $status = 'error';
         $code = 500;
     }
+    
+    $token = $payments->createToken('api-token');
+
     return response()->json([
         'message' => 'Credit Card Information Added Successfully',
         'status' => $status,
-        'code' => $code
+        'code' => $code,
+        'token' => $token->plainTextToken
     ], 200);
     }
 

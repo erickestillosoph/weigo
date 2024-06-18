@@ -8,6 +8,7 @@ use App\Models\DBCreditCard;
 use App\Models\DPFilteredPayments;
 use App\Models\DPPreSelectingPayments;
 use App\Models\User;
+use App\Models\Guest;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -33,7 +34,7 @@ class DatabaseSeeder extends Seeder
             DBPaymentSeeder::class,
             DBFilteredPaymentSeeder::class,
             DBPreSelectingPaymentSeeder::class,
-
+            DBGuestSeeder::class,
         ]);
        
     }
