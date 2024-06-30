@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WeigoResetPassword;
+use Illuminate\Support\Facades\DB;
+use App\Models\Guest; 
+use Illuminate\Support\Facades\Log;
 
 class PasswordResetLinkController extends Controller
 {
@@ -39,13 +44,25 @@ class PasswordResetLinkController extends Controller
         $status = Password::sendResetLink(
             $request->only('email')
         );
-
+        
         if ($status == Password::RESET_LINK_SENT) {
             return back()->with('status', __($status));
         }
-
+     
         throw ValidationException::withMessages([
             'email' => [trans($status)],
         ]);
+    }
+
+    public function sendResetLink(Request $request)
+    {
+        $emailParam = $request->query('email');
+        $user = Guest::where('email', $emailParam)->first();
+        if ($user) {
+            $mail = new WeigoResetPassword($user);
+            Mail::to($user->email)->send($mail);
+        } else {
+            return response()->json(['message' => 'User not found'], 404);
+        }
     }
 }

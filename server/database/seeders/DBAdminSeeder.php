@@ -8,25 +8,22 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Faker\Factory as Faker;
 use Carbon\Carbon;
-use App\Models\Guest;
-use Illuminate\Support\Str;
-class DBGuestSeeder extends Seeder
+use App\Models\User;
+class DBAdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Guest::factory()->create([
-            'uid' => Str::uuid(),
-            'first_name' => 'Erick',
-            'last_name' => 'Estilloso',
+      User::factory()->create([
+            'name' => 'Erick',
             'birthday' => '1990-01-01',
             'phone_number' => '1234567890',
             'email' => 'hover.erickestilloso@gmail.com',
             'password' => bcrypt('password'),
             'email_verified_at' => time(),
-            'verification_token' => sha1(Faker::create()->unique()->randomNumber()),
+            'role' => 'superadministrator'
         ]); 
     }
 }

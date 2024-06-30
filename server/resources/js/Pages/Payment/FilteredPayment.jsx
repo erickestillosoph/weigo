@@ -43,10 +43,6 @@ export default function FilteredPayment({ auth }) {
             submit();
         } catch (error) {
             console.log("Error", error.message);
-            console.log(error.name);
-            console.log(error.request);
-            console.log(error.stack);
-            console.log(error.response.data);
         }
     };
 

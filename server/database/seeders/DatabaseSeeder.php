@@ -19,15 +19,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Erick',
-            'email' => 'hover.erickestilloso@gmail.com',
-            'password' => bcrypt('123.321A'),
-            'email_verified_at' => time() 
-        ]);      
-
         $this->call([
             DBServiceModelSeeder::class,
             DBCreditCardSeeder::class,
@@ -35,6 +26,7 @@ class DatabaseSeeder extends Seeder
             DBFilteredPaymentSeeder::class,
             DBPreSelectingPaymentSeeder::class,
             DBGuestSeeder::class,
+            DBAdminSeeder::class
         ]);
        
     }
