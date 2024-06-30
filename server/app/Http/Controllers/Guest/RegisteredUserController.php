@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\Guest;
-use Illuminate\Auth\Events\Registered;
+// use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +12,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WeigoEmail;
+use Illuminate\Support\Str;
 class RegisteredUserController extends Controller
 {
     /**
@@ -31,18 +33,26 @@ class RegisteredUserController extends Controller
     public function store(Request $request):JsonResponse
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.Guest::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $guest = Guest::create([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
+            'phone_number' => $request->phone_number ?? '1234567890',
+            'birthday' => $request->birthday ?? now(),  
             'password' => Hash::make($request->password),
+            'verification_token' => Str::random(32),  
+            'uid' => Str::uuid(),         
         ]);
 
-        event(new Registered($guest));
+        Mail::to($guest->email)->send(new WeigoEmail($guest));
+
+        // event(new Registered($guest));
         return response()->json(['message' => 'Registration is Successfully'], 200);
 
     }

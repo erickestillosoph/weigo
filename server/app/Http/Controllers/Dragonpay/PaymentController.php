@@ -48,14 +48,12 @@ class PaymentController extends Controller
         $status = 'error';
         $code = 500;
     }
-    
-    $token = $payments->createToken('api-token');
+
 
     return response()->json([
-        'message' => 'Credit Card Information Added Successfully',
+        'message' => 'Payment Information Added Successfully',
         'status' => $status,
         'code' => $code,
-        'token' => $token->plainTextToken
     ], 200);
     }
 

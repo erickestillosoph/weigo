@@ -1,11 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-
-export default function Authenticated({ user, header, children }) {
+import { useAccounts } from "@/hooks/data/useAccounts";
+export default function Authenticated({ user, header, children, role }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
+    const [isRole, setIsRole] = useState(false);
+    const { current_user } = useAccounts();
+    useEffect(() => {
+        if (current_user.role === "superadministrator") {
+            setIsRole(true);
+        } else if (current_user.role === "administrator") {
+            setIsRole(true);
+        } else {
+            setIsRole(false);
+        }
+    }, []);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -61,6 +72,16 @@ export default function Authenticated({ user, header, children }) {
                                 >
                                     Pre Selecting Payment
                                 </NavLink>
+                                {isRole ? (
+                                    <NavLink
+                                        href={route("accounts")}
+                                        active={route().current("accounts")}
+                                    >
+                                        Accounts
+                                    </NavLink>
+                                ) : (
+                                    <></>
+                                )}
                             </div>
                         </div>
 

@@ -44,7 +44,7 @@ class FilteredPaymentsController extends Controller
             $code = 500;
         }
         return response()->json([
-            'message' => 'Credit Card Information Added Successfully',
+            'message' => 'Filtered Payments Information Added Successfully',
             'status' => $status,
             'code' => $code
         ], 200);

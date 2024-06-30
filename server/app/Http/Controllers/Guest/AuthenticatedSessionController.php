@@ -45,8 +45,19 @@ class AuthenticatedSessionController extends Controller
         if (!$user || !Hash::check($data['password'], $user->password)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
+
+        $guest = DB::table('guests')
+        ->where('email', $data['email'])
+        ->whereNotNull('email_verified_at')
+        ->first();
+
+
+        if (!$guest) {
+            return response()->json(['message' => 'Email not Verified', 'guest' => $guest], 401);
+        }
+
         $token = $user->createToken('token-name')->plainTextToken;
-        return response()->json(['message' => 'Login is Successfully', 'user' => $user, 'token' =>$token ], 200);
+        return response()->json(['message' => 'Login is Successfully', 'user' => $user, 'token' =>$token, 'email verified at' => $guest->email_verified_at ], 200);
     }
 
     /**
