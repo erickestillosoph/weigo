@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
@@ -24,7 +25,11 @@ class GuestFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'uid' => (string) Str::uuid() ,
+            'first_name' => fake()->name(),
+            'last_name' => fake()->name(),
+            'birthday' => fake()->date(),
+            'phone_number' => rand(1000000000, 9999999999),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),

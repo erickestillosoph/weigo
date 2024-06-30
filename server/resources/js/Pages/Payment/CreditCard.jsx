@@ -56,11 +56,6 @@ export default function CreditCard({ auth }) {
         } catch (error) {
             console.log(error.config);
             console.log("Error", error.message);
-            console.log(error.name);
-            console.log(error.request);
-            console.log(error.stack);
-            console.log(error.response.data);
-            console.log("error");
         }
     };
 

@@ -1,15 +1,19 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\Dragonpay\CreditCardController;
 use App\Http\Controllers\Dragonpay\PaymentController;
 use App\Http\Controllers\Dragonpay\ServiceModelController;
 use App\Http\Controllers\Dragonpay\FilteredPaymentsController;
 use App\Http\Controllers\Dragonpay\PreSelectingPaymentsController;
+use App\Http\Controllers\Accounts\AccountsProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::redirect('/', '/dashboard');
@@ -46,13 +50,42 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/pre-selecting-payments', [PreSelectingPaymentsController::class, 'index'],fn() => Inertia::render('DPPreSelectingPayments'))
     ->name('pre-selecting-payments');
     Route::post('pre-selecting-payments', [PreSelectingPaymentsController::class, 'store', HandlePrecognitiveRequests::class]);
+
+   
+     // Account User Route  
+     Route::get('/accounts/admin', [AccountsProfileController::class, 'getAdminUser'])->name('accounts');
+     Route::put('/accounts/admin', [AccountsProfileController::class, 'editAdminUser'])->name('accounts.admin.get'); 
+
+     // Account Guest Route
+     Route::get('/accounts', [AccountsProfileController::class, 'getGuestUser'],fn() => Inertia::render('Guest'))
+     ->name('accounts');
+     Route::put('/accounts/guest', [AccountsProfileController::class, 'editGuestUser'])->name('accounts.guest.get');
+      
+
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+ 
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/login');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+ 
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 
 
 

@@ -43,7 +43,7 @@ class PreSelectingPaymentsController extends Controller
             $code = 500;
         }
         return response()->json([
-            'message' => 'Credit Card Information Added Successfully',
+            'message' => 'Pre-Selecting Information Added Successfully',
             'status' => $status,
             'code' => $code
         ], 200);
