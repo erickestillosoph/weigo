@@ -46,7 +46,7 @@ class CreditCardController extends Controller
         $code = 500;
     }
     return response()->json([
-        'message' => 'Credit Card Information Added Successfully',
+        'message' => 'Credit Card Transaction is Successful',
         'status' => $status,
         'code' => $code
     ], 200);
@@ -79,8 +79,13 @@ class CreditCardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CreditCard $creditCard)
+    public function destroy($id)
     {
-        //
+        DB::table('d_p_credit_cards')->where('id', $id)->delete();
+        if (DB::table('d_p_credit_cards')->where('id', $id)->exists()) {
+            return back()->with('error', 'Item not deleted');
+        }
+        
+        return back()->with('success', 'Item deleted successfully');
     }
 }
