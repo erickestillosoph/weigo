@@ -43,7 +43,7 @@ class PreSelectingPaymentsController extends Controller
             $code = 500;
         }
         return response()->json([
-            'message' => 'Pre-Selecting Information Added Successfully',
+            'message' => 'Pre-Selecting Information Transaction is Successful',
             'status' => $status,
             'code' => $code
         ], 200);
@@ -76,8 +76,13 @@ class PreSelectingPaymentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DPPreSelectingPayments $dPPreSelectingPayments)
+    public function destroy($id)
     {
-        //
+        DB::table('d_p_pre_selecting_payments')->where('id', $id)->delete();
+        if (DB::table('d_p_pre_selecting_payments')->where('id', $id)->exists()) {
+            return back()->with('error', 'Item not deleted');
+        }
+        
+        return back()->with('success', 'Item deleted successfully');
     }
 }

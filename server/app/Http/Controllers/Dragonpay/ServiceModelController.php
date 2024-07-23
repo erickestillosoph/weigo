@@ -46,7 +46,7 @@ class ServiceModelController extends Controller
         $code = 500;
     }
     return response()->json([
-        'message' => 'Service Model Information Added Successfully',
+        'message' => 'Service Model Information Transaction is Successful',
         'status' => $status,
         'code' => $code
     ], 200);
@@ -79,8 +79,13 @@ class ServiceModelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ServiceModel $serviceModel)
+    public function destroy($id)
     {
-        //
+        DB::table('d_p_service_models')->where('id', $id)->delete();
+        if (DB::table('d_p_service_models')->where('id', $id)->exists()) {
+            return back()->with('error', 'Item not deleted');
+        }
+        
+        return back()->with('success', 'Item deleted successfully');
     }
 }
