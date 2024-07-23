@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePaymentRequest extends FormRequest
+class DeletePaymentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,10 +22,7 @@ class StorePaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => [ 'required', 'min:1', 'string'],
-            'ccy' => [ 'required', 'max:5', 'string' ],
-            'description' => [ 'required','max:255', 'string'],
-            'email' => [ 'required', 'max:255', 'email' ],
+            "id" => ["required", "integer"],
         ];
     }
 }

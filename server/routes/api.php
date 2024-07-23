@@ -17,6 +17,9 @@ use App\Http\Controllers\Dragonpay\PaymentController;
 use App\Http\Controllers\Dragonpay\ServiceModelController;
 use App\Http\Controllers\Dragonpay\FilteredPaymentsController;
 use App\Http\Controllers\Dragonpay\PreSelectingPaymentsController;
+use App\Http\Controllers\Guest\Profile\ProfileController;
+
+use App\Http\Controllers\Accounts\AccountsProfileController;
 
 use App\Http\Controllers\EmailController;
 
@@ -74,12 +77,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
                 ->name('credit-card');
     Route::post('/weigo/dp-payment', [PaymentController::class, 'store', HandlePrecognitiveRequests::class])
                 ->name('payment');
+
     Route::post('/weigo/dp-service-model', [ServiceModelController::class, 'store', HandlePrecognitiveRequests::class])
                 ->name('service-model');
     Route::post('/weigo/dp-filtered-payments', [FilteredPaymentsController::class, 'store', HandlePrecognitiveRequests::class])
                 ->name('filtered-payments');
     Route::post('/weigo/dp-preselecting-payments', [PreSelectingPaymentsController::class, 'store', HandlePrecognitiveRequests::class])
                 ->name('preselecting-payments');
+
+    Route::delete('/weigo/delete-profile/{id}', [AccountsProfileController::class, 'deleteGuestUser'])->name('deleteId');
+    Route::post('/weigo/edit-profile', [AccountsProfileController::class, 'editGuestUser'])->name('updateProfile');
+
 
     Route::get('/weigo/profile', [ProfileController::class, 'create', HandlePrecognitiveRequests::class])->name('profile.edit');                 
     Route::post('/weigo/profile', [ProfileController::class, 'store', HandlePrecognitiveRequests::class])->name('profile.edit');                 

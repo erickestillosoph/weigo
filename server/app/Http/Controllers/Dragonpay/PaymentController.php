@@ -10,6 +10,7 @@ use Inertia\Inertia;
 use App\Http\Resources\PaymentResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
@@ -51,7 +52,8 @@ class PaymentController extends Controller
 
 
     return response()->json([
-        'message' => 'Payment Information Added Successfully',
+        'message' => 'Payment Information Transaction is Successful',
+        'payments' => $request->all(),
         'status' => $status,
         'code' => $code,
     ], 200);
@@ -82,10 +84,21 @@ class PaymentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage on the guest side
      */
-    public function destroy(Payment $payment)
+    public function destroy($id)
     {
-        //
+
+        DB::table('d_p_payments')->where('id', $id)->delete();
+        if (DB::table('d_p_payments')->where('id', $id)->exists()) {
+            return back()->with('error', 'Item not deleted');
+        }
+        
+        return back()->with('success', 'Item deleted successfully');
+    }
+    // Remove the specified resource from storage on the dashboard admin
+    public function delete(Payment $request)
+    {
+        $request->delete();
     }
 }

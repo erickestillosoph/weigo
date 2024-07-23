@@ -3,34 +3,55 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useDpFilteringPayments } from "@/hooks/data/useFilteringPayments";
-import { Head } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import { useForm } from "laravel-precognition-react";
 import { useEffect, useState } from "react";
 import Tabs from "@/Components/Tabs";
+import Modal from "@/Components/Modal";
+import InformationModal from "@/Components/Modal/InformationModal";
+import ConfirmationModal from "@/Components/Modal/ConfirmationModal";
+import DangerButton from "@/Components/DangerButton";
+import { Inertia } from "@inertiajs/inertia";
+import { useAccounts } from "@/hooks/data/useAccounts";
 export default function FilteredPayment({ auth }) {
     const [message, setMessage] = useState("");
+    console.log(message);
     const [tabToggle, setTabToggle] = useState(true);
     const { d_p_filtered_payments } = useDpFilteringPayments();
+    const [confirmationUserDeletion, setConfirmingUserDeletion] =
+        useState(false);
+    const [dataToModal, setDataToModal] = useState(undefined);
+    const [filterPayment, setFilterPayment] = useState(d_p_filtered_payments);
+    const [deleteData, setDeleteData] = useState(undefined);
+    const [infoData, setInfoData] = useState(false);
+
+    const { current_user } = useAccounts();
+    const [isRoleAdmin, setIsRoleAdmin] = useState(false);
+
     const { data, setData, processing, errors, reset, submit, hasErrors } =
         useForm("post", "filtering-payments", {
             amount: "",
-            txnid: "",
             ccy: "",
             description: "",
             email: "",
-            param2: "",
-            param1: "",
-            merchantId: "",
-            password: "",
         });
     const keys = Object.keys(errors);
-    // const values = Object.values(errors);
+
     console.log(hasErrors);
     useEffect(() => {
+        setFilterPayment(d_p_filtered_payments);
+        if (
+            current_user.role === "superadministrator" ||
+            current_user.role === "administrator"
+        ) {
+            setIsRoleAdmin(true);
+        } else {
+            setIsRoleAdmin(false);
+        }
         return () => {
             reset("password");
         };
-    }, []);
+    }, [d_p_filtered_payments]);
     const handleErrorMessage = () => {
         setMessage(keys);
     };
@@ -41,276 +62,239 @@ export default function FilteredPayment({ auth }) {
         }
         try {
             submit();
+            reset();
+            Inertia.reload({ only: ["d_p_filtered_payments"] });
         } catch (error) {
             console.log("Error", error.message);
         }
     };
 
-    console.log(message);
+    const closeModal = () => {
+        setConfirmingUserDeletion(false);
+        setInfoData(false);
+    };
+
+    const showInfoData = () => {
+        return (
+            <InformationModal
+                data={dataToModal}
+                onClickModal={(value) => setInfoData(value)}
+            ></InformationModal>
+        );
+    };
+
+    const confirmationDelete = () => {
+        return (
+            <ConfirmationModal
+                data={deleteData}
+                onClickModal={(value) => {
+                    setConfirmingUserDeletion(value);
+                }}
+                onClickDelete={(id) =>
+                    router.delete(`/filtering-payments/${id}}`)
+                }
+            ></ConfirmationModal>
+        );
+    };
+
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dragonpay Setting - Filtered Payment
-                </h2>
-            }
-        >
-            <Head title="Payment" />
+        <section>
+            <AuthenticatedLayout
+                user={auth.user}
+                header={
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight">
+                        Dragonpay Setting - Filtered Payment
+                    </h2>
+                }
+            >
+                <Head title="Payment" />
 
-            <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-5">
-                            <div className="hidden space-x-8 sm:-my-px sm:flex">
-                                <Tabs
-                                    onClick={() => {
-                                        setTabToggle(true);
-                                    }}
-                                    active={tabToggle}
-                                    className="cursor-pointer"
-                                >
-                                    Filtered Payment Information
-                                </Tabs>
-                                <Tabs
-                                    onClick={() => {
-                                        setTabToggle(false);
-                                    }}
-                                    active={!tabToggle}
-                                    className="cursor-pointer"
-                                >
-                                    Input Data
-                                </Tabs>
+                <div className="py-12">
+                    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <div className="p-5">
+                                <div className="hidden space-x-8 sm:-my-px sm:flex">
+                                    <Tabs
+                                        onClick={() => {
+                                            setTabToggle(true);
+                                        }}
+                                        active={tabToggle}
+                                        className="cursor-pointer"
+                                    >
+                                        Filtered Payment Information
+                                    </Tabs>
+                                    <Tabs
+                                        onClick={() => {
+                                            setTabToggle(false);
+                                        }}
+                                        active={!tabToggle}
+                                        className="cursor-pointer"
+                                    >
+                                        Input Data
+                                    </Tabs>
+                                </div>
                             </div>
-                        </div>
 
-                        <div
-                            className="mt-4 overflow-x-auto max-h-[60vh]"
-                            hidden={!tabToggle}
-                        >
-                            <table className="min-w-full bg-white shadow-md rounded-xl text-[14px] relative">
-                                <thead className="relative">
-                                    <tr className="border-b bg-slate-100 sticky top-0 w-full  bg-blue-gray-100 text-gray-700">
-                                        <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
-                                            Merchant ID
-                                        </th>
-                                        <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
-                                            Password
-                                        </th>
-                                        <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
-                                            Amount
-                                        </th>
-                                        <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
-                                            TXNID
-                                        </th>
-                                        <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
-                                            Currency
-                                        </th>
-                                        <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
-                                            Description
-                                        </th>
+                            <div
+                                className="mt-4 overflow-x-auto max-h-[60vh]"
+                                hidden={!tabToggle}
+                            >
+                                <table className="min-w-full bg-white shadow-md rounded-xl text-[14px] relative">
+                                    <thead className="relative">
+                                        <tr className="border-b bg-slate-100 sticky top-0 w-full  bg-blue-gray-100 text-gray-700">
+                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
+                                                Email
+                                            </th>
+                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
+                                                Amount
+                                            </th>
 
-                                        <th className=" py-3 px-4 text-left min-w-[40px] max-w-[20px]">
-                                            Action
-                                        </th>
-                                        <th className=" py-3 px-4 text-left min-w-[40px] max-w-[20px]"></th>
-                                    </tr>
-                                </thead>
-                                <tbody className="h-[100px] text-blue-gray-900">
-                                    {d_p_filtered_payments.map(
-                                        (payments, index) => (
-                                            <tr
-                                                key={index}
-                                                className="max-w-xs break-words border-b border-blue-gray-200"
-                                            >
-                                                <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px] ">
-                                                    {payments.merchantId}
-                                                </td>
-                                                <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]  break-words">
-                                                    {payments.password}
-                                                </td>
-                                                <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                    {payments.amount}
-                                                </td>
-                                                <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                    {payments.txnid}
-                                                </td>
-                                                <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                    {payments.ccy}
-                                                </td>
-                                                <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                    {payments.description}
-                                                </td>
+                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
+                                                Currency
+                                            </th>
+                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
+                                                Description
+                                            </th>
 
-                                                <td className="py-3 px-4">
-                                                    <a
-                                                        href="#"
-                                                        className="font-medium text-blue-600 hover:text-blue-800"
-                                                    >
-                                                        Edit
-                                                    </a>
-                                                </td>
-                                                <td className="py-3 px-4">
-                                                    <a
-                                                        href="#"
-                                                        className="font-medium text-blue-600 hover:text-blue-800"
-                                                    >
-                                                        Delete
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        )
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
+                                            <th className=" py-3 px-4 text-left w-12">
+                                                Action
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="h-[100px] text-blue-gray-900">
+                                        {filterPayment.map(
+                                            (payments, index) => (
+                                                <tr
+                                                    key={index}
+                                                    className="max-w-xs break-words border-b border-blue-gray-200"
+                                                >
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
+                                                        {payments.email}
+                                                    </td>
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
+                                                        {payments.amount}
+                                                    </td>
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
+                                                        {payments.ccy}
+                                                    </td>
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
+                                                        {payments.description}
+                                                    </td>
 
-                        <form onSubmit={handleSubmit} hidden={tabToggle}>
-                            <div className="p-6 grid grid-cols-3 gap-4 w-full">
-                                <div className="">
-                                    <InputLabel htmlFor="txnid" value="TXNID" />
-                                    <TextInput
-                                        id="txnid"
-                                        type="text"
-                                        value={data.txnid}
-                                        name="txnid"
-                                        className="mt-1 block w-full"
-                                        onChange={(e) =>
-                                            setData("txnid", e.target.value)
-                                        }
-                                    />
-                                </div>
-                                <div className="">
-                                    <InputLabel
-                                        htmlFor="merchantId"
-                                        value="MERCHANT ID"
-                                    />
-                                    <TextInput
-                                        id="merchantId"
-                                        type="text"
-                                        value={data.merchantId}
-                                        className="mt-1 block w-full"
-                                        name="merchantId"
-                                        onChange={(e) =>
-                                            setData(
-                                                "merchantId",
-                                                e.target.value
+                                                    <td className="py-3 px-4 flex gap-2">
+                                                        <PrimaryButton
+                                                            className="bg-blue-400"
+                                                            disabled={
+                                                                processing
+                                                            }
+                                                            onClick={() => {
+                                                                setInfoData(
+                                                                    true
+                                                                );
+                                                                setDataToModal(
+                                                                    payments
+                                                                );
+                                                            }}
+                                                        >
+                                                            Info
+                                                        </PrimaryButton>
+                                                        {isRoleAdmin && (
+                                                            <DangerButton
+                                                                className="ms-3"
+                                                                disabled={
+                                                                    processing
+                                                                }
+                                                                onClick={() => {
+                                                                    setConfirmingUserDeletion(
+                                                                        true
+                                                                    );
+                                                                    setDeleteData(
+                                                                        payments
+                                                                    );
+                                                                }}
+                                                            >
+                                                                Delete
+                                                            </DangerButton>
+                                                        )}
+                                                    </td>
+                                                </tr>
                                             )
-                                        }
-                                    />
-                                </div>
-                                <div className="">
-                                    <InputLabel
-                                        htmlFor="password"
-                                        value="MERCHANT KEY/PASSWORD"
-                                    />
-                                    <TextInput
-                                        id="password"
-                                        type="password"
-                                        value={data.password}
-                                        className="mt-1 block w-full"
-                                        name="password"
-                                        onChange={(e) =>
-                                            setData("password", e.target.value)
-                                        }
-                                    />
-                                </div>
-                                <div className="">
-                                    <InputLabel htmlFor="email" value="Email" />
-                                    <TextInput
-                                        id="email"
-                                        type="email"
-                                        value={data.email}
-                                        className="mt-1 block w-full"
-                                        name="email"
-                                        onChange={(e) =>
-                                            setData("email", e.target.value)
-                                        }
-                                    />
-                                </div>
-                                <div className="">
-                                    <InputLabel
-                                        htmlFor="amount"
-                                        value="Amount"
-                                    />
-                                    <TextInput
-                                        id="amount"
-                                        type="text"
-                                        value={data.amount}
-                                        className="mt-1 block w-full"
-                                        name="amount"
-                                        onChange={(e) =>
-                                            setData("amount", e.target.value)
-                                        }
-                                    />
-                                </div>
-                                <div className="">
-                                    <InputLabel htmlFor="ccy" value="CCY" />
-                                    <TextInput
-                                        id="ccy"
-                                        type="text"
-                                        value={data.ccy}
-                                        className="mt-1 block w-full"
-                                        name="ccy"
-                                        onChange={(e) =>
-                                            setData("ccy", e.target.value)
-                                        }
-                                    />
-                                </div>
-                                <div className="">
-                                    <InputLabel
-                                        htmlFor="description"
-                                        value="Description"
-                                    />
-                                    <TextInput
-                                        id="description"
-                                        type="text"
-                                        value={data.description}
-                                        className="mt-1 block w-full"
-                                        name="description"
-                                        onChange={(e) =>
-                                            setData(
-                                                "description",
-                                                e.target.value
-                                            )
-                                        }
-                                    />
-                                </div>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
 
-                                <div className="">
-                                    <InputLabel
-                                        htmlFor="param1"
-                                        value="Param1"
-                                    />
-                                    <TextInput
-                                        id="param1"
-                                        type="text"
-                                        value={data.param1}
-                                        className="mt-1 block w-full"
-                                        name="param1"
-                                        onChange={(e) =>
-                                            setData("param1", e.target.value)
-                                        }
-                                    />
+                            <form onSubmit={handleSubmit} hidden={tabToggle}>
+                                <div className="p-6 grid grid-cols-3 gap-4 w-full">
+                                    <div className="">
+                                        <InputLabel
+                                            htmlFor="email"
+                                            value="Email"
+                                        />
+                                        <TextInput
+                                            id="email"
+                                            type="email"
+                                            value={data.email}
+                                            className="mt-1 block w-full"
+                                            name="email"
+                                            onChange={(e) =>
+                                                setData("email", e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="">
+                                        <InputLabel
+                                            htmlFor="amount"
+                                            value="Amount"
+                                        />
+                                        <TextInput
+                                            id="amount"
+                                            type="text"
+                                            value={data.amount}
+                                            className="mt-1 block w-full"
+                                            name="amount"
+                                            onChange={(e) =>
+                                                setData(
+                                                    "amount",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                    </div>
+                                    <div className="">
+                                        <InputLabel htmlFor="ccy" value="CCY" />
+                                        <TextInput
+                                            id="ccy"
+                                            type="text"
+                                            value={data.ccy}
+                                            className="mt-1 block w-full"
+                                            name="ccy"
+                                            onChange={(e) =>
+                                                setData("ccy", e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="">
+                                        <InputLabel
+                                            htmlFor="description"
+                                            value="Description"
+                                        />
+                                        <TextInput
+                                            id="description"
+                                            type="text"
+                                            value={data.description}
+                                            className="mt-1 block w-full"
+                                            name="description"
+                                            onChange={(e) =>
+                                                setData(
+                                                    "description",
+                                                    e.target.value
+                                                )
+                                            }
+                                        />
+                                    </div>
                                 </div>
-                                <div className="">
-                                    <InputLabel
-                                        htmlFor="param2"
-                                        value="Param2"
-                                    />
-                                    <TextInput
-                                        id="param2"
-                                        type="text"
-                                        value={data.param2}
-                                        className="mt-1 block w-full"
-                                        name="param2"
-                                        onChange={(e) =>
-                                            setData("param2", e.target.value)
-                                        }
-                                    />
-                                </div>
-
-                                <div className="">
+                                <div className="pl-6 pb-6">
                                     <PrimaryButton
                                         type="submit"
                                         disabled={processing}
@@ -318,11 +302,25 @@ export default function FilteredPayment({ auth }) {
                                         Submit
                                     </PrimaryButton>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </AuthenticatedLayout>
+                <Modal
+                    show={infoData}
+                    onClose={closeModal}
+                    closeable={true}
+                    maxWidth="2xl"
+                    children={showInfoData()}
+                ></Modal>
+                <Modal
+                    show={confirmationUserDeletion}
+                    onClose={closeModal}
+                    closeable={true}
+                    maxWidth="sm"
+                    children={confirmationDelete()}
+                ></Modal>
+            </AuthenticatedLayout>
+        </section>
     );
 }

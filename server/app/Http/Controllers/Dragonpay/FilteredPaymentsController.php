@@ -44,7 +44,7 @@ class FilteredPaymentsController extends Controller
             $code = 500;
         }
         return response()->json([
-            'message' => 'Filtered Payments Information Added Successfully',
+            'message' => 'Filtered Payments Transaction is Successful',
             'status' => $status,
             'code' => $code
         ], 200);
@@ -77,8 +77,13 @@ class FilteredPaymentsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DPFilteredPayments $dPFilteredPayments)
+    public function destroy($id)
     {
-        //
+        DB::table('d_p_filtered_payments')->where('id', $id)->delete();
+        if (DB::table('d_p_filtered_payments')->where('id', $id)->exists()) {
+            return back()->with('error', 'Item not deleted');
+        }
+        
+        return back()->with('success', 'Item deleted successfully');
     }
 }

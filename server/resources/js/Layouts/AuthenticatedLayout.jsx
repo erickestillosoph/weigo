@@ -3,7 +3,7 @@ import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { useAccounts } from "@/hooks/data/useAccounts";
-export default function Authenticated({ user, header, children, role }) {
+export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     const [isRole, setIsRole] = useState(false);
