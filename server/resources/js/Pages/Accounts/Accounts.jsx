@@ -10,6 +10,8 @@ import FormModal from "@/Components/Modal/FormModal";
 import PrimaryButton from "@/Components/PrimaryButton";
 import ConfirmationModal from "@/Components/Modal/ConfirmationModal";
 import { Inertia } from "@inertiajs/inertia";
+import RegisterAccountAdmin from "@/Components/Modal/RegisterModal";
+
 export default function Accounts({ auth }) {
     const [tabToggle, setTabToggle] = useState(true);
     const [isRoleAdmin, setIsRoleAdmin] = useState(false);
@@ -18,6 +20,7 @@ export default function Accounts({ auth }) {
     const [confirmationUserDeletion, setConfirmingUserDeletion] =
         useState(false);
     const [editData, setEditData] = useState(false);
+    const [registerModal, setRegisterModal] = useState(false);
     const [dataToModal, setDataToModal] = useState(undefined);
     const [deleteData, setDeleteData] = useState(undefined);
     const { guests, users, current_user, user } = useAccounts();
@@ -55,6 +58,7 @@ export default function Accounts({ auth }) {
     });
 
     const roles = [
+        { role: "superadministrator" },
         { role: "administrator" },
         { role: "maintenance" },
         { role: "sales" },
@@ -63,7 +67,7 @@ export default function Accounts({ auth }) {
     const closeModal = () => {
         setConfirmingUserDeletion(false);
         setEditData(false);
-        reset();
+        setRegisterModal(false);
     };
 
     const setDataFromFormModal = (value) => {
@@ -101,7 +105,7 @@ export default function Accounts({ auth }) {
                 reset={resetAdmin || resetGuest}
                 data={dataToModal}
                 roles={roles}
-                processing={processingGuest}
+                processing={processingGuest | processingAdmin}
                 onClickModal={(value) => {
                     setEditData(value);
                 }}
@@ -112,6 +116,18 @@ export default function Accounts({ auth }) {
             ></FormModal>
         );
     };
+
+    const registerAccount = () => {
+        return (
+            <RegisterAccountAdmin
+                roles={roles}
+                onClickModal={(value) => {
+                    setRegisterModal(value);
+                }}
+            ></RegisterAccountAdmin>
+        );
+    };
+
     const confirmationDelete = () => {
         return (
             <ConfirmationModal
@@ -177,6 +193,19 @@ export default function Accounts({ auth }) {
                                     >
                                         Admin/Staff Accounts
                                     </Tabs>
+                                    <div
+                                        hidden={tabToggle}
+                                        className="p-4 text-end"
+                                    >
+                                        <PrimaryButton
+                                            className="bg-green-400"
+                                            onClick={() => {
+                                                setRegisterModal(true);
+                                            }}
+                                        >
+                                            Create Account
+                                        </PrimaryButton>
+                                    </div>
                                 </div>
                             </div>
 
@@ -417,6 +446,13 @@ export default function Accounts({ auth }) {
                 closeable={false}
                 maxWidth="sm"
                 children={confirmationDelete()}
+            ></Modal>
+            <Modal
+                show={registerModal}
+                onClose={closeModal}
+                closeable={false}
+                maxWidth="2xl"
+                children={registerAccount()}
             ></Modal>
         </section>
     );
