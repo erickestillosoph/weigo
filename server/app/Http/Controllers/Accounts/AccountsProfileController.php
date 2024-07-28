@@ -59,13 +59,7 @@ class AccountsProfileController extends Controller
         ];
 
         $data = $request->validate([     
-            'id' => ['required', 'exists:users,id'],   
-            // 'name' => 'required|string|max:255',
-            // 'email' => ['required', 'email', 'exists:guests,email'],
-            // 'phone_number' => 'required|string',
-            // 'birthday' => 'required|date',
-            // 'password' => ['required', Rules\Password::defaults()],
-            // 'role' => 'required|string',
+            'id' => ['required', 'exists:users,id'],     
         ], $messages);
    
 
@@ -119,12 +113,6 @@ class AccountsProfileController extends Controller
   
         $data = $request->validate([
             'id' => ['required', 'exists:guests,id'],
-            // 'first_name' => 'required|string|max:255',
-            // 'last_name' => 'required|string|max:255',
-            // 'email' => ['required', 'email', 'exists:guests,email'],          
-            // 'phone_number' => 'required|string',
-            // 'birthday' => 'required|date',
-            // 'password' => ['required', Rules\Password::defaults()],
         ], $messages);
 
 

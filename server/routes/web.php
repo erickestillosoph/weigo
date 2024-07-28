@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 Route::redirect('/', '/dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -58,6 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
      Route::delete('/account/admin/{id}', [AccountsProfileController::class, 'deleteAdminUser'])->name('deleteId');
      Route::get('/accounts/admin', [AccountsProfileController::class, 'getAdminUser'])->name('accounts');
      Route::post('update-admin', [AccountsProfileController::class, 'editAdminUser', HandlePrecognitiveRequests::class]);
+     Route::post('register', [RegisteredUserController::class, 'store'])->name('register');
      
      // Account Guest Route
      Route::delete('/account/guest/{id}', [AccountsProfileController::class, 'deleteGuestUser'])->name('deleteId');
