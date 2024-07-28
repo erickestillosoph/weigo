@@ -39,7 +39,7 @@ export default function Accounts({ auth }) {
         password: "password",
         phone_number: "09123456789",
         birthday: "2024-11-11",
-        id: 5,
+        uid: 5,
     });
     const {
         setData: setDataAdmin,
@@ -54,7 +54,7 @@ export default function Accounts({ auth }) {
         phone_number: "09123456789",
         birthday: "2024-11-11",
         role: "administrator",
-        id: 5,
+        uid: 5,
     });
 
     const roles = [
@@ -80,7 +80,7 @@ export default function Accounts({ auth }) {
                 password: `${value.password}`,
                 phone_number: `${value.phone_number}`,
                 birthday: `${value.birthday}`,
-                id: `${value.id}`,
+                uid: `${value.uid}`,
             });
             submitGuest();
         } else {
@@ -92,7 +92,7 @@ export default function Accounts({ auth }) {
                 phone_number: `${value.phone_number}`,
                 birthday: `${value.birthday}`,
                 role: `${value.role}`,
-                id: `${value.id}`,
+                uid: `${value.uid}`,
             });
             submitAdmin();
         }
@@ -135,10 +135,10 @@ export default function Accounts({ auth }) {
                 onClickModal={(value) => {
                     setConfirmingUserDeletion(value);
                 }}
-                onClickDelete={(id) =>
+                onClickDelete={(uid) =>
                     tabToggle
-                        ? router.delete(`/account/guest/${id}}`)
-                        : router.delete(`/account/admin/${id}}`)
+                        ? router.delete(`/account/guest/${uid}`)
+                        : router.delete(`/account/admin/${uid}`)
                 }
             ></ConfirmationModal>
         );

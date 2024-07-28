@@ -55,25 +55,25 @@ class AccountsProfileController extends Controller
             'birthday.required' => 'The birthday field is required.',
             'password.required' => 'The password field is required.',
             'role.required' => 'The role field is required.',
-            'id.required' => 'The id field is required.',
+            'uid.required' => 'The uid field is required.',
         ];
 
         $data = $request->validate([     
-            'id' => ['required', 'exists:users,id'],     
+            'uid' => ['required', 'exists:users,uid'],     
         ], $messages);
    
 
           
         try {
             
-            $update_admin = DB::table('users')->where('id', $data['id'])->update([
+            $update_admin = DB::table('users')->where('uid', $data['uid'])->update([
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone_number' => $request->phone_number,
                 'birthday' => $request->birthday,  
                 'password' => Hash::make($request->password),          
                 'role' => $request->role,
-                'id' => $request->id
+                'uid' => $request->uid
             ]);
 
             if ($update_admin) {
@@ -107,17 +107,17 @@ class AccountsProfileController extends Controller
             'phone_number.required' => 'The phone number field is required.',
             'birthday.required' => 'The birthday field is required.',
             'password.required' => 'The password field is required.',
-            'id.required' => 'The id field is required.',
+            'uid.required' => 'The id field is required.',
         ];
     
   
         $data = $request->validate([
-            'id' => ['required', 'exists:guests,id'],
+            'uid' => ['required', 'exists:guests,uid'],
         ], $messages);
 
 
         try {
-            $update_guest = DB::table('guests')->where('id', $data['id'])->update([
+            $update_guest = DB::table('guests')->where('uid', $data['uid'])->update([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
@@ -153,8 +153,8 @@ class AccountsProfileController extends Controller
     public function deleteAdminUser($id)
     {
 
-        DB::table('users')->where('id', $id)->delete();
-        if (DB::table('users')->where('id', $id)->exists()) {
+        DB::table('users')->where('uid', $id)->delete();
+        if (DB::table('users')->where('uid', $id)->exists()) {
             return back()->with('error', 'Item not deleted');
         }
         
@@ -162,9 +162,9 @@ class AccountsProfileController extends Controller
     }
     public function deleteGuestUser($id)
     {
-
-        DB::table('guests')->where('id', $id)->delete();
-        if (DB::table('guests')->where('id', $id)->exists()) {
+        
+        DB::table('guests')->where('uid', $id)->delete();
+        if (DB::table('guests')->where('uid', $id)->exists()) {
             return back()->with('error', 'Item not deleted');
         }
         

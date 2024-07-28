@@ -25,8 +25,7 @@ export default function ConfirmationModal({
                     disabled={processing}
                     onClick={() => {
                         onClickModal(false);
-                        onClickDelete(data.id);
-                        console.log(data.id);
+                        onClickDelete(data.uid);
                     }}
                 >
                     Confirm

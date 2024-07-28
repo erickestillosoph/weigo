@@ -57,7 +57,7 @@ function GuestAccount({
         password: data.password,
         phone_number: data.phone_number,
         birthday: data.birthday,
-        id: data.id,
+        uid: data.uid,
     });
 
     const handleChange = (e) => {
@@ -194,7 +194,7 @@ function AdminStaff({
         phone_number: data.phone_number,
         birthday: data.birthday,
         role: data.role,
-        id: data.id,
+        uid: data.uid,
     });
     const handleChange = (e) => {
         setDataChanges({
