@@ -73,12 +73,22 @@ export default function Authenticated({ user, header, children }) {
                                     Pre Selecting Payment
                                 </NavLink>
                                 {isRole ? (
-                                    <NavLink
-                                        href={route("accounts")}
-                                        active={route().current("accounts")}
-                                    >
-                                        Accounts
-                                    </NavLink>
+                                    <>
+                                        <NavLink
+                                            href={route("accounts")}
+                                            active={route().current("accounts")}
+                                        >
+                                            Accounts
+                                        </NavLink>
+                                        <NavLink
+                                            href={route("dpsettings")}
+                                            active={route().current(
+                                                "dpsettings"
+                                            )}
+                                        >
+                                            Weigo Settings (DP)
+                                        </NavLink>
+                                    </>
                                 ) : (
                                     <></>
                                 )}

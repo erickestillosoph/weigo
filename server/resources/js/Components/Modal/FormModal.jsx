@@ -160,7 +160,6 @@ function GuestAccount({
                     <SecondaryButton
                         onClick={() => {
                             reset();
-                            console.log(dataCh);
                             onClickModal(false);
                         }}
                     >
@@ -296,7 +295,6 @@ function AdminStaff({
                     <SecondaryButton
                         onClick={() => {
                             reset();
-                            console.log(dataCh);
                             onClickModal(false);
                         }}
                     >

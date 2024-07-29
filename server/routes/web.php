@@ -7,6 +7,7 @@ use App\Http\Controllers\Dragonpay\PaymentController;
 use App\Http\Controllers\Dragonpay\ServiceModelController;
 use App\Http\Controllers\Dragonpay\FilteredPaymentsController;
 use App\Http\Controllers\Dragonpay\PreSelectingPaymentsController;
+use App\Http\Controllers\Dragonpay\WeigoSettingController;
 use App\Http\Controllers\Accounts\AccountsProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -66,6 +67,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
      Route::get('/accounts', [AccountsProfileController::class, 'getGuestUser'],fn() => Inertia::render('Guest'))
      ->name('accounts');
      Route::post('update-guest', [AccountsProfileController::class, 'editGuestUser', HandlePrecognitiveRequests::class]);
+
+    // Dragonpay Weigo Settings TXNID and Merchant ID
+    Route::get('/weigo-dp-settings', [WeigoSettingController::class, 'index'],fn() => Inertia::render('DPWeigoSetting'))->name('dpsettings');
+    Route::post('update-weigo-dp-settings', [WeigoSettingController::class, 'update', HandlePrecognitiveRequests::class]);
      
 
 });
