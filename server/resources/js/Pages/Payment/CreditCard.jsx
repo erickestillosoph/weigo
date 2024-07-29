@@ -161,6 +161,9 @@ export default function CreditCard({ auth }) {
                                             <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
                                                 Description
                                             </th>
+                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
+                                                Created At
+                                            </th>
 
                                             <th className=" py-3 px-4 text-left w-12">
                                                 Action
@@ -168,8 +171,13 @@ export default function CreditCard({ auth }) {
                                         </tr>
                                     </thead>
                                     <tbody className="h-[100px] text-blue-gray-900">
-                                        {creditCardData.map(
-                                            (creditCard, index) => (
+                                        {creditCardData
+                                            .sort(
+                                                (a, b) =>
+                                                    new Date(b.created_at) -
+                                                    new Date(a.created_at)
+                                            )
+                                            .map((creditCard, index) => (
                                                 <tr
                                                     key={index}
                                                     className="max-w-xs break-words border-b border-blue-gray-200"
@@ -192,6 +200,9 @@ export default function CreditCard({ auth }) {
                                                     </td>
                                                     <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
                                                         {creditCard.description}
+                                                    </td>
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
+                                                        {creditCard.created_at}
                                                     </td>
 
                                                     <td className="py-3 px-4 flex gap-2">
@@ -231,8 +242,7 @@ export default function CreditCard({ auth }) {
                                                         )}
                                                     </td>
                                                 </tr>
-                                            )
-                                        )}
+                                            ))}
                                     </tbody>
                                 </table>
                             </div>

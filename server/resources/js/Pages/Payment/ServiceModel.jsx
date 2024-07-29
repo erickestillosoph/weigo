@@ -155,6 +155,9 @@ export default function ServiceModel({ auth }) {
                                             <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
                                                 Description
                                             </th>
+                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
+                                                Created At
+                                            </th>
 
                                             <th className=" py-3 px-4 text-left w-12">
                                                 Action
@@ -162,57 +165,72 @@ export default function ServiceModel({ auth }) {
                                         </tr>
                                     </thead>
                                     <tbody className="h-[100px] text-blue-gray-900">
-                                        {serviceModal.map((sm, index) => (
-                                            <tr
-                                                key={index}
-                                                className="max-w-xs break-words border-b border-blue-gray-200"
-                                            >
-                                                <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                    {sm.email}
-                                                </td>
-                                                <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                    {sm.amount}
-                                                </td>
+                                        {serviceModal
+                                            .sort(
+                                                (a, b) =>
+                                                    new Date(b.created_at) -
+                                                    new Date(a.created_at)
+                                            )
+                                            .map((sm, index) => (
+                                                <tr
+                                                    key={index}
+                                                    className="max-w-xs break-words border-b border-blue-gray-200"
+                                                >
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
+                                                        {sm.email}
+                                                    </td>
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
+                                                        {sm.amount}
+                                                    </td>
 
-                                                <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                    {sm.ccy}
-                                                </td>
-                                                <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                    {sm.description}
-                                                </td>
-                                                <td className="py-3 px-4 flex gap-2">
-                                                    <PrimaryButton
-                                                        className="bg-blue-400"
-                                                        disabled={processing}
-                                                        onClick={() => {
-                                                            setInfoData(true);
-                                                            setDataToModal(sm);
-                                                        }}
-                                                    >
-                                                        Info
-                                                    </PrimaryButton>
-
-                                                    {isRoleAdmin && (
-                                                        <DangerButton
-                                                            className="ms-3"
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
+                                                        {sm.ccy}
+                                                    </td>
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
+                                                        {sm.description}
+                                                    </td>
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
+                                                        {sm.created_at}
+                                                    </td>
+                                                    <td className="py-3 px-4 flex gap-2">
+                                                        <PrimaryButton
+                                                            className="bg-blue-400"
                                                             disabled={
                                                                 processing
                                                             }
                                                             onClick={() => {
-                                                                setConfirmingUserDeletion(
+                                                                setInfoData(
                                                                     true
                                                                 );
-                                                                setDeleteData(
+                                                                setDataToModal(
                                                                     sm
                                                                 );
                                                             }}
                                                         >
-                                                            Delete
-                                                        </DangerButton>
-                                                    )}
-                                                </td>
-                                            </tr>
-                                        ))}
+                                                            Info
+                                                        </PrimaryButton>
+
+                                                        {isRoleAdmin && (
+                                                            <DangerButton
+                                                                className="ms-3"
+                                                                disabled={
+                                                                    processing
+                                                                }
+                                                                onClick={() => {
+                                                                    setConfirmingUserDeletion(
+                                                                        true
+                                                                    );
+                                                                    setDeleteData(
+                                                                        sm
+                                                                    );
+                                                                }}
+                                                            >
+                                                                Delete
+                                                            </DangerButton>
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            ))}
                                     </tbody>
                                 </table>
                             </div>
