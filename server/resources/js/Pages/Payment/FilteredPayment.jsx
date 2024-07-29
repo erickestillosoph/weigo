@@ -155,6 +155,9 @@ export default function FilteredPayment({ auth }) {
                                             <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
                                                 Description
                                             </th>
+                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
+                                                Created At
+                                            </th>
 
                                             <th className=" py-3 px-4 text-left w-12">
                                                 Action
@@ -162,8 +165,13 @@ export default function FilteredPayment({ auth }) {
                                         </tr>
                                     </thead>
                                     <tbody className="h-[100px] text-blue-gray-900">
-                                        {filterPayment.map(
-                                            (payments, index) => (
+                                        {filterPayment
+                                            .sort(
+                                                (a, b) =>
+                                                    new Date(b.created_at) -
+                                                    new Date(a.created_at)
+                                            )
+                                            .map((payments, index) => (
                                                 <tr
                                                     key={index}
                                                     className="max-w-xs break-words border-b border-blue-gray-200"
@@ -180,7 +188,9 @@ export default function FilteredPayment({ auth }) {
                                                     <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
                                                         {payments.description}
                                                     </td>
-
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
+                                                        {payments.created_at}
+                                                    </td>
                                                     <td className="py-3 px-4 flex gap-2">
                                                         <PrimaryButton
                                                             className="bg-blue-400"
@@ -218,8 +228,7 @@ export default function FilteredPayment({ auth }) {
                                                         )}
                                                     </td>
                                                 </tr>
-                                            )
-                                        )}
+                                            ))}
                                     </tbody>
                                 </table>
                             </div>
