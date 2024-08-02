@@ -23,14 +23,15 @@ export default function Accounts({ auth }) {
     const [registerModal, setRegisterModal] = useState(false);
     const [dataToModal, setDataToModal] = useState(undefined);
     const [deleteData, setDeleteData] = useState(undefined);
-    const { guests, users, current_user, user } = useAccounts();
+
+    const { guests, users, current_user } = useAccounts();
     const [guestsData, setGuestsData] = useState(guests);
     const [usersData, setUsersData] = useState(users);
+
     const {
         setData: setDataGuest,
         processing: processingGuest,
         submit: submitGuest,
-        errors: errorsGuest,
         reset: resetGuest,
     } = useForm("post", "update-guest", {
         first_name: "erick",
@@ -45,7 +46,6 @@ export default function Accounts({ auth }) {
         setData: setDataAdmin,
         processing: processingAdmin,
         submit: submitAdmin,
-        errors: errorsAdmin,
         reset: resetAdmin,
     } = useForm("post", "update-admin", {
         name: "erick",

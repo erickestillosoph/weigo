@@ -36,17 +36,7 @@ class PreSelectingPaymentsController extends Controller
     public function store(StoreDPPreSelectingPaymentsRequest $request)
     {
         $preSelectingPayments = DPPreSelectingPayments::create($request->validated());
-        $status = 'success';
-        $code = 200;
-        if (!$preSelectingPayments) {
-            $status = 'error';
-            $code = 500;
-        }
-        return response()->json([
-            'message' => 'Pre-Selecting Information Transaction is Successful',
-            'status' => $status,
-            'code' => $code
-        ], 200);
+        return back()->with('success', 'Item deleted successfully');
     }
 
     /**
@@ -78,8 +68,8 @@ class PreSelectingPaymentsController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('d_p_pre_selecting_payments')->where('id', $id)->delete();
-        if (DB::table('d_p_pre_selecting_payments')->where('id', $id)->exists()) {
+        DB::table('d_p_pre_selecting_payments')->where('uid', $id)->delete();
+        if (DB::table('d_p_pre_selecting_payments')->where('uid', $id)->exists()) {
             return back()->with('error', 'Item not deleted');
         }
         

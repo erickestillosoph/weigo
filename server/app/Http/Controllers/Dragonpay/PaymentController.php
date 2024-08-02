@@ -39,24 +39,11 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePaymentRequest $request): JsonResponse
+    public function store(StorePaymentRequest $request)
     {
         //
     $payments = Payment::create($request->validated());
-    $status = 'success';
-    $code = 200;
-    if (!$payments) {
-        $status = 'error';
-        $code = 500;
-    }
-
-
-    return response()->json([
-        'message' => 'Payment Information Transaction is Successful',
-        'payments' => $request->all(),
-        'status' => $status,
-        'code' => $code,
-    ], 200);
+    return back()->with('success', 'Item deleted successfully');
     }
 
     /**
@@ -89,8 +76,8 @@ class PaymentController extends Controller
     public function destroy($id)
     {
 
-        DB::table('d_p_payments')->where('id', $id)->delete();
-        if (DB::table('d_p_payments')->where('id', $id)->exists()) {
+        DB::table('d_p_payments')->where('uid', $id)->delete();
+        if (DB::table('d_p_payments')->where('uid', $id)->exists()) {
             return back()->with('error', 'Item not deleted');
         }
         

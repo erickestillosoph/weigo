@@ -60,7 +60,7 @@ class WeigoSettingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DPWeigoSetting $dPWeigoSetting): JsonResponse
+    public function update(Request $request, DPWeigoSetting $dPWeigoSetting)
     {
         
         $messages = [
@@ -71,36 +71,11 @@ class WeigoSettingController extends Controller
             'uid' => ['required', 'exists:d_p_weigo_settings,uid'],     
         ], $messages);
    
-
-          
-        try {
-            
-            $update_dp_setting = DB::table('d_p_weigo_settings')->where('uid', $data['uid'])->update([
-                'txnid' => $request->txnid,                
-                'merchant_id' => $request->merchant_id,                
-                'uid' => $request->uid
-            ]);
-
-            if ($update_dp_setting) {
-                return response()->json([
-                    'message' => 'Updated Successfully',
-                    'status' => 'success',
-                    'code' => 200
-                ], 200);
-            } else {
-                return response()->json([
-                    'message' => 'Unsuccessful Update',
-                    'code' => 500,             
-                ], 500);
-            }
-            
-        }
-        catch (e){
-            return response()->json([
-                'message' => 'Unsuccessful Update',
-                'code' => 500,             
-            ], 500);
-        }
+        $update_dp_setting = DB::table('d_p_weigo_settings')->where('uid', $data['uid'])->update([
+            'txnid' => $request->txnid,                
+            'merchant_id' => $request->merchant_id,                
+            'uid' => $request->uid
+        ]);
     }
 
     /**

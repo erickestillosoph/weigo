@@ -4,7 +4,6 @@ import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useDpFilteringPayments } from "@/hooks/data/useFilteringPayments";
 import { Head, router } from "@inertiajs/react";
-import { useForm } from "laravel-precognition-react";
 import { useEffect, useState } from "react";
 import Tabs from "@/Components/Tabs";
 import Modal from "@/Components/Modal";
@@ -13,33 +12,49 @@ import ConfirmationModal from "@/Components/Modal/ConfirmationModal";
 import DangerButton from "@/Components/DangerButton";
 import { Inertia } from "@inertiajs/inertia";
 import { useAccounts } from "@/hooks/data/useAccounts";
+import { useValidationSchemaCommon } from "@/hooks/validations/useValidationSchemaCommon";
+import { useFormik } from "formik";
+import InputError from "@/Components/InputError";
 export default function FilteredPayment({ auth }) {
-    const [message, setMessage] = useState("");
-    console.log(message);
-    const [tabToggle, setTabToggle] = useState(true);
+    const { current_user } = useAccounts();
     const { d_p_filtered_payments } = useDpFilteringPayments();
+    const [filterPayment, setFilterPayment] = useState(d_p_filtered_payments);
+
+    const [tabToggle, setTabToggle] = useState(true);
     const [confirmationUserDeletion, setConfirmingUserDeletion] =
         useState(false);
-    const [dataToModal, setDataToModal] = useState(undefined);
-    const [filterPayment, setFilterPayment] = useState(d_p_filtered_payments);
-    const [deleteData, setDeleteData] = useState(undefined);
     const [infoData, setInfoData] = useState(false);
 
-    const { current_user } = useAccounts();
+    const [dataToModal, setDataToModal] = useState(undefined);
+
+    const [deleteData, setDeleteData] = useState(undefined);
     const [isRoleAdmin, setIsRoleAdmin] = useState(false);
 
-    const { data, setData, processing, errors, reset, submit, hasErrors } =
-        useForm("post", "filtering-payments", {
+    const [valuesData, setValuesData] = useState({
+        amount: "",
+        ccy: "",
+        description: "",
+        email: "",
+    });
+    const { validationSchema } = useValidationSchemaCommon(valuesData);
+
+    const { handleSubmit, handleChange, values, touched, errors } = useFormik({
+        initialValues: {
             amount: "",
             ccy: "",
             description: "",
             email: "",
-        });
-    const keys = Object.keys(errors);
+        },
+        validationSchema,
+        onSubmit: () => {
+            router.post("/filtering-payments", values);
+            Inertia.reload({ only: ["d_p_filtered_payments"] });
+        },
+    });
 
-    console.log(hasErrors);
     useEffect(() => {
         setFilterPayment(d_p_filtered_payments);
+        setValuesData(values);
         if (
             current_user.role === "superadministrator" ||
             current_user.role === "administrator"
@@ -48,26 +63,7 @@ export default function FilteredPayment({ auth }) {
         } else {
             setIsRoleAdmin(false);
         }
-        return () => {
-            reset("password");
-        };
     }, [d_p_filtered_payments]);
-    const handleErrorMessage = () => {
-        setMessage(keys);
-    };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (hasErrors === true) {
-            handleErrorMessage();
-        }
-        try {
-            submit();
-            reset();
-            Inertia.reload({ only: ["d_p_filtered_payments"] });
-        } catch (error) {
-            console.log("Error", error.message);
-        }
-    };
 
     const closeModal = () => {
         setConfirmingUserDeletion(false);
@@ -91,7 +87,7 @@ export default function FilteredPayment({ auth }) {
                     setConfirmingUserDeletion(value);
                 }}
                 onClickDelete={(id) =>
-                    router.delete(`/filtering-payments/${id}}`)
+                    router.delete(`/filtering-payments/${id}`)
                 }
             ></ConfirmationModal>
         );
@@ -194,9 +190,6 @@ export default function FilteredPayment({ auth }) {
                                                     <td className="py-3 px-4 flex gap-2">
                                                         <PrimaryButton
                                                             className="bg-blue-400"
-                                                            disabled={
-                                                                processing
-                                                            }
                                                             onClick={() => {
                                                                 setInfoData(
                                                                     true
@@ -211,9 +204,6 @@ export default function FilteredPayment({ auth }) {
                                                         {isRoleAdmin && (
                                                             <DangerButton
                                                                 className="ms-3"
-                                                                disabled={
-                                                                    processing
-                                                                }
                                                                 onClick={() => {
                                                                     setConfirmingUserDeletion(
                                                                         true
@@ -243,13 +233,16 @@ export default function FilteredPayment({ auth }) {
                                         <TextInput
                                             id="email"
                                             type="email"
-                                            value={data.email}
                                             className="mt-1 block w-full"
                                             name="email"
-                                            onChange={(e) =>
-                                                setData("email", e.target.value)
-                                            }
+                                            onChange={handleChange}
                                         />
+                                        {touched.email && errors.email && (
+                                            <InputError
+                                                message={errors.email}
+                                                className="mt-2"
+                                            />
+                                        )}
                                     </div>
                                     <div className="">
                                         <InputLabel
@@ -259,29 +252,32 @@ export default function FilteredPayment({ auth }) {
                                         <TextInput
                                             id="amount"
                                             type="text"
-                                            value={data.amount}
                                             className="mt-1 block w-full"
                                             name="amount"
-                                            onChange={(e) =>
-                                                setData(
-                                                    "amount",
-                                                    e.target.value
-                                                )
-                                            }
+                                            onChange={handleChange}
                                         />
+                                        {touched.amount && errors.amount && (
+                                            <InputError
+                                                message={errors.amount}
+                                                className="mt-2"
+                                            />
+                                        )}
                                     </div>
                                     <div className="">
                                         <InputLabel htmlFor="ccy" value="CCY" />
                                         <TextInput
                                             id="ccy"
                                             type="text"
-                                            value={data.ccy}
                                             className="mt-1 block w-full"
                                             name="ccy"
-                                            onChange={(e) =>
-                                                setData("ccy", e.target.value)
-                                            }
+                                            onChange={handleChange}
                                         />
+                                        {touched.ccy && errors.ccy && (
+                                            <InputError
+                                                message={errors.ccy}
+                                                className="mt-2"
+                                            />
+                                        )}
                                     </div>
                                     <div className="">
                                         <InputLabel
@@ -291,23 +287,21 @@ export default function FilteredPayment({ auth }) {
                                         <TextInput
                                             id="description"
                                             type="text"
-                                            value={data.description}
                                             className="mt-1 block w-full"
                                             name="description"
-                                            onChange={(e) =>
-                                                setData(
-                                                    "description",
-                                                    e.target.value
-                                                )
-                                            }
+                                            onChange={handleChange}
                                         />
+                                        {touched.description &&
+                                            errors.description && (
+                                                <InputError
+                                                    message={errors.description}
+                                                    className="mt-2"
+                                                />
+                                            )}
                                     </div>
                                 </div>
                                 <div className="pl-6 pb-6">
-                                    <PrimaryButton
-                                        type="submit"
-                                        disabled={processing}
-                                    >
+                                    <PrimaryButton type="submit">
                                         Submit
                                     </PrimaryButton>
                                 </div>

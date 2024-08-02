@@ -26,51 +26,59 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Credit Card Route
     Route::get('/credit-card', [CreditCardController::class, 'index'],fn() => Inertia::render('CreditCard'))
-    ->name('credit-card');
-    // Route::post('creditcard', [CreditCardController::class, 'store']);
+    ->name('credit-card');    
     Route::post('credit-card', [CreditCardController::class, 'store', HandlePrecognitiveRequests::class]);
-    Route::delete('/credit-card/{id}', [CreditCardController::class, 'destroy'])->name('deleteId');
+    // Route::post('/credit-card', [CreditCardController::class, 'store']);
+    Route::delete('/credit-card/{id}', [CreditCardController::class, 'destroy'])->name('deleteCCId');
 
     // Payment Route
     Route::get('/payments', [PaymentController::class, 'index'],fn() => Inertia::render('Payment'))
     ->name('payments');
-    Route::post('payments', [PaymentController::class, 'store', HandlePrecognitiveRequests::class]);
-    Route::delete('/payments/{id}', [PaymentController::class, 'destroy'])->name('deleteId');
+    // Route::post('payments', [PaymentController::class, 'store', HandlePrecognitiveRequests::class]);
+    Route::post('/payments', [PaymentController::class, 'store']);
+    Route::delete('/payments/{id}', [PaymentController::class, 'destroy'])->name('deletePaymentsId');
     
     
     // Service Model Route
     Route::get('/service-model', [ServiceModelController::class, 'index'],fn() => Inertia::render('ServiceModel'))
     ->name('service-model');
-    Route::post('service-model', [ServiceModelController::class, 'store', HandlePrecognitiveRequests::class]);
-    Route::delete('/service-model/{id}', [ServiceModelController::class, 'destroy'])->name('deleteId');
+    // Route::post('service-model', [ServiceModelController::class, 'store', HandlePrecognitiveRequests::class]);
+    Route::post('/service-model', [ServiceModelController::class, 'store']);
+    Route::delete('/service-model/{id}', [ServiceModelController::class, 'destroy'])->name('deleteServiceId');
     
     // Filtering Payments Route
     Route::get('/filtering-payments', [FilteredPaymentsController::class, 'index'],fn() => Inertia::render('DPFilteredPayments'))
     ->name('filtering-payments');
-    Route::post('filtering-payments', [FilteredPaymentsController::class, 'store', HandlePrecognitiveRequests::class]);
-    Route::delete('/filtering-payments/{id}', [FilteredPaymentsController::class, 'destroy'])->name('deleteId');
+    // Route::post('filtering-payments', [FilteredPaymentsController::class, 'store', HandlePrecognitiveRequests::class]);
+    Route::post('/filtering-payments', [FilteredPaymentsController::class, 'store']);
+    Route::delete('/filtering-payments/{id}', [FilteredPaymentsController::class, 'destroy'])->name('deleteFilteringId');
 
     // Pre Selecting Payments Route
     Route::get('/pre-selecting-payments', [PreSelectingPaymentsController::class, 'index'],fn() => Inertia::render('DPPreSelectingPayments'))
     ->name('pre-selecting-payments');
-    Route::post('pre-selecting-payments', [PreSelectingPaymentsController::class, 'store', HandlePrecognitiveRequests::class]);
+    // Route::post('pre-selecting-payments', [PreSelectingPaymentsController::class, 'store', HandlePrecognitiveRequests::class]);
+    Route::post('/pre-selecting-payments', [PreSelectingPaymentsController::class, 'store']);
     Route::delete('/pre-selecting-payments/{id}', [PreSelectingPaymentsController::class, 'destroy'])->name('deleteId');
    
      // Account User Route  
-     Route::delete('/account/admin/{id}', [AccountsProfileController::class, 'deleteAdminUser'])->name('deleteId');
+     Route::delete('/account/admin/{id}', [AccountsProfileController::class, 'deleteAdminUser'])->name('deleteAdminId');
      Route::get('/accounts/admin', [AccountsProfileController::class, 'getAdminUser'])->name('accounts');
      Route::post('update-admin', [AccountsProfileController::class, 'editAdminUser', HandlePrecognitiveRequests::class]);
+     Route::post('/update-admin', [AccountsProfileController::class, 'editAdminUser']);
      Route::post('register', [RegisteredUserController::class, 'store'])->name('register');
+     Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
      
      // Account Guest Route
-     Route::delete('/account/guest/{id}', [AccountsProfileController::class, 'deleteGuestUser'])->name('deleteId');
+     Route::delete('/account/guest/{id}', [AccountsProfileController::class, 'deleteGuestUser'])->name('deleteGuestId');
      Route::get('/accounts', [AccountsProfileController::class, 'getGuestUser'],fn() => Inertia::render('Guest'))
      ->name('accounts');
      Route::post('update-guest', [AccountsProfileController::class, 'editGuestUser', HandlePrecognitiveRequests::class]);
+     Route::post('/update-guest', [AccountsProfileController::class, 'editGuestUser']);
 
     // Dragonpay Weigo Settings TXNID and Merchant ID
     Route::get('/weigo-dp-settings', [WeigoSettingController::class, 'index'],fn() => Inertia::render('DPWeigoSetting'))->name('dpsettings');
-    Route::post('update-weigo-dp-settings', [WeigoSettingController::class, 'update', HandlePrecognitiveRequests::class]);
+    // Route::post('update-weigo-dp-settings', [WeigoSettingController::class, 'update', HandlePrecognitiveRequests::class]);
+    Route::post('/update-weigo-dp-settings', [WeigoSettingController::class, 'update']);
      
 
 });
