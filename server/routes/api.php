@@ -73,16 +73,16 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::put('/weigo/password', [PasswordController::class, 'update', HandlePrecognitiveRequests::class])->name('password.update');
 
-    Route::post('/weigo/dp-credit-card', [CreditCardController::class, 'store', HandlePrecognitiveRequests::class])
+    Route::post('/weigo/dp-credit-card', [CreditCardController::class, 'create'])
                 ->name('credit-card');
-    Route::post('/weigo/dp-payment', [PaymentController::class, 'store', HandlePrecognitiveRequests::class])
+    Route::post('/weigo/dp-payment', [PaymentController::class, 'create', HandlePrecognitiveRequests::class])
                 ->name('payment');
 
-    Route::post('/weigo/dp-service-model', [ServiceModelController::class, 'store', HandlePrecognitiveRequests::class])
+    Route::post('/weigo/dp-service-model', [ServiceModelController::class, 'create', HandlePrecognitiveRequests::class])
                 ->name('service-model');
-    Route::post('/weigo/dp-filtered-payments', [FilteredPaymentsController::class, 'store', HandlePrecognitiveRequests::class])
+    Route::post('/weigo/dp-filtered-payments', [FilteredPaymentsController::class, 'create', HandlePrecognitiveRequests::class])
                 ->name('filtered-payments');
-    Route::post('/weigo/dp-preselecting-payments', [PreSelectingPaymentsController::class, 'store', HandlePrecognitiveRequests::class])
+    Route::post('/weigo/dp-preselecting-payments', [PreSelectingPaymentsController::class, 'create', HandlePrecognitiveRequests::class])
                 ->name('preselecting-payments');
 
     Route::delete('/weigo/delete-profile/{id}', [AccountsProfileController::class, 'deleteGuestUser'])->name('deleteId');

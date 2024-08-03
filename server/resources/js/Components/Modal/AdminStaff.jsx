@@ -8,7 +8,12 @@ import { useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 
 export default function AdminStaff({ auth, data, roles, onClickModal }) {
-    const { setData, post, errors } = useForm({
+    const {
+        data: dataAdmin,
+        setData,
+        post,
+        errors,
+    } = useForm({
         name: "",
         email: "",
         password: "",
@@ -21,12 +26,12 @@ export default function AdminStaff({ auth, data, roles, onClickModal }) {
     useEffect(() => {
         if (auth.user.role === "administrator") {
             setData({
-                name: data.name,
+                name: dataAdmin.name,
                 email: data.email,
                 password: data.password,
                 phone_number: data.phone_number,
                 birthday: data.birthday,
-                role: data.role,
+                role: dataAdmin.role,
                 uid: data.uid,
             });
         }
