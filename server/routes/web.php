@@ -18,7 +18,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 use App\Http\Controllers\Auth\RegisteredUserController;
-Route::redirect('/', '/dashboard');
+Route::redirect('/', '/payments');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', fn() => Inertia::render('Dashboard'))
@@ -63,8 +63,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
      // Account User Route  
      Route::delete('/account/admin/{id}', [AccountsProfileController::class, 'deleteAdminUser'])->name('deleteAdminId');
      Route::get('/accounts/admin', [AccountsProfileController::class, 'getAdminUser'])->name('accounts');
-     Route::post('update-admin', [AccountsProfileController::class, 'editAdminUser', HandlePrecognitiveRequests::class]);
-     Route::post('/update-admin', [AccountsProfileController::class, 'editAdminUser']);
+    //  Route::post('update-admin', [AccountsProfileController::class, 'editAdminUser', HandlePrecognitiveRequests::class]);
+     Route::post('update-admin', [AccountsProfileController::class, 'editAdminUser'])->name('update-admin');;
      Route::post('register', [RegisteredUserController::class, 'store'])->name('register');
      Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
      
@@ -72,8 +72,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
      Route::delete('/account/guest/{id}', [AccountsProfileController::class, 'deleteGuestUser'])->name('deleteGuestId');
      Route::get('/accounts', [AccountsProfileController::class, 'getGuestUser'],fn() => Inertia::render('Guest'))
      ->name('accounts');
-     Route::post('update-guest', [AccountsProfileController::class, 'editGuestUser', HandlePrecognitiveRequests::class]);
-     Route::post('/update-guest', [AccountsProfileController::class, 'editGuestUser']);
+    //  Route::post('update-guest', [AccountsProfileController::class, 'editGuestUser', HandlePrecognitiveRequests::class]);
+     Route::post('/update-guest', [AccountsProfileController::class, 'updateGuestUser']);
+     Route::post('updateguest', [AccountsProfileController::class, 'editAdminUser'])->name('updateguest');
 
     // Dragonpay Weigo Settings TXNID and Merchant ID
     Route::get('/weigo-dp-settings', [WeigoSettingController::class, 'index'],fn() => Inertia::render('DPWeigoSetting'))->name('dpsettings');

@@ -3,14 +3,12 @@ import { useAccounts } from "@/hooks/data/useAccounts";
 import { Head, router } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 import Tabs from "@/Components/Tabs";
-import { useForm } from "laravel-precognition-react";
 import DangerButton from "@/Components/DangerButton";
 import Modal from "@/Components/Modal";
-import FormModal from "@/Components/Modal/FormModal";
 import PrimaryButton from "@/Components/PrimaryButton";
 import ConfirmationModal from "@/Components/Modal/ConfirmationModal";
-import { Inertia } from "@inertiajs/inertia";
 import RegisterAccountAdmin from "@/Components/Modal/RegisterModal";
+import AdminStaff from "@/Components/Modal/AdminStaff";
 
 export default function Accounts({ auth }) {
     const [tabToggle, setTabToggle] = useState(true);
@@ -28,35 +26,6 @@ export default function Accounts({ auth }) {
     const [guestsData, setGuestsData] = useState(guests);
     const [usersData, setUsersData] = useState(users);
 
-    const {
-        setData: setDataGuest,
-        processing: processingGuest,
-        submit: submitGuest,
-        reset: resetGuest,
-    } = useForm("post", "update-guest", {
-        first_name: "erick",
-        last_name: "estilloso",
-        email: "email@gmail.com",
-        password: "password",
-        phone_number: "09123456789",
-        birthday: "2024-11-11",
-        uid: 5,
-    });
-    const {
-        setData: setDataAdmin,
-        processing: processingAdmin,
-        submit: submitAdmin,
-        reset: resetAdmin,
-    } = useForm("post", "update-admin", {
-        name: "erick",
-        email: "email@gmail.com",
-        password: "password",
-        phone_number: "09123456789",
-        birthday: "2024-11-11",
-        role: "administrator",
-        uid: 5,
-    });
-
     const roles = [
         { role: "superadministrator" },
         { role: "administrator" },
@@ -70,50 +39,16 @@ export default function Accounts({ auth }) {
         setRegisterModal(false);
     };
 
-    const setDataFromFormModal = (value) => {
-        if (tabToggle) {
-            Inertia.reload({ only: ["guests"] });
-            setDataGuest({
-                first_name: `${value.first_name}`,
-                last_name: `${value.last_name}`,
-                email: `${value.email}`,
-                password: `${value.password}`,
-                phone_number: `${value.phone_number}`,
-                birthday: `${value.birthday}`,
-                uid: `${value.uid}`,
-            });
-            submitGuest();
-        } else {
-            Inertia.reload({ only: ["users"] });
-            setDataAdmin({
-                name: `${value.name}`,
-                email: `${value.email}`,
-                password: `${value.password}`,
-                phone_number: `${value.phone_number}`,
-                birthday: `${value.birthday}`,
-                role: `${value.role}`,
-                uid: `${value.uid}`,
-            });
-            submitAdmin();
-        }
-    };
-
     const formsData = () => {
         return (
-            <FormModal
+            <AdminStaff
                 auth={auth}
-                reset={resetAdmin || resetGuest}
                 data={dataToModal}
                 roles={roles}
-                processing={processingGuest | processingAdmin}
                 onClickModal={(value) => {
                     setEditData(value);
                 }}
-                setDataChange={(value) => {
-                    setDataFromFormModal(value);
-                }}
-                pageName={tabToggle ? "guest" : "admin"}
-            ></FormModal>
+            ></AdminStaff>
         );
     };
 
@@ -291,7 +226,7 @@ export default function Accounts({ auth }) {
                                                     </td>
 
                                                     <td className="py-3 px-4 flex gap-2 items-center">
-                                                        <PrimaryButton
+                                                        {/* <PrimaryButton
                                                             className="bg-blue-400"
                                                             onClick={() => {
                                                                 setEditData(
@@ -303,7 +238,7 @@ export default function Accounts({ auth }) {
                                                             }}
                                                         >
                                                             Edit
-                                                        </PrimaryButton>
+                                                        </PrimaryButton> */}
                                                         <DangerButton
                                                             className="ms-3"
                                                             onClick={() => {

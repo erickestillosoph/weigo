@@ -3,11 +3,10 @@ import "yup-phone-lite";
 import { useEffect, useState } from "react";
 
 export const useValidationSchemaGuestAccount = (values) => {
-    const { firstName, lastName, email, password, phone_number, date, amount } =
+    const { first_name, last_name, email, password, phone_number, birthday } =
         values;
 
     const [emailData, setEmailData] = useState("undefined");
-    const [amountData, setAmountData] = useState("undefined");
     const [nameData, setNameData] = useState("undefined");
     const [passwordData, setPasswordData] = useState("undefined");
     const [phoneNumberData, setPhoneNumberData] = useState("undefined");
@@ -15,11 +14,11 @@ export const useValidationSchemaGuestAccount = (values) => {
 
     const validateName = () => {
         let response;
-        if (!firstName || !lastName) {
+        if (!first_name || !last_name) {
             response = "Name is Required";
-        } else if (!/^[a-zA-Z]*$/i.test(firstName)) {
+        } else if (!/^[a-zA-Z]*$/i.test(first_name)) {
             response = "Invalid Name. Please use alphabetical characters only";
-        } else if (!/^[a-zA-Z]*$/i.test(lastName)) {
+        } else if (!/^[a-zA-Z]*$/i.test(last_name)) {
             response = "Invalid Name. Please use alphabetical characters only";
         } else {
             response = "Good!";
@@ -48,21 +47,6 @@ export const useValidationSchemaGuestAccount = (values) => {
             response = "Good!";
         }
         setEmailData(response);
-        return response;
-    };
-
-    const validateAmount = () => {
-        let response;
-        if (!amount) {
-            response = "Amount is required";
-        } else if (!/^[0-9]/i.test(amount)) {
-            response = "Please enter numbers";
-        } else if (amount.length <= 2) {
-            response = "Please input amount greater that  2 digit";
-        } else {
-            response = "Good!";
-        }
-        setAmountData(response);
         return response;
     };
 
@@ -101,7 +85,7 @@ export const useValidationSchemaGuestAccount = (values) => {
     // To refactor
     const validateDate = () => {
         let response;
-        if (!date) {
+        if (!birthday) {
             response = "Date is required";
         } else {
             response = "Good!";
@@ -113,19 +97,26 @@ export const useValidationSchemaGuestAccount = (values) => {
     useEffect(() => {
         validateName();
         validatePhoneNumber();
-        validateAmount();
         validateEmail();
         validateDate();
-    }, [amount, email, date, firstName, lastName, password, phone_number]);
+        validatePassword();
+    }, [
+        email,
+        birthday,
+        first_name,
+        last_name,
+        password,
+        phone_number,
+        password,
+    ]);
 
     const validationSchema = Yup.object({
-        firstName: Yup.string().required(`${nameData}`),
-        lastName: Yup.string().required(`${nameData}`),
+        first_name: Yup.string().required(`${nameData}`),
+        last_name: Yup.string().required(`${nameData}`),
         email: Yup.string().required(`${emailData}`),
         password: Yup.string().required(`${passwordData}`),
-        amount: Yup.string().required(`${amountData}`),
-        phoneNumber: Yup.string().required(`${phoneNumberData}`),
-        date: Yup.string().required(`${dateData}`),
+        phone_number: Yup.string().required(`${phoneNumberData}`),
+        birthday: Yup.string().required(`${dateData}`),
     });
 
     return {

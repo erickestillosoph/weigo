@@ -15,7 +15,6 @@ import { useAccounts } from "@/hooks/data/useAccounts";
 import { Inertia } from "@inertiajs/inertia";
 import { useValidationSchemaCommon } from "@/hooks/validations/useValidationSchemaCommon";
 import { useFormik } from "formik";
-import "react-toastify/dist/ReactToastify.css";
 import InputError from "@/Components/InputError";
 
 export default function Payment({ auth }) {
