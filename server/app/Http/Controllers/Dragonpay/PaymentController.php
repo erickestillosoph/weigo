@@ -29,10 +29,22 @@ class PaymentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(StorePaymentRequest $request): JsonResponse
     {
         //
-
+        $payments = Payment::create($request->validated());
+        $status = 'success';
+        $code = 200;
+        if (!$payments) {
+            $status = 'error';
+            $code = 500;
+        }
+        return response()->json([
+            'message' => 'Payment Information Transaction is Successful',
+            'payments' => $request->all(),
+            'status' => $status,
+            'code' => $code,
+        ], 200);
     
     }
 

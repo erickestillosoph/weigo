@@ -26,10 +26,22 @@ class ServiceModelController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(StoreServiceModelRequest $request)
     {
         //
-        
+        $serviceModel = ServiceModel::create($request->validated());
+        $status = 'success';
+        $code = 200;
+        if (!$serviceModel) {
+            $status = 'error';
+            $code = 500;
+        }
+        return response()->json([
+            'message' => 'Service Model Information Transaction is Successful',
+            'status' => $status,
+            'code' => $code
+        ], 200);
+
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateDPPreSelectingPaymentsRequest;
 use App\Models\DPPreSelectingPayments;
 use App\Http\Resources\DPPreSelectingPaymentsResource;
 use Inertia\Inertia;
+use Illuminate\Http\JsonResponse; 
 use Illuminate\Support\Facades\DB;
 class PreSelectingPaymentsController extends Controller
 {
@@ -25,9 +26,23 @@ class PreSelectingPaymentsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(StoreDPPreSelectingPaymentsRequest $request)
     {
         //
+        $preSelectingPayments = DPPreSelectingPayments::create($request->validated());
+        $status = 'success';
+        $code = 200;
+        if (!$preSelectingPayments) {
+            $status = 'error';
+            $code = 500;
+        }
+        return response()->json([
+            'message' => 'Pre-Selecting Information Transaction is Successful',
+            'status' => $status,
+            'code' => $code
+        ], 200);
+        
+        
     }
 
     /**
