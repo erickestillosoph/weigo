@@ -37,19 +37,9 @@ class CreditCardController extends Controller
      */
     public function store(StoreCreditCardRequest $request)
     {
-     
+
     $creditCard = CreditCard::create($request->validated());
-    $status = 'success';
-    $code = 200;
-    if (!$creditCard) {
-        $status = 'error';
-        $code = 500;
-    }
-    return response()->json([
-        'message' => 'Credit Card Transaction is Successful',
-        'status' => $status,
-        'code' => $code
-    ], 200);
+    return back()->with('success', 'Item deleted successfully');
     }
 
     /**
@@ -81,8 +71,8 @@ class CreditCardController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('d_p_credit_cards')->where('id', $id)->delete();
-        if (DB::table('d_p_credit_cards')->where('id', $id)->exists()) {
+        DB::table('d_p_credit_cards')->where('uid', $id)->delete();
+        if (DB::table('d_p_credit_cards')->where('uid', $id)->exists()) {
             return back()->with('error', 'Item not deleted');
         }
         

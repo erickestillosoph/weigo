@@ -37,17 +37,7 @@ class FilteredPaymentsController extends Controller
     {
         //
         $filteredPayments = DPFilteredPayments::create($request->validated());
-        $status = 'success';
-        $code = 200;
-        if (!$filteredPayments) {
-            $status = 'error';
-            $code = 500;
-        }
-        return response()->json([
-            'message' => 'Filtered Payments Transaction is Successful',
-            'status' => $status,
-            'code' => $code
-        ], 200);
+        return back()->with('success', 'Item deleted successfully');
     }
 
     /**
@@ -79,8 +69,8 @@ class FilteredPaymentsController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('d_p_filtered_payments')->where('id', $id)->delete();
-        if (DB::table('d_p_filtered_payments')->where('id', $id)->exists()) {
+        DB::table('d_p_filtered_payments')->where('uid', $id)->delete();
+        if (DB::table('d_p_filtered_payments')->where('uid', $id)->exists()) {
             return back()->with('error', 'Item not deleted');
         }
         

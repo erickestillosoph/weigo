@@ -44,10 +44,7 @@ class AccountsProfileController extends Controller
         ]);
     }
 
-    public function editAdminUser(Request $request): JsonResponse {
-
-
-
+    public function editAdminUser(Request $request) {
         $messages = [        
             'name.required' => 'The name field is required.',
             'email.required' => 'The email field is required.',
@@ -60,11 +57,14 @@ class AccountsProfileController extends Controller
 
         $data = $request->validate([     
             'uid' => ['required', 'exists:users,uid'],     
-        ], $messages);
-   
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255',            
+            'password' => ['required', Rules\Password::defaults()],
+            'phone_number' => 'required|string|max:255',
+            'birthday' => 'required|string|max:255',
+            'role' => 'required|string|max:255',
 
-          
-        try {
+        ], $messages);
             
             $update_admin = DB::table('users')->where('uid', $data['uid'])->update([
                 'name' => $request->name,
@@ -76,28 +76,32 @@ class AccountsProfileController extends Controller
                 'uid' => $request->uid
             ]);
 
-            if ($update_admin) {
-                return response()->json([
-                    'message' => 'Updated Successfully',
-                    'status' => 'success',
-                    'code' => 200
-                ], 200);
-            } else {
-                return response()->json([
-                    'message' => 'Unsuccessful Update',
-                    'code' => 500,             
-                ], 500);
-            }
-            
-        }
-        catch (e){
-            return response()->json([
-                'message' => 'Unsuccessful Update',
-                'code' => 500,             
-            ], 500);
-        }
+            return back()->with('success', 'Item deleted successfully');
 
     }
+    public function updateAdminUser(Request $request): JsonResponse {
+
+
+
+        $data = $request->validate([     
+            'uid' => ['required', 'exists:users,uid'],     
+        ]);
+   
+        $update_admin = DB::table('users')->where('uid', $data['uid'])->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'birthday' => $request->birthday,  
+            'password' => Hash::make($request->password),          
+            'role' => $request->role,
+            'uid' => $request->uid
+        ]);
+
+        return back()->with('success', 'Item deleted successfully');
+
+    }
+
+    // Please refer to editAdminUser
     public function editGuestUser(Request $request): JsonResponse {
 
         $messages = [
@@ -147,6 +151,27 @@ class AccountsProfileController extends Controller
             ], 500);
         }
         
+    
+    }
+    public function updateGuestUser(Request $request) {
+        
+        $messages = [
+            'uid.required' => 'The uid field is required.',
+        ];
+
+        $data = $request->validate([     
+            'uid' => ['required', 'exists:guests,uid'],
+        ], $messages);
+   
+        $update_guest = DB::table('guests')->where('uid', $data['uid'])->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'phone_number' => $request->phone_number,
+            'birthday' => $request->birthday,  
+            'password' => Hash::make($request->password),
+            'uid' => $request->uid  
+        ]);
     
     }
 

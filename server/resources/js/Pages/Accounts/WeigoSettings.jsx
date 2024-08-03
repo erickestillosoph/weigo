@@ -4,37 +4,46 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { useWeigoSettings } from "@/hooks/data/useWeigoSettings";
-import { Head } from "@inertiajs/react";
-import { useForm } from "laravel-precognition-react";
+import { Head, router } from "@inertiajs/react";
 import { useEffect, useState } from "react";
+import { useFormik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import * as Yup from "yup";
 
 export default function WeigoSettings({ auth }) {
     const { d_p_weigo_settings } = useWeigoSettings();
     const [weigoSettings, setWeigoSettings] = useState(d_p_weigo_settings);
 
-    const { data, setData, processing, errors, submit, hasErrors } = useForm(
-        "post",
-        "update-weigo-dp-settings",
-        {
-            txnid: undefined,
-            merchant_id: undefined,
-            uid: d_p_weigo_settings[0].uid,
-        }
-    );
+    const validationSchema = Yup.object({
+        txnid: Yup.string().required("TXNID is required"),
+        merchant_id: Yup.string().required("MERCHANT ID is required"),
+    });
+
+    const { handleSubmit, handleChange, values, touched, errors, resetForm } =
+        useFormik({
+            initialValues: {
+                txnid: "",
+                merchant_id: "",
+                uid: d_p_weigo_settings[0].uid,
+            },
+            validationSchema,
+            onSubmit: () => {
+                router.post("/update-weigo-dp-settings", values);
+                toast("Successful Changed!", {
+                    position: "top-center",
+                    autoClose: 500,
+                    hideProgressBar: true,
+                    theme: "dark",
+                })();
+                resetForm();
+                Inertia.reload({ only: ["d_p_weigo_settings"] });
+            },
+        });
 
     useEffect(() => {
         setWeigoSettings(d_p_weigo_settings[0]);
     }, [d_p_weigo_settings]);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            submit();
-            Inertia.reload({ only: ["d_p_weigo_settings"] });
-        } catch (error) {
-            console.log("Error", error.message);
-        }
-    };
 
     return (
         <section>
@@ -64,14 +73,14 @@ export default function WeigoSettings({ auth }) {
                                             placeholder={weigoSettings.txnid}
                                             className="mt-1 block w-full"
                                             name="txnid"
-                                            onChange={(e) =>
-                                                setData("txnid", e.target.value)
-                                            }
+                                            onChange={handleChange}
                                         />
-                                        <InputError
-                                            message={errors.txnid}
-                                            className="mt-2"
-                                        />
+                                        {touched.txnid && errors.txnid && (
+                                            <InputError
+                                                message={errors.txnid}
+                                                className="mt-2"
+                                            />
+                                        )}
                                     </div>
                                     <div className="">
                                         <InputLabel
@@ -86,17 +95,15 @@ export default function WeigoSettings({ auth }) {
                                             }
                                             className="mt-1 block w-full"
                                             name="merchant_id"
-                                            onChange={(e) =>
-                                                setData(
-                                                    "merchant_id",
-                                                    e.target.value
-                                                )
-                                            }
+                                            onChange={handleChange}
                                         />
-                                        <InputError
-                                            message={errors.merchant_id}
-                                            className="mt-2"
-                                        />
+                                        {touched.merchant_id &&
+                                            errors.merchant_id && (
+                                                <InputError
+                                                    message={errors.merchant_id}
+                                                    className="mt-2"
+                                                />
+                                            )}
                                     </div>
                                 </div>
                                 <div className="pl-6 pb-6">
@@ -108,6 +115,7 @@ export default function WeigoSettings({ auth }) {
                         </div>
                     </div>
                 </div>
+                <ToastContainer stacked />
             </AuthenticatedLayout>
         </section>
     );
