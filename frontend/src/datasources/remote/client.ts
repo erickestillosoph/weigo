@@ -22,7 +22,7 @@ export class WeigoClient implements IWeigoClient {
     }
 
     // Please refer to Authentication ( Access Token )
-    authentication(): Promise<{ access_token: string }> {
+    async authentication(): Promise<{ access_token: string }> {
         const data = {
             username: `${process.env.REACT_APP_WEIGO_USERNAME}`,
             password: `${process.env.REACT_APP_WEIGO_PASSWORD}`,
