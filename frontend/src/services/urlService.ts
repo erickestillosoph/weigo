@@ -1,13 +1,13 @@
 let apiDomain = "";
 if (process.env.NODE_ENV === "production") {
-    apiDomain = "https://life-api.amitavroy.com/";
+    apiDomain = "http://production.api.test";
 } else {
-    apiDomain = "http://localhost:8001/";
+    apiDomain = "http://staging.api.test";
 }
 
 class UrlService {
     static loginUrl() {
-        return apiDomain + "api/login";
+        return apiDomain + "api/weigo/login";
     }
     static currentUserProfileUrl() {
         return apiDomain + "api/weigo/user";
@@ -22,7 +22,7 @@ class UrlService {
         return apiDomain + "api/weigo/logout";
     }
     static passwordReset(id: string) {
-        return apiDomain + "api/todo/complete/" + id;
+        return apiDomain + "api/weigo/reset/" + id;
     }
     static emailVerification(id: string) {
         return apiDomain + "api/weigo/email/verify/" + id;
