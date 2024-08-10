@@ -1,19 +1,13 @@
-let apiDomain = "";
+let apiDomain = process.env.NODE_ENV; // Initial value for apiDomain
 if (process.env.NODE_ENV === "production") {
-    apiDomain = "http://production.api.test";
+    apiDomain = process.env.REACT_APP_WEIGO_SERVER_PROD_API;
 } else {
-    apiDomain = "http://staging.api.test";
+    apiDomain = process.env.REACT_APP_WEIGO_SERVER_TESTING_API;
 }
 
 class UrlService {
     static loginUrl() {
         return apiDomain + "api/weigo/login";
-    }
-    static currentUserProfileUrl() {
-        return apiDomain + "api/weigo/user";
-    }
-    static saveUserProfileUrl() {
-        return apiDomain + "api/weigo/user";
     }
     static register() {
         return apiDomain + "api/weigo/register";
@@ -21,14 +15,20 @@ class UrlService {
     static logout() {
         return apiDomain + "api/weigo/logout";
     }
-    static passwordReset(id: string) {
-        return apiDomain + "api/weigo/reset/" + id;
+    static delete() {
+        return apiDomain + "api/weigo/delete";
     }
-    static emailVerification(id: string) {
-        return apiDomain + "api/weigo/email/verify/" + id;
+    static passwordReset() {
+        return apiDomain + "api/weigo/send-reset-link";
     }
-    static updateProfile() {
-        return apiDomain + "api/weigo/activities";
+    static emailVerification(email: string) {
+        return apiDomain + "api/weigo/email/verify/" + email;
+    }
+    static currentUserProfileUrl() {
+        return apiDomain + "api/weigo/user";
+    }
+    static updateProfileUrl() {
+        return apiDomain + "api/weigo/edit-profile";
     }
     static dpPayment() {
         return apiDomain + "api/weigo/dp-payment";

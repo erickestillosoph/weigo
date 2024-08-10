@@ -2,7 +2,7 @@ import TitleSection from "@/components/sections/titleSection";
 import image from "@/assets/images/titles/domestic_international_title_image.png";
 import { Button } from "@/components/ui/button";
 // import { useState, useEffect } from "react";
-// import { WeigoClient } from "@/datasources/remote/client";
+// import { WeigoGlobaltix } from "@/datasources/remote/client";
 // import { GetOptionsList } from "@/datasources/remote/model";
 import { cn } from "@/lib/utils";
 import { CardListThree } from "@/components/shared/card";
@@ -13,7 +13,7 @@ function DomesticPackages() {
     // const [dataFetched, setDataFetched] = useState<GetCityList[]>([]);
     // const [dataFetched, setDataFetched] = useState<GetOptionsList[]>([]);
     // useEffect(() => {
-    //     const dataClient = new WeigoClient();
+    //     const dataClient = new WeigoGlobaltix();
     //     const init = async () => {
     //         const data = await dataClient.getActivitiesList("00001", "en");
     //         const data = await dataClient.getCityList();

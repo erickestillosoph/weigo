@@ -3,10 +3,10 @@ import {
     GetCityList,
     GetCountryList,
     GetOptionsList,
-} from "./model";
+} from "./globaltixTypes";
 import axios from "axios";
 
-export interface IWeigoClient {
+export interface IWeigoGlobaltix {
     authentication(): Promise<{ access_token: string }>;
     getCountryList(): Promise<GetCountryList[]>;
     getCityList(): Promise<GetCityList[]>;
@@ -14,7 +14,7 @@ export interface IWeigoClient {
     getActivitiesList(id: string, country: string): Promise<GetActivitiesList>;
 }
 
-export class WeigoClient implements IWeigoClient {
+export class WeigoGlobaltix implements IWeigoGlobaltix {
     private readonly baseUrl: string;
 
     constructor() {
