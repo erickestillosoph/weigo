@@ -101,7 +101,6 @@ class AccountsProfileController extends Controller
 
     }
 
-    // Please refer to editAdminUser
     public function editGuestUser(Request $request): JsonResponse {
 
         $messages = [
@@ -117,6 +116,12 @@ class AccountsProfileController extends Controller
   
         $data = $request->validate([
             'uid' => ['required', 'exists:guests,uid'],
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255',            
+            'password' => ['required', Rules\Password::defaults()],
+            'phone_number' => 'required|string|max:255',
+            'birthday' => 'required|string|max:255',
         ], $messages);
 
 
@@ -127,7 +132,8 @@ class AccountsProfileController extends Controller
                 'email' => $request->email,
                 'phone_number' => $request->phone_number,
                 'birthday' => $request->birthday,  
-                'password' => Hash::make($request->password),          
+                'password' => Hash::make($request->password),   
+                'uid' => $request->uid       
             ]);
     
             if ($update_guest) {
@@ -139,6 +145,7 @@ class AccountsProfileController extends Controller
             } else {
                 return response()->json([
                     'message' => 'Unsuccessful Update',
+                    'status' => 'Error',
                     'code' => 500,             
                 ], 500);
             }
@@ -153,6 +160,8 @@ class AccountsProfileController extends Controller
         
     
     }
+
+    // Reserve for Dashboard Update for guests
     public function updateGuestUser(Request $request) {
         
         $messages = [
@@ -194,5 +203,51 @@ class AccountsProfileController extends Controller
         }
         
         return back()->with('success', 'Item deleted successfully');
+    }
+    
+    public function deleteGuestClient(Request $request)
+    {
+        $messages = [
+            'uid.required' => 'The id field is required.',
+        ];
+    
+        $data = $request->validate([
+            'uid' => ['required', 'exists:guests,uid'],
+        ], $messages);
+
+       try {
+        $delete_guest = DB::table('guests')->where('uid', $data['uid'])->delete();
+
+        if ($delete_guest) {
+            return response()->json([
+                'message' => 'Deleted Successfully',
+                'status' => 'success',
+                'code' => 200
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Unsuccessful Delete',
+                'status' => 'Error',
+                'code' => 500,             
+            ], 500);
+        }
+
+        if (DB::table('guests')->where('uid', $id)->exists()) {
+            return response()->json([
+                'message' => 'Item not deleted',
+                'status' => 'Error',
+                'code' => 500,             
+            ], 500);
+        }
+        
+           
+       }
+       catch(e) {
+            return response()->json([
+                'message' => 'Unsuccessful Update',
+                'status' => 'Error',
+                'code' => 500,             
+            ], 500);
+       }
     }
 }
