@@ -65,17 +65,14 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): JsonResponse
     {
-        $user = $request->user();
+      
+        $revoked = $request->user()->currentAccessToken()->delete();
 
-        if ($user) {
-            // Revoke all tokens...
-            $user->tokens()->delete();
-
-            Log::info('User logged out successfully: ', ['user_id' => $user->id]);
-
-            return response()->json(['message' => 'Logout successfully'], 200);
+        if($revoked )
+        {
+            return response()->json(['message' => 'Token revoked successfully'], 200);
         }
+        return response()->json(['message' => 'Token is not revoked sucessfully'], 401);
 
-        return response()->json(['message' => 'User not authenticated'], 401);
     }
 }

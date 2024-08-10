@@ -63,8 +63,8 @@ Route::middleware(['guest'])->group(function () {
 
 
 Route::middleware(['auth:sanctum'])->group(function () {    
-    Route::post('/weigo/logout', [AuthenticatedSessionController::class, 'destroy', HandlePrecognitiveRequests::class])
-    ->name('logout');
+    Route::post('/weigo/logout/', [AuthenticatedSessionController::class, 'destroy', HandlePrecognitiveRequests::class])
+        ->name('logout');
 
     Route::get('/weigo/confirm-password', [ConfirmablePasswordController::class, 'show', HandlePrecognitiveRequests::class])
     ->name('password.confirm');
@@ -86,12 +86,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
                 ->name('preselecting-payments');
 
     Route::delete('/weigo/delete-profile/{id}', [AccountsProfileController::class, 'deleteGuestUser'])->name('deleteId');
+    Route::delete('/weigo/delete-client', [AccountsProfileController::class, 'deleteGuestClient'])->name('deleteIdClient');
     Route::post('/weigo/edit-profile', [AccountsProfileController::class, 'editGuestUser'])->name('updateProfile');
 
 
     Route::get('/weigo/profile', [ProfileController::class, 'create', HandlePrecognitiveRequests::class])->name('profile.edit');                 
-    Route::post('/weigo/profile', [ProfileController::class, 'store', HandlePrecognitiveRequests::class])->name('profile.edit');                 
-    Route::post('/weigo/profile', [ProfileController::class, 'store', HandlePrecognitiveRequests::class])->name('profile.edit');                 
+    Route::post('/weigo/profile', [ProfileController::class, 'store', HandlePrecognitiveRequests::class])->name('profile.edit');       
+    
+    
+                  
 });
 
 

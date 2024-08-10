@@ -21,7 +21,11 @@ export type Logout = {
 };
 export type UpdateProfile = {
     message: string;
+    status: string;
+    code: number;
 };
 export type DeleteProfile = {
     message: string;
+    status: string;
+    code: number;
 };
