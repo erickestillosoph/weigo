@@ -8,6 +8,7 @@ import Logo from "../../../assets/images/weigo-logo.png";
 import { NavLink } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import { navLinks } from "@/lib/navigationLinks";
+
 gsap.registerPlugin(useGSAP);
 
 function Navigation() {
@@ -48,6 +49,10 @@ function Navigation() {
         });
 
         setIsOpenMobile(!isOpenMobile);
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     useEffect(() => {
@@ -117,7 +122,7 @@ function Navigation() {
                             key={index}
                             onClick={toggleMobileMenu}
                         >
-                            <NavLink to={variable.route}>
+                            <NavLink onClick={scrollToTop} to={variable.route}>
                                 <p className="w_text_color focus:shadow-[0_0_0_2px]">
                                     {variable.name}
                                 </p>
@@ -216,6 +221,7 @@ function Navigation() {
                                 <NavLink
                                     className="text-white hover:hover_background active:hover_background focus:hover_background block select-none rounded-[4px] px-3 py-2 text-[15px] font-medium leading-none no-underline outline-none focus:shadow-[0_0_0_2px]"
                                     to={variable.route}
+                                    onClick={scrollToTop}
                                 >
                                     {variable.name}
                                 </NavLink>
