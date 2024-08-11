@@ -8,6 +8,9 @@ import DomesticPackages from "@/pages/domesticPackages";
 import InternationalPackages from "@/pages/internationalPackages";
 import Insurance from "@/pages/insurance";
 import Visa from "@/pages/visa";
+import Register from "@/pages/auth/register/Register";
+import LoginUser from "@/pages/auth/login/LoginUser";
+import Reset from "@/pages/auth/reset/Reset";
 
 function BodyLayout() {
     return (
@@ -26,9 +29,11 @@ function BodyLayout() {
                 />
                 <Route path="/insurance" element={<Insurance />} />
                 <Route path="/car-rental" element={<CarRental />} />
-
                 <Route path="/visa" element={<Visa />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/register-user" element={<Register />} />
+                <Route path="/login-user" element={<LoginUser />} />
+                <Route path="/reset-user" element={<Reset />} />
             </Routes>
         </div>
     );

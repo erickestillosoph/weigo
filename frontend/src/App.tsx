@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Header } from "./components/layouts/headerLayout";
 import { FooterLayout } from "./components/layouts/footerLayout";
 import { BodyLayout } from "./components/layouts/bodyLayout";
-
 const queryClient = new QueryClient();
 
 function App() {
