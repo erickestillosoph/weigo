@@ -8,9 +8,11 @@ import DomesticPackages from "@/pages/domesticPackages";
 import InternationalPackages from "@/pages/internationalPackages";
 import Insurance from "@/pages/insurance";
 import Visa from "@/pages/visa";
-import Register from "@/pages/auth/register/Register";
-import LoginUser from "@/pages/auth/login/LoginUser";
-import Reset from "@/pages/auth/reset/Reset";
+import Register from "@/pages/auth/register";
+import LoginUser from "@/pages/auth/login";
+import Reset from "@/pages/auth/reset";
+import Profile from "@/pages/profile";
+import NotFound from "@/pages/notFound/NotFound";
 
 function BodyLayout() {
     return (
@@ -34,6 +36,8 @@ function BodyLayout() {
                 <Route path="/register-user" element={<Register />} />
                 <Route path="/login-user" element={<LoginUser />} />
                 <Route path="/reset-user" element={<Reset />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </div>
     );

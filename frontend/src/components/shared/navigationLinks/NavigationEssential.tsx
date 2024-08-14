@@ -2,13 +2,33 @@ import { Button } from "@/components/ui/button";
 import LogoText from "../../../assets/images/weigo-logo.png";
 import { useSetUseIsAuthState } from "@/state/pages/useAuthApp";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 function NavigationEssential() {
     const navigate = useNavigate();
     const location = useLocation();
     const currentPath = location.pathname;
     const setIsAuthState = useSetUseIsAuthState();
+
+    const commonPath = useMemo(
+        () => [
+            "/",
+            "/about-us",
+            "/domestic-packages",
+            "/international-packages",
+            "/insurance",
+            "/activities",
+            "/visa",
+            "/car-rental",
+            "/contact",
+        ],
+        [],
+    );
+    const authPath = useMemo(
+        () => ["/reset-user", "/login-user", "/register-user"],
+        [],
+    );
+
     const toggleAuthSignIn = () => {
         setIsAuthState({ authentication: false });
         navigate("/login-user");
@@ -22,14 +42,12 @@ function NavigationEssential() {
     };
 
     useEffect(() => {
-        if (
-            currentPath === "/login-user" ||
-            currentPath === "/register-user" ||
-            currentPath === "/reset-user"
-        ) {
+        const isAuthPathExist = authPath.includes(currentPath);
+        const isCommonPathExist = commonPath.includes(currentPath);
+        if (!isCommonPathExist || isAuthPathExist) {
             setIsAuthState({ authentication: false });
         }
-    }, [currentPath, setIsAuthState]);
+    }, [currentPath, setIsAuthState, authPath, commonPath]);
 
     return (
         <div className="border-b-[0.5px] border-[rgb(100,122,250)] bg_header">
