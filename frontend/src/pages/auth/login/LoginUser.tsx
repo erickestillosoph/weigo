@@ -5,14 +5,35 @@ import { useSetUseIsAuthState } from "@/state/pages/useAuthApp";
 import { HomeIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router-dom";
 import { Checkbox } from "@/components/ui/checkbox";
+import { FormEvent, useEffect } from "react";
+import { useLogin } from "@/hooks/auth/useLogin";
 
 function LoginUser() {
     const navigate = useNavigate();
+    const {
+        errorCsrfToken,
+        errorFormState,
+        handleSubmitForm,
+        onSubmit,
+        register,
+    } = useLogin();
+
     const setIsAuthState = useSetUseIsAuthState();
     const handleHome = () => {
         setIsAuthState({ authentication: true });
         navigate("/");
     };
+
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        handleSubmitForm(() => {
+            onSubmit.mutate();
+        })();
+    };
+    useEffect(() => {
+        console.log(errorCsrfToken);
+        console.log(errorFormState);
+    }, [errorFormState, errorCsrfToken]);
     return (
         <div>
             <div className="w-full flex flex-row gap-2 p-8">
@@ -21,17 +42,26 @@ function LoginUser() {
             </div>
             <div className="flex justify-center items-center h-[80vh]">
                 <div className="w-[30%]">
-                    <form action="" className="flex flex-col gap-6">
+                    <form
+                        onSubmit={handleSubmit}
+                        className="flex flex-col gap-6"
+                    >
                         <div className="">
                             <h1 className="text-4xl">Login!</h1>
                             <p>Welcome to weigo!</p>
                         </div>
 
                         <div className="">
-                            <Input placeholder="Email Adress"></Input>
+                            <Input
+                                placeholder="Email Adress"
+                                {...register("email")}
+                            ></Input>
                         </div>
                         <div className="">
-                            <Input placeholder="Password"></Input>
+                            <Input
+                                placeholder="Password"
+                                {...register("password")}
+                            ></Input>
                         </div>
                         <div className="flex flex-row justify-between items-center">
                             <div className="flex flex-row gap-2 justify-center">

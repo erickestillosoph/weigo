@@ -8,7 +8,6 @@ import {
     DeleteProfile,
 } from "./weigoGuestTypes";
 import axios from "axios";
-
 export interface IWeigoGuest {
     login(email: string, password: string): Promise<Login>;
     reset(email: string): Promise<Reset>;

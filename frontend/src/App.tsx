@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Header } from "./components/layouts/headerLayout";
 import { FooterLayout } from "./components/layouts/footerLayout";
 import { BodyLayout } from "./components/layouts/bodyLayout";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 const queryClient = new QueryClient();
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
                     <BodyLayout></BodyLayout>
                     <FooterLayout className="margin_top_200_clamp"></FooterLayout>
                 </RecoilRoot>
+                <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
         </div>
     );
