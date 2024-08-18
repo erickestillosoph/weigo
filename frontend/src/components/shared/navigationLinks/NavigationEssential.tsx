@@ -2,13 +2,15 @@ import { Button } from "@/components/ui/button";
 import LogoText from "../../../assets/images/weigo-logo.png";
 import { useSetUseIsAuthState } from "@/state/pages/useAuthApp";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { localStorageClient } from "@/lib/localStorage/localStorageClient";
 
 function NavigationEssential() {
     const navigate = useNavigate();
     const location = useLocation();
     const currentPath = location.pathname;
     const setIsAuthState = useSetUseIsAuthState();
+    const [authState, setAuthState] = useState(null);
 
     const commonPath = useMemo(
         () => [
@@ -47,6 +49,10 @@ function NavigationEssential() {
         if (!isCommonPathExist || isAuthPathExist) {
             setIsAuthState({ authentication: false });
         }
+
+        // Retrieve and set the localStorage value
+        const storedAuthState = localStorageClient.getLoginnedLSKey();
+        setAuthState(storedAuthState);
     }, [currentPath, setIsAuthState, authPath, commonPath]);
 
     return (
@@ -61,14 +67,23 @@ function NavigationEssential() {
                 </div>
 
                 <div className="flex gap-4">
-                    <Button variant="outline" onClick={toggleAuthSignIn}>
-                        SignIn
-                    </Button>
+                    {!authState && (
+                        <>
+                            <Button
+                                variant="outline"
+                                onClick={toggleAuthSignIn}
+                            >
+                                SignIn
+                            </Button>
 
-                    <Button variant="outline" onClick={toggleAuthSignUp}>
-                        SignUp
-                    </Button>
-
+                            <Button
+                                variant="outline"
+                                onClick={toggleAuthSignUp}
+                            >
+                                SignUp
+                            </Button>
+                        </>
+                    )}
                     <Button variant="outline" onClick={handleContactUs}>
                         Contact Us
                     </Button>

@@ -1,6 +1,7 @@
 import cookieService from "@/services/cookieService";
 import Axios from "axios";
 
+// const clientDomain = process.env.REACT_APP_WEIGO_BASE_URL;
 let apiDomain = process.env.NODE_ENV || "";
 if (process.env.REACT_APP_WEIGO_SERVER_MODE === "testing") {
     apiDomain = process.env.REACT_APP_WEIGO_SERVER_TEST_API || "";
@@ -24,6 +25,8 @@ const axios = Axios.create({
     headers: {
         "X-Requested-With": "XMLHttpRequest",
         Authorization: `Bearer ${getBearerToken()}`,
+        "Content-Type": "application/json",
+        // Referer: `${clientDomain}`,
     },
     withCredentials: true,
     withXSRFToken: true,
