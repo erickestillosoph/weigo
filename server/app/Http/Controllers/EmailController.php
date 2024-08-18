@@ -18,6 +18,8 @@ class EmailController extends Controller
     $guest->email_verified_at = now();
     $guest->save();
 
-    return response()->json(['message' => 'Email verified successfully']);
+    $frontEndUrl = env('FRONTEND_URL');
+
+    return redirect($frontEndUrl);
 }
 }

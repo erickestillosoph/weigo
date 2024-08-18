@@ -5,18 +5,12 @@ import { useSetUseIsAuthState } from "@/state/pages/useAuthApp";
 import { HomeIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router-dom";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FormEvent, useEffect } from "react";
+import { FormEvent } from "react";
 import { useLogin } from "@/hooks/auth/useLogin";
 
 function LoginUser() {
     const navigate = useNavigate();
-    const {
-        errorCsrfToken,
-        errorFormState,
-        handleSubmitForm,
-        onSubmit,
-        register,
-    } = useLogin();
+    const { handleSubmitForm, onSubmit, register } = useLogin();
 
     const setIsAuthState = useSetUseIsAuthState();
     const handleHome = () => {
@@ -34,10 +28,7 @@ function LoginUser() {
             }
         })();
     };
-    useEffect(() => {
-        console.log(errorCsrfToken);
-        console.log(errorFormState);
-    }, [errorFormState, errorCsrfToken]);
+
     return (
         <div>
             <div className="w-full flex flex-row gap-2 p-8">
@@ -95,7 +86,7 @@ function LoginUser() {
                         </div>
 
                         <div>
-                            <a href="/register-user">
+                            <a href="/register">
                                 <Label
                                     htmlFor="terms1"
                                     className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

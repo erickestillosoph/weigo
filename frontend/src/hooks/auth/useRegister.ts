@@ -7,19 +7,22 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { csrfTokenState } from "@/state/auth/csrf/useCsrf";
-import cookieService from "@/services/cookieService";
 import { authLoginState } from "@/state/auth/useLoginState";
+import cookieService from "@/services/cookieService";
 import {
     authenticatedStateAtom,
     authenticatedStateSelector,
 } from "@/state/auth/useAuthenticated";
 
 type Inputs = {
+    first_name: string;
+    last_name: string;
     email: string;
     password: string;
+    password_confirmation: string;
 };
 
-export const useLogin = () => {
+export const useRegister = () => {
     const { query } = useCsrfToken();
     const [csrfToken, setCsrfToken] = useRecoilState(csrfTokenState);
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(authLoginState);
@@ -31,20 +34,26 @@ export const useLogin = () => {
         getValues,
         register,
         handleSubmit,
-        formState: { errors, isSubmitSuccessful },
+        formState: { errors, isSubmitSuccessful, isLoading, isSubmitting },
     } = useForm<Inputs>({
         defaultValues: {
+            first_name: "",
+            last_name: "",
             email: "",
             password: "",
+            password_confirmation: "",
         },
     });
 
     const onSubmit = useMutation({
         mutationFn: async () => {
-            const url = UrlService.loginUrl();
+            const url = UrlService.register();
             const data = {
+                first_name: getValues("first_name"),
+                last_name: getValues("last_name"),
                 email: getValues("email"),
                 password: getValues("password"),
+                password_confirmation: getValues("password_confirmation"),
             };
             const response = await axios.post(url, data);
 
@@ -63,9 +72,7 @@ export const useLogin = () => {
                 encodeURIComponent(decodedData.user_id),
                 { maxAge: 86400 },
             );
-            if (data) {
-                setAuthState({ authentication: "login", state: true });
-            }
+            if (data) setAuthState({ authentication: "register", state: true });
             setCsrfToken("isCsrfToken");
             setIsLoggedIn("isLoggedIn");
         },
@@ -75,17 +82,17 @@ export const useLogin = () => {
     });
 
     useEffect(() => {
-        console.log(state);
         if (state === true) {
-            console.log(isLoggedIn);
             navigate(destination);
         }
-    }, [isLoggedIn, state, destination, csrfToken, navigate]);
+    }, [isLoggedIn, state, csrfToken, navigate, destination]);
 
     return {
         loadingCsrfToken: query.isLoading,
         errorCsrfToken: query.error,
         errorFormState: errors,
+        isLoading,
+        isSubmitting,
         register,
         handleSubmitForm: handleSubmit,
         isSubmitSuccessful,

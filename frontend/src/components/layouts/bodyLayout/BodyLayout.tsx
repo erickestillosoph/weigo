@@ -13,6 +13,7 @@ import LoginUser from "@/pages/auth/login";
 import Reset from "@/pages/auth/reset";
 import Profile from "@/pages/profile";
 import NotFound from "@/pages/notFound/NotFound";
+import ResendLink from "@/pages/auth/resend";
 
 function BodyLayout() {
     return (
@@ -33,9 +34,10 @@ function BodyLayout() {
                 <Route path="/car-rental" element={<CarRental />} />
                 <Route path="/visa" element={<Visa />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/register-user" element={<Register />} />
+                <Route path="/register" element={<Register />} />
                 <Route path="/login-user" element={<LoginUser />} />
                 <Route path="/reset-user" element={<Reset />} />
+                <Route path="/resend-link" element={<ResendLink />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>

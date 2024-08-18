@@ -25,7 +25,7 @@ function NavigationEssential() {
         [],
     );
     const authPath = useMemo(
-        () => ["/reset-user", "/login-user", "/register-user"],
+        () => ["/reset-user", "/login-user", "/register", "/resend-link"],
         [],
     );
 
@@ -35,7 +35,7 @@ function NavigationEssential() {
     };
     const toggleAuthSignUp = () => {
         setIsAuthState({ authentication: false });
-        navigate("/register-user");
+        navigate("/register");
     };
     const handleContactUs = () => {
         navigate("/contact");
