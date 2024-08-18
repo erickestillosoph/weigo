@@ -57,7 +57,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         $token = $user->createToken('token-name')->plainTextToken;
-        return response()->json(['message' => 'Login is Successfully', 'user' => $user, 'token' =>$token, 'email verified at' => $guest->email_verified_at ], 200);
+        return response()->json(['message' => 'Login is Successfully', 'user_id' => $guest->uid, 'token' =>$token], 200);
     }
 
     /**

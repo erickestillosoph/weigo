@@ -26,8 +26,12 @@ function LoginUser() {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        handleSubmitForm(() => {
-            onSubmit.mutate();
+        handleSubmitForm(async () => {
+            try {
+                await onSubmit.mutateAsync();
+            } catch (e) {
+                console.error(e);
+            }
         })();
     };
     useEffect(() => {

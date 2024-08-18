@@ -5,8 +5,15 @@ import Product from "@/components/sections/productSection";
 import Activity from "@/components/sections/activitySection";
 import LogoSection from "@/components/sections/logoSection";
 import VisaCarRentalSection from "@/components/sections/visaCarRentalSection";
+import { useEffect } from "react";
+import { useSetUseIsAuthState } from "@/state/pages/useAuthApp";
 
 function Home() {
+    const setIsAuthState = useSetUseIsAuthState();
+
+    useEffect(() => {
+        setIsAuthState({ authentication: true });
+    }, [setIsAuthState]);
     return (
         <div className="flex  flex-col gap_200_clamp">
             <HeroSection />
