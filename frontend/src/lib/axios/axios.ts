@@ -1,7 +1,7 @@
 import cookieService from "@/services/cookieService";
 import Axios from "axios";
 
-let apiDomain = process.env.NODE_ENV || ""; // Initial value for apiDomain
+let apiDomain = process.env.NODE_ENV || "";
 if (process.env.REACT_APP_WEIGO_SERVER_MODE === "testing") {
     apiDomain = process.env.REACT_APP_WEIGO_SERVER_TEST_API || "";
 } else {
@@ -10,6 +10,10 @@ if (process.env.REACT_APP_WEIGO_SERVER_MODE === "testing") {
 
 const getBearerToken = () => {
     const cookieToken = cookieService.getCookieData("tokenId");
+    if (!cookieToken) {
+        return " ";
+    }
+
     const decodedCookieToken = decodeURI(JSON.stringify(cookieToken));
     const parseCookieToken = JSON.parse(decodedCookieToken);
     return parseCookieToken;

@@ -58,7 +58,10 @@ Route::middleware(['guest'])->group(function () {
 
     Route::post('/weigo/reset-password', [NewPasswordController::class, 'store', HandlePrecognitiveRequests::class])
                 ->name('password.store');
-    
+    Route::post('/weigo/email/verification-notification', [EmailVerificationNotificationController::class, 'store', HandlePrecognitiveRequests::class])
+    ->middleware('throttle:6,1')
+    ->name('verification.send');
+
 });
 
 
