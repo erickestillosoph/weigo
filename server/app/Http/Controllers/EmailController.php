@@ -18,7 +18,7 @@ class EmailController extends Controller
     $guest->email_verified_at = now();
     $guest->save();
 
-    $frontEndUrl = env('FRONTEND_URL');
+    $frontEndUrl = env('FRONTEND_URL_LOGIN');
 
     return redirect($frontEndUrl);
 }

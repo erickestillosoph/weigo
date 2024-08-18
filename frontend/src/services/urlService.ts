@@ -5,6 +5,9 @@ class UrlService {
     static register() {
         return "/api/weigo/register";
     }
+    static resendLink() {
+        return "/api/weigo/reverify";
+    }
     static logout() {
         return "/api/weigo/logout";
     }

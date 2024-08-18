@@ -13,6 +13,7 @@ import {
     authenticatedStateAtom,
     authenticatedStateSelector,
 } from "@/state/auth/useAuthenticated";
+import { useSetUseRegisteredDataState } from "@/state/auth/useRegisterState";
 
 type Inputs = {
     first_name: string;
@@ -28,7 +29,7 @@ export const useRegister = () => {
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(authLoginState);
     const setAuthState = useSetRecoilState(authenticatedStateAtom);
     const { state, destination } = useRecoilValue(authenticatedStateSelector);
-
+    const setUseRegisteredDataState = useSetUseRegisteredDataState();
     const navigate = useNavigate();
     const {
         getValues,
@@ -55,6 +56,7 @@ export const useRegister = () => {
                 password: getValues("password"),
                 password_confirmation: getValues("password_confirmation"),
             };
+            setUseRegisteredDataState({ email: getValues("email") });
             const response = await axios.post(url, data);
 
             return response.data;

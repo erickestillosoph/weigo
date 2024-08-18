@@ -3,6 +3,7 @@ import { recoilLocalStorageKey } from "@/lib/localStorage/recoilStatePersistence
 export const LocalStorageKey = {
     accessToken: "accessToken",
     idToken: "idToken",
+    authStatus: "authStatus",
     refreshToken: "refreshToken",
     currencyToken: "currencyToken",
     destinationToken: "destinationToken",

@@ -4,11 +4,12 @@ import { useSetUseIsAuthState } from "@/state/pages/useAuthApp";
 import { HomeIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router-dom";
 import { FormEvent } from "react";
-import { useLogin } from "@/hooks/auth/useLogin";
+import { useResendLink } from "@/hooks/auth/useResendLink";
+import { Input } from "@/components/ui/input";
 
 function ResendLink() {
     const navigate = useNavigate();
-    const { handleSubmitForm, onSubmit } = useLogin();
+    const { handleSubmitForm, register, onSubmit } = useResendLink();
 
     const setIsAuthState = useSetUseIsAuthState();
     const handleHome = () => {
@@ -43,7 +44,12 @@ function ResendLink() {
                             <h1 className="text-4xl">Verify your Email!</h1>
                             <p>Theres an email in your inbox!</p>
                         </div>
-
+                        <div>
+                            <Input
+                                {...register("email")}
+                                placeholder="Email Adress"
+                            ></Input>
+                        </div>
                         <div className="">
                             <Button className="w-full" type="submit">
                                 Resend New Verification Link

@@ -1,4 +1,5 @@
 import { LocalStorageKey } from "@/config/localStorage";
+import { recoilLocalStorageKey } from "./recoilStatePersistence";
 
 interface ILocalStorageClient {
     setAccessToken(accessToken: string): void;
@@ -38,6 +39,10 @@ interface ILocalStorageClient {
 }
 
 class LocalStorageClient implements ILocalStorageClient {
+    getLoginnedLSKey() {
+        const value = localStorage.getItem(recoilLocalStorageKey);
+        return value ? JSON.parse(value) : null;
+    }
     setAccessToken(accessToken: string): void {
         localStorage.setItem(LocalStorageKey.accessToken, accessToken);
     }
