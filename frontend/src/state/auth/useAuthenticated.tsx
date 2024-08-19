@@ -28,7 +28,7 @@ export const authenticatedStateSelector = selector({
             case "login":
                 return { state, destination: "/" };
             case "register":
-                return { state, destination: "/login-user" };
+                return { state, destination: "/resend-link" };
             case "update":
                 return { state, destination: "/profile" };
             case "reset":
