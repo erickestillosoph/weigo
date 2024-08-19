@@ -10,10 +10,12 @@ import Insurance from "@/pages/insurance";
 import Visa from "@/pages/visa";
 import Register from "@/pages/auth/register";
 import LoginUser from "@/pages/auth/login";
-import Reset from "@/pages/auth/reset";
+
 import Profile from "@/pages/profile";
 import NotFound from "@/pages/notFound/NotFound";
 import ResendLink from "@/pages/auth/resend";
+import ResetForm from "@/pages/auth/reset/Reset";
+import ResetEmail from "@/pages/auth/reset/ResetForm";
 
 function BodyLayout() {
     return (
@@ -36,7 +38,8 @@ function BodyLayout() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login-user" element={<LoginUser />} />
-                <Route path="/reset-user" element={<Reset />} />
+                <Route path="/reset-user" element={<ResetForm />} />
+                <Route path="/reset-user-form" element={<ResetEmail />} />
                 <Route path="/resend-link" element={<ResendLink />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="*" element={<NotFound />} />

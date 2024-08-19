@@ -1,28 +1,23 @@
 import { useCsrfToken } from "../token/useCsrfToken";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import axios from "@/lib/axios/axios";
-import UrlService from "@/services/urlService";
-import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { csrfTokenState } from "@/state/auth/csrf/useCsrf";
-import cookieService from "@/services/cookieService";
-import { authLoginState } from "@/state/auth/useLoginState";
 import {
     authenticatedStateAtom,
     authenticatedStateSelector,
 } from "@/state/auth/useAuthenticated";
 
-type Inputs = {
-    email: string;
-    password: string;
-};
+import axios from "@/lib/axios/axios";
+import UrlService from "@/services/urlService";
+import { useMutation } from "@tanstack/react-query";
+import cookieService from "@/services/cookieService";
 
-export const useLogin = () => {
+export const usePasswordReset = () => {
     const { query } = useCsrfToken();
     const [csrfToken, setCsrfToken] = useRecoilState(csrfTokenState);
-    const [isLoggedIn, setIsLoggedIn] = useRecoilState(authLoginState);
+
     const setAuthState = useSetRecoilState(authenticatedStateAtom);
     const { state, destination } = useRecoilValue(authenticatedStateSelector);
 
@@ -32,42 +27,29 @@ export const useLogin = () => {
         register,
         handleSubmit,
         formState: { errors, isSubmitSuccessful },
-    } = useForm<Inputs>({
+    } = useForm<{ email: string }>({
         defaultValues: {
             email: "",
-            password: "",
         },
     });
 
     const onSubmit = useMutation({
         mutationFn: async () => {
-            const url = UrlService.loginUrl();
-            const data = {
-                email: getValues("email"),
-                password: getValues("password"),
-            };
-            const response = await axios.post(url, data);
-
+            const url = UrlService.forgotPassword();
+            const response = await axios.post(url, {
+                email: String(getValues("email")),
+            });
             return response.data;
         },
         onSuccess: (data) => {
+            console.log(data);
             const token = JSON.stringify(data);
             const decodedData = JSON.parse(decodeURIComponent(token ?? ""));
-            cookieService.set(
-                "tokenId",
-                encodeURIComponent(decodedData.token),
-                { maxAge: 86400 },
-            );
-            cookieService.set(
-                "userId",
-                encodeURIComponent(decodedData.user_id),
-                { maxAge: 86400 },
-            );
-            if (data) {
-                setAuthState({ authentication: "login", state: true });
-            }
+            cookieService.set("uuid", encodeURIComponent(decodedData.token), {
+                maxAge: 86400,
+            });
+            setAuthState({ authentication: "reset", state: false });
             setCsrfToken("isCsrfToken");
-            setIsLoggedIn("isLoggedIn");
         },
         onError: (err: Error) => {
             throw err;
@@ -76,10 +58,9 @@ export const useLogin = () => {
 
     useEffect(() => {
         if (state === true) {
-            console.log(isLoggedIn);
             navigate(destination);
         }
-    }, [isLoggedIn, state, destination, csrfToken, navigate]);
+    }, [state, destination, csrfToken, navigate]);
 
     return {
         loadingCsrfToken: query.isLoading,
