@@ -12,10 +12,13 @@ class UrlService {
         return "/api/weigo/logout";
     }
     static delete() {
-        return "api/weigo/delete";
+        return "/api/weigo/delete";
     }
-    static passwordReset() {
+    static forgotPassword() {
         return "api/weigo/send-reset-link";
+    }
+    static resetPassword() {
+        return "api/weigo/reset-password-guest";
     }
     static emailVerification(email: string) {
         return "api/weigo/email/verify/" + email;

@@ -50,8 +50,17 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/weigo/forgot-password', [PasswordResetLinkController::class, 'store', HandlePrecognitiveRequests::class])
                 ->name('password.email');
 
-    Route::post('/weigo/send-reset-link', [PasswordResetLinkController::class, 'sendResetLink', HandlePrecognitiveRequests::class])
-                ->name('password.reset-email');
+    Route::post('/weigo/send-reset-link', [PasswordResetLinkController::class, 'sendResetLinkMail'])->name('resetemail');
+    
+    Route::post('/weigo/remember-password-guest', [PasswordResetLinkController::class, 'forgotPassword', HandlePrecognitiveRequests::class])
+                ->name('fogotPassword');
+                
+    Route::post('/weigo/reset-password-guest', [PasswordResetLinkController::class, 'resetPasswordMail'])
+                ->name('resetPassword');
+
+    Route::post('/weigo/forgot-password', [PasswordResetLinkController::class, 'store', HandlePrecognitiveRequests::class])
+                ->name('password.email');
+
     
     Route::post('/weigo/reverify', [EmailVerificationNotificationController::class, 'store', HandlePrecognitiveRequests::class])->name('email.reverify');
 

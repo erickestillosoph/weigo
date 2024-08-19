@@ -105,7 +105,7 @@
 <p>We provide a reset link for you</p>
 
 
-          </div></td></tr><tr><td style="word-break:break-word;font-size:0px;padding:10px 25px;" align="center"><table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:separate;" align="center" border="0"><tbody><tr><td style="border:none;border-radius:3px;color:white;cursor:auto;padding:15px 19px;" align="center" valign="middle" bgcolor="#0000F"><a href="{{ $data['weigoFrontendUrl'] . '/weigo/reset-password/' }}" style="text-decoration:none;line-height:100%;background:#0000FF;color:white;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;font-weight:normal;text-transform:none;margin:0px;" target="_blank">
+          </div></td></tr><tr><td style="word-break:break-word;font-size:0px;padding:10px 25px;" align="center"><table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse:separate;" align="center" border="0"><tbody><tr><td style="border:none;border-radius:3px;color:white;cursor:auto;padding:15px 19px;" align="center" valign="middle" bgcolor="#0000F"><a href="{{ $data['weigoFrontendUrl'] . '/reset-user-form' }}"  style="text-decoration:none;line-height:100%;background:#0000FF;color:white;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:15px;font-weight:normal;text-transform:none;margin:0px;" target="_blank">
             Reset Password
           </a></td></tr></tbody></table></td></tr></tbody></table></div>
 </body>

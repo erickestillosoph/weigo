@@ -16,7 +16,7 @@ type Inputs = {
 
 export const useProfile = () => {
     const cookieUserId = cookieService.getCookieData("userId");
-    console.log(cookieUserId);
+
     const {
         getValues,
         register,

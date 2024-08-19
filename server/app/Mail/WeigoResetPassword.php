@@ -39,7 +39,7 @@ class WeigoResetPassword extends Mailable
      */
     public function content(): Content
     {
-        $weigoFrontendUrl = env('WEIGO_FRONTEND_URL');
+        $weigoFrontendUrl = env('FRONTEND_URL');
         $data = [
             'name' => $this->user->name,
             'id' => $this->user->id,

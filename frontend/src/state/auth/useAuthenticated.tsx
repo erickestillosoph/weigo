@@ -9,6 +9,7 @@ type authenticationState = {
         | "update"
         | "reset"
         | "resend"
+        | "password"
         | "undefined";
     state: boolean;
 };
@@ -31,6 +32,8 @@ export const authenticatedStateSelector = selector({
             case "update":
                 return { state, destination: "/profile" };
             case "reset":
+                return { state, destination: "/reset-user-form" };
+            case "password":
                 return { state, destination: "/login-user" };
             case "resend":
                 return { state, destination: "/resend-link" };

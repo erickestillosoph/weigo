@@ -1,14 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { usePasswordReset } from "@/hooks/auth/usePasswordReset";
+import { usePasswordResetForm } from "@/hooks/auth/usePasswordResetForm";
 import { useSetUseIsAuthState } from "@/state/pages/useAuthApp";
 import { HomeIcon } from "@radix-ui/react-icons";
 import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-function ResetEmail() {
+function ResetForm() {
     const navigate = useNavigate();
-    const { handleSubmitForm, onSubmit, register } = usePasswordReset();
+    const { handleSubmitForm, onSubmit, register } = usePasswordResetForm();
     const setIsAuthState = useSetUseIsAuthState();
     const handleHome = () => {
         setIsAuthState({ authentication: true });
@@ -38,18 +38,21 @@ function ResetEmail() {
                         className="flex flex-col gap-6"
                     >
                         <div className="">
-                            <h1 className="text-4xl">Reset your password!</h1>
-                            <p>
-                                Fill out the email you want to reset the
-                                password
-                            </p>
+                            <h1 className="text-4xl">Enter new password!</h1>
+                            <p>Enter new password</p>
                         </div>
                         <div className="">
                             <Input
-                                {...register("email")}
-                                placeholder="Email Adress"
+                                {...register("password")}
+                                placeholder="Password"
                             ></Input>
                         </div>
+                        {/* <div className="">
+                            <Input
+                                {...register("password_confirmation")}
+                                placeholder="Password Confirmation"
+                            ></Input>
+                        </div> */}
 
                         <div className="">
                             <Button className="w-full" type="submit">
@@ -63,4 +66,4 @@ function ResetEmail() {
     );
 }
 
-export default ResetEmail;
+export default ResetForm;
