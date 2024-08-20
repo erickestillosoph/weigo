@@ -13,6 +13,7 @@ import {
     authenticatedStateAtom,
     authenticatedStateSelector,
 } from "@/state/auth/useAuthenticated";
+import { useToast } from "@/components/ui/toast/use-toast";
 
 type Inputs = {
     email: string;
@@ -25,6 +26,7 @@ export const useLogin = () => {
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(authLoginState);
     const setAuthState = useSetRecoilState(authenticatedStateAtom);
     const { state, destination } = useRecoilValue(authenticatedStateSelector);
+    const { toast } = useToast();
 
     const navigate = useNavigate();
     const {
@@ -64,19 +66,31 @@ export const useLogin = () => {
                 { maxAge: 86400 },
             );
             if (data) {
-                setAuthState({ authentication: "login", state: true });
+                setAuthState({ authentication: "home", state: true });
             }
             setCsrfToken("isCsrfToken");
             setIsLoggedIn("isLoggedIn");
+
+            toast({
+                variant: "default",
+                draggable: true,
+                title: "Success!",
+                description: "Your Successfully Login!",
+            });
         },
         onError: (err: Error) => {
+            toast({
+                variant: "destructive",
+                draggable: true,
+                title: "Error Submitting",
+                description: "Error on sending data to the server",
+            });
             throw err;
         },
     });
 
     useEffect(() => {
         if (state === true) {
-            console.log(isLoggedIn);
             navigate(destination);
         }
     }, [isLoggedIn, state, destination, csrfToken, navigate]);

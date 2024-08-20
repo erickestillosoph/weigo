@@ -20,8 +20,8 @@ class UrlService {
     static resetPassword() {
         return "api/weigo/reset-password-guest";
     }
-    static emailVerification(email: string) {
-        return "api/weigo/email/verify/" + email;
+    static getProfileUser(uid: string) {
+        return "api/weigo/profile/" + uid;
     }
     static currentUserProfileUrl() {
         return "api/weigo/user";

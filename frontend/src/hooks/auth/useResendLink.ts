@@ -3,6 +3,7 @@ import axios from "@/lib/axios/axios";
 import UrlService from "@/services/urlService";
 import { useMutation } from "@tanstack/react-query";
 import { useIsRegisteredDataState } from "@/state/auth/useRegisterState";
+import { useToast } from "@/components/ui/toast/use-toast";
 
 type Inputs = {
     email: string;
@@ -10,6 +11,7 @@ type Inputs = {
 
 export const useResendLink = () => {
     const isRegisteredDataState = useIsRegisteredDataState();
+    const { toast } = useToast();
     const {
         register,
         getValues,
@@ -31,10 +33,21 @@ export const useResendLink = () => {
 
             return response.data;
         },
-        onSuccess: (data) => {
-            console.log(data);
+        onSuccess: () => {
+            toast({
+                variant: "default",
+                draggable: true,
+                title: "Success!",
+                description: "Verfication Email has been sucessfully sent",
+            });
         },
         onError: (err: Error) => {
+            toast({
+                variant: "destructive",
+                draggable: true,
+                title: "Error Submitting",
+                description: "Error on sending data to the server",
+            });
             throw err;
         },
     });

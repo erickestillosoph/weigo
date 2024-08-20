@@ -16,8 +16,11 @@ import NotFound from "@/pages/notFound/NotFound";
 import ResendLink from "@/pages/auth/resend";
 import ResetForm from "@/pages/auth/reset/Reset";
 import ResetEmail from "@/pages/auth/reset/ResetForm";
+import AuthGuard from "@/components/shared/authGuard/AuthGuard";
+import useAxiosInterceptor from "@/lib/axios/useAxiosInterceptor";
 
 function BodyLayout() {
+    useAxiosInterceptor();
     return (
         <div>
             <Routes>
@@ -41,7 +44,14 @@ function BodyLayout() {
                 <Route path="/reset-user" element={<ResetForm />} />
                 <Route path="/reset-user-form" element={<ResetEmail />} />
                 <Route path="/resend-link" element={<ResendLink />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route
+                    path="/profile"
+                    element={
+                        <AuthGuard>
+                            <Profile />
+                        </AuthGuard>
+                    }
+                />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </div>

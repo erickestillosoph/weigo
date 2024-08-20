@@ -20,16 +20,20 @@ class EmailVerificationNotificationController extends Controller
      */
     public function store(Request $request):JsonResponse
     {
-    
 
-        $emailParam = $request->query('email');
-        $user = Guest::where('email', $emailParam)->first();
-        if ($user) {
-            $mail = new WeigoEmail($user);
-            Mail::to($user->email)->send($mail);
-            return response()->json(['message' => 'Verification Sent'], 200);
-        } else {
-            return response()->json(['message' => 'User not found'], 404);
+        $data = $request->validate([
+            'email' => ['required', 'email', 'exists:guests,email'],
+        ]);
+        $user = Guest::where('email', $data['email'])->first();
+    
+        if (!$user) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
+    
+        $mail = new WeigoEmail($user);
+        Mail::to($user->email)->send($mail);
+
+        return response()->json(['Message' => "Verification already sent"], 200);
+
     }
 }
