@@ -13,11 +13,12 @@ import axios from "@/lib/axios/axios";
 import UrlService from "@/services/urlService";
 import { useMutation } from "@tanstack/react-query";
 import cookieService from "@/services/cookieService";
+import { useToast } from "@/components/ui/toast/use-toast";
 
 export const usePasswordReset = () => {
     const { query } = useCsrfToken();
     const [csrfToken, setCsrfToken] = useRecoilState(csrfTokenState);
-
+    const { toast } = useToast();
     const setAuthState = useSetRecoilState(authenticatedStateAtom);
     const { state, destination } = useRecoilValue(authenticatedStateSelector);
 
@@ -50,8 +51,20 @@ export const usePasswordReset = () => {
             });
             setAuthState({ authentication: "reset", state: false });
             setCsrfToken("isCsrfToken");
+            toast({
+                variant: "default",
+                draggable: true,
+                title: "Success!",
+                description: "Successful request sent to the server",
+            });
         },
         onError: (err: Error) => {
+            toast({
+                variant: "default",
+                draggable: true,
+                title: "Error!",
+                description: "Error on send reset request to the server!",
+            });
             throw err;
         },
     });

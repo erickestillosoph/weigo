@@ -5,6 +5,7 @@ import { Header } from "./components/layouts/headerLayout";
 import { FooterLayout } from "./components/layouts/footerLayout";
 import { BodyLayout } from "./components/layouts/bodyLayout";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "./components/ui/toast/toaster";
 const queryClient = new QueryClient();
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
                     <Header></Header>
                     <BodyLayout></BodyLayout>
                     <FooterLayout className="margin_top_200_clamp"></FooterLayout>
+                    <Toaster />
                 </RecoilRoot>
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>

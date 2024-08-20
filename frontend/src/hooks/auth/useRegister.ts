@@ -14,6 +14,7 @@ import {
     authenticatedStateSelector,
 } from "@/state/auth/useAuthenticated";
 import { useSetUseRegisteredDataState } from "@/state/auth/useRegisterState";
+import { useToast } from "@/components/ui/toast/use-toast";
 
 type Inputs = {
     first_name: string;
@@ -31,6 +32,7 @@ export const useRegister = () => {
     const { state, destination } = useRecoilValue(authenticatedStateSelector);
     const setUseRegisteredDataState = useSetUseRegisteredDataState();
     const navigate = useNavigate();
+    const { toast } = useToast();
     const {
         getValues,
         register,
@@ -77,8 +79,20 @@ export const useRegister = () => {
             if (data) setAuthState({ authentication: "register", state: true });
             setCsrfToken("isCsrfToken");
             setIsLoggedIn("isLoggedIn");
+            toast({
+                variant: "default",
+                draggable: true,
+                title: "Success!",
+                description: "Verfication Email has been sucessfully sent",
+            });
         },
         onError: (err: Error) => {
+            toast({
+                variant: "destructive",
+                draggable: true,
+                title: "ERROR!",
+                description: "Error while saving data to the server!",
+            });
             throw err;
         },
     });

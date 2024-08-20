@@ -100,6 +100,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/weigo/delete-profile/{id}', [AccountsProfileController::class, 'deleteGuestUser'])->name('deleteId');
     Route::delete('/weigo/delete-client', [AccountsProfileController::class, 'deleteGuestClient'])->name('deleteIdClient');
     Route::post('/weigo/edit-profile', [AccountsProfileController::class, 'editGuestUser'])->name('updateProfile');
+    Route::get('/weigo/profile/{uid}', [AccountsProfileController::class, 'getProfileUser'])->name('getProfile');
 
 
     Route::get('/weigo/profile', [ProfileController::class, 'create', HandlePrecognitiveRequests::class])->name('profile.edit');                 

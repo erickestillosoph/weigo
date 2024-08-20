@@ -16,6 +16,7 @@ const getBearerToken = () => {
 
     const decodedCookieToken = decodeURI(JSON.stringify(cookieToken));
     const parseCookieToken = JSON.parse(decodedCookieToken);
+
     return parseCookieToken;
 };
 

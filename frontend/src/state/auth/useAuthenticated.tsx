@@ -10,6 +10,7 @@ type authenticationState = {
         | "reset"
         | "resend"
         | "password"
+        | "home"
         | "undefined";
     state: boolean;
 };
@@ -25,8 +26,10 @@ export const authenticatedStateSelector = selector({
         const { authentication, state } = get(authenticatedStateAtom);
 
         switch (authentication) {
-            case "login":
+            case "home":
                 return { state, destination: "/" };
+            case "login":
+                return { state, destination: "/profile" };
             case "register":
                 return { state, destination: "/resend-link" };
             case "update":

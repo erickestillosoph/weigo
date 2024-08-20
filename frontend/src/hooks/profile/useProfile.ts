@@ -3,7 +3,7 @@ import axios from "@/lib/axios/axios";
 import UrlService from "@/services/urlService";
 import { useMutation } from "@tanstack/react-query";
 import cookieService from "@/services/cookieService";
-
+import { useToast } from "@/components/ui/toast/use-toast";
 type Inputs = {
     first_name: string;
     last_name: string;
@@ -16,7 +16,7 @@ type Inputs = {
 
 export const useProfile = () => {
     const cookieUserId = cookieService.getCookieData("userId");
-
+    const { toast } = useToast();
     const {
         getValues,
         register,
@@ -53,6 +53,12 @@ export const useProfile = () => {
             console.log(res);
         },
         onError: (err: Error) => {
+            toast({
+                variant: "destructive",
+                draggable: true,
+                title: "Error Submitting",
+                description: "Error on sending data to the server",
+            });
             throw err;
         },
     });

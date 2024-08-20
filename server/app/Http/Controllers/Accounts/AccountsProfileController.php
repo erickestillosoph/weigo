@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use App\Request as RequestModel;
 use Illuminate\Http\JsonResponse;
-
+use Illuminate\Support\Facades\Schema;
 
 use Illuminate\Support\Facades\Log;
 
@@ -42,6 +42,27 @@ class AccountsProfileController extends Controller
         return Inertia::render('Accounts/Accounts', [
             "guests" => $account_guest_user
         ]);
+    }
+
+    public function getProfileUser($uid): JsonResponse
+    {
+        try {
+            $check_guest = Guest::where('uid', $uid)->exists();
+            if ($check_guest) {
+                $get_guest = DB::table('guests')
+                    ->where('uid', $uid)
+                    ->select('first_name', 'last_name', 'birthday', 'phone_number', 'email', 'remember_token')
+                    ->first();              
+                return response()->json(
+                    $get_guest,                
+                );              
+            } 
+            else {
+                return response()->json(['error' => 'User not found'], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function editAdminUser(Request $request) {
