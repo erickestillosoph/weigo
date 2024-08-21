@@ -1,18 +1,13 @@
 import { useCsrfToken } from "../token/useCsrfToken";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "@/lib/axios/axios";
 import UrlService from "@/services/urlService";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { csrfTokenState } from "@/state/auth/csrf/useCsrf";
 import cookieService from "@/services/cookieService";
 import { authLoginState } from "@/state/auth/useLoginState";
-import {
-    authenticatedStateAtom,
-    authenticatedStateSelector,
-} from "@/state/auth/useAuthenticated";
 import { useToast } from "@/components/ui/toast/use-toast";
 
 type Inputs = {
@@ -24,11 +19,10 @@ export const useLogin = () => {
     const { query } = useCsrfToken();
     const [csrfToken, setCsrfToken] = useRecoilState(csrfTokenState);
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(authLoginState);
-    const setAuthState = useSetRecoilState(authenticatedStateAtom);
-    const { state, destination } = useRecoilValue(authenticatedStateSelector);
+    const [urlState, setUrlState] = useState({ redirect: false });
+
     const { toast } = useToast();
 
-    const navigate = useNavigate();
     const {
         getValues,
         register,
@@ -66,7 +60,7 @@ export const useLogin = () => {
                 { maxAge: 86400 },
             );
             if (data) {
-                setAuthState({ authentication: "home", state: true });
+                setUrlState({ redirect: true });
             }
             setCsrfToken("isCsrfToken");
             setIsLoggedIn("isLoggedIn");
@@ -75,6 +69,7 @@ export const useLogin = () => {
                 variant: "default",
                 draggable: true,
                 title: "Success!",
+                duration: 1500,
                 description: "Your Successfully Login!",
             });
         },
@@ -82,6 +77,7 @@ export const useLogin = () => {
             toast({
                 variant: "destructive",
                 draggable: true,
+                duration: 1500,
                 title: "Error Submitting",
                 description: "Error on sending data to the server",
             });
@@ -90,10 +86,10 @@ export const useLogin = () => {
     });
 
     useEffect(() => {
-        if (state === true) {
-            navigate(destination);
+        if (urlState.redirect === true) {
+            window.location.replace("/");
         }
-    }, [isLoggedIn, state, destination, csrfToken, navigate]);
+    }, [isLoggedIn, urlState, csrfToken]);
 
     return {
         loadingCsrfToken: query.isLoading,

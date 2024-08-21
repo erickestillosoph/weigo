@@ -38,6 +38,7 @@ export const useResendLink = () => {
                 variant: "default",
                 draggable: true,
                 title: "Success!",
+                duration: 1500,
                 description: "Verfication Email has been sucessfully sent",
             });
         },
@@ -45,6 +46,7 @@ export const useResendLink = () => {
             toast({
                 variant: "destructive",
                 draggable: true,
+                duration: 1500,
                 title: "Error Submitting",
                 description: "Error on sending data to the server",
             });

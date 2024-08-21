@@ -1,4 +1,3 @@
-import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -13,58 +12,38 @@ import { useMutation } from "@tanstack/react-query";
 import cookieService from "@/services/cookieService";
 import { useToast } from "@/components/ui/toast/use-toast";
 
-type Inputs = {
-    uid: string;
-    password: string;
-    password_confirmation: string;
-};
-
-export const usePasswordResetForm = () => {
-    const cookieUuid = cookieService.getCookieData("uuid");
+export const useDelete = () => {
+    const cookieUuid = cookieService.getCookieData("userId") || "";
     const setAuthState = useSetRecoilState(authenticatedStateAtom);
     const { state, destination } = useRecoilValue(authenticatedStateSelector);
     const { toast } = useToast();
     const navigate = useNavigate();
-    const {
-        getValues,
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitSuccessful },
-    } = useForm<Inputs>({
-        defaultValues: {
-            uid: cookieUuid,
-            password: "",
-        },
-    });
 
-    const onSubmit = useMutation({
+    const { mutate } = useMutation({
         mutationFn: async () => {
-            const url = UrlService.resetPassword();
-            const data = {
-                password: String(getValues("password")),
-                uid: cookieUuid,
-            };
-            const response = await axios.post(url, data);
+            const url = UrlService.delete(cookieUuid);
+
+            const response = await axios.delete(url);
             return response.data;
         },
         onSuccess: () => {
+            cookieService.remove("userId");
+            setAuthState({ authentication: "home", state: true });
             toast({
                 variant: "default",
                 draggable: true,
                 duration: 1500,
                 title: "Success!",
-                description: "Successful request sent to the server",
+                description: "Successful deletion of your profile",
             });
-            cookieService.remove("uuid");
-            setAuthState({ authentication: "password", state: true });
         },
         onError: (err: Error) => {
             toast({
                 variant: "default",
                 draggable: true,
                 duration: 1500,
-                title: "Error!",
-                description: "Error on send reset request to the server!",
+                title: "Error Server!",
+                description: "Cannot Delete Profile",
             });
             throw err;
         },
@@ -77,10 +56,6 @@ export const usePasswordResetForm = () => {
     }, [state, destination, navigate]);
 
     return {
-        errorFormState: errors,
-        register,
-        handleSubmitForm: handleSubmit,
-        isSubmitSuccessful,
-        onSubmit,
+        mutate,
     };
 };

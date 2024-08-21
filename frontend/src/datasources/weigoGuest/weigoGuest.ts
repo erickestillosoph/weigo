@@ -81,9 +81,8 @@ export class WeigoGuest implements IWeigoGuest {
     }
 
     async reset(email: string): Promise<Reset> {
-        const url = UrlService.passwordReset();
         return axios
-            .post(url, email, {
+            .post("/", email, {
                 headers: {
                     "Content-Type": "application/json",
                 },

@@ -1,4 +1,3 @@
-import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -13,41 +12,25 @@ import { useMutation } from "@tanstack/react-query";
 import cookieService from "@/services/cookieService";
 import { useToast } from "@/components/ui/toast/use-toast";
 
-type Inputs = {
-    uid: string;
-    password: string;
-    password_confirmation: string;
-};
-
-export const usePasswordResetForm = () => {
+export const useLogout = () => {
     const cookieUuid = cookieService.getCookieData("uuid");
     const setAuthState = useSetRecoilState(authenticatedStateAtom);
     const { state, destination } = useRecoilValue(authenticatedStateSelector);
     const { toast } = useToast();
     const navigate = useNavigate();
-    const {
-        getValues,
-        register,
-        handleSubmit,
-        formState: { errors, isSubmitSuccessful },
-    } = useForm<Inputs>({
-        defaultValues: {
-            uid: cookieUuid,
-            password: "",
-        },
-    });
 
-    const onSubmit = useMutation({
+    const { mutate } = useMutation({
         mutationFn: async () => {
-            const url = UrlService.resetPassword();
+            const url = UrlService.logout();
             const data = {
-                password: String(getValues("password")),
                 uid: cookieUuid,
             };
             const response = await axios.post(url, data);
             return response.data;
         },
         onSuccess: () => {
+            cookieService.remove("uuid");
+            setAuthState({ authentication: "home", state: true });
             toast({
                 variant: "default",
                 draggable: true,
@@ -55,8 +38,6 @@ export const usePasswordResetForm = () => {
                 title: "Success!",
                 description: "Successful request sent to the server",
             });
-            cookieService.remove("uuid");
-            setAuthState({ authentication: "password", state: true });
         },
         onError: (err: Error) => {
             toast({
@@ -77,10 +58,6 @@ export const usePasswordResetForm = () => {
     }, [state, destination, navigate]);
 
     return {
-        errorFormState: errors,
-        register,
-        handleSubmitForm: handleSubmit,
-        isSubmitSuccessful,
-        onSubmit,
+        mutate,
     };
 };

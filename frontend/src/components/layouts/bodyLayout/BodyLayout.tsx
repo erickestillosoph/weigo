@@ -17,10 +17,8 @@ import ResendLink from "@/pages/auth/resend";
 import ResetForm from "@/pages/auth/reset/Reset";
 import ResetEmail from "@/pages/auth/reset/ResetForm";
 import AuthGuard from "@/components/shared/authGuard/AuthGuard";
-import useAxiosInterceptor from "@/lib/axios/useAxiosInterceptor";
 
 function BodyLayout() {
-    useAxiosInterceptor();
     return (
         <div>
             <Routes>

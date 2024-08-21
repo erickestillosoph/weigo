@@ -4,6 +4,7 @@ import { useSetUseIsAuthState } from "@/state/pages/useAuthApp";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { localStorageClient } from "@/lib/localStorage/localStorageClient";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 function NavigationEssential() {
     const navigate = useNavigate();
@@ -11,6 +12,7 @@ function NavigationEssential() {
     const currentPath = location.pathname;
     const setIsAuthState = useSetUseIsAuthState();
     const [authState, setAuthState] = useState(null);
+    const [isAvatar, setIsAvatar] = useState(false);
 
     const commonPath = useMemo(
         () => [
@@ -43,12 +45,19 @@ function NavigationEssential() {
         navigate("/contact");
     };
 
+    const handleProfile = () => {
+        navigate("/profile");
+    };
+
     useEffect(() => {
+        const isLoggedIn = localStorage.getItem("authState");
         const isAuthPathExist = authPath.includes(currentPath);
         const isCommonPathExist = commonPath.includes(currentPath);
         if (!isCommonPathExist || isAuthPathExist) {
             setIsAuthState({ authentication: false });
         }
+        if (isLoggedIn) setIsAvatar(true);
+        else setIsAvatar(false);
 
         // Retrieve and set the localStorage value
         const storedAuthState = localStorageClient.getLoginnedLSKey();
@@ -87,6 +96,14 @@ function NavigationEssential() {
                     <Button variant="outline" onClick={handleContactUs}>
                         Contact Us
                     </Button>
+                    {isAvatar && (
+                        <div className="">
+                            <Avatar onClick={handleProfile}>
+                                <AvatarImage src="https://github.com/shadcn.png" />
+                                <AvatarFallback>W</AvatarFallback>
+                            </Avatar>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

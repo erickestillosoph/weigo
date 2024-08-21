@@ -82,6 +82,7 @@ export const useRegister = () => {
             toast({
                 variant: "default",
                 draggable: true,
+                duration: 1500,
                 title: "Success!",
                 description: "Verfication Email has been sucessfully sent",
             });
@@ -90,6 +91,7 @@ export const useRegister = () => {
             toast({
                 variant: "destructive",
                 draggable: true,
+                duration: 1500,
                 title: "ERROR!",
                 description: "Error while saving data to the server!",
             });
