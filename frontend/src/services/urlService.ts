@@ -11,8 +11,8 @@ class UrlService {
     static logout() {
         return "/api/weigo/logout";
     }
-    static delete() {
-        return "/api/weigo/delete";
+    static delete(uid: string) {
+        return "api/weigo/delete-profile-guest/" + uid;
     }
     static forgotPassword() {
         return "api/weigo/send-reset-link";

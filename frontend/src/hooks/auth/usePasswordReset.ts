@@ -54,6 +54,7 @@ export const usePasswordReset = () => {
             toast({
                 variant: "default",
                 draggable: true,
+                duration: 1500,
                 title: "Success!",
                 description: "Successful request sent to the server",
             });
@@ -62,6 +63,7 @@ export const usePasswordReset = () => {
             toast({
                 variant: "default",
                 draggable: true,
+                duration: 1500,
                 title: "Error!",
                 description: "Error on send reset request to the server!",
             });

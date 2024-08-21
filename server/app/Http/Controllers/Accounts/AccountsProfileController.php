@@ -271,4 +271,23 @@ class AccountsProfileController extends Controller
             ], 500);
        }
     }
+
+    public function deleteProfileGuest($uid): JsonResponse
+    {
+        try {
+            $check_guest = Guest::where('uid', $uid)->exists();
+            if ($check_guest) {
+                $delete_guest = DB::table('guests')->where('uid', $uid)->delete();
+                $revoked = Auth::user()->currentAccessToken()->delete();       
+                return response()->json(
+                    [ 'delete_guest'=> $delete_guest, 'revoked'=> $revoked  ]              
+                );              
+            } 
+            else {
+                return response()->json(['error' => 'User not found'], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }

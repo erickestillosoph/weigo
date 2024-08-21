@@ -51,12 +51,20 @@ export const useProfile = () => {
         },
         onSuccess: (res) => {
             console.log(res);
+            toast({
+                variant: "default",
+                draggable: true,
+                title: "Succes",
+                duration: 1500,
+                description: "Success on sending data to the server",
+            });
         },
         onError: (err: Error) => {
             toast({
                 variant: "destructive",
                 draggable: true,
                 title: "Error Submitting",
+                duration: 1500,
                 description: "Error on sending data to the server",
             });
             throw err;

@@ -31,4 +31,9 @@ const axios = Axios.create({
     withXSRFToken: true,
 });
 
+// Function to update the Authorization header
+export const updateAuthorizationHeader = () => {
+    axios.defaults.headers["Authorization"] = `Bearer ${getBearerToken()}`;
+};
+
 export default axios;

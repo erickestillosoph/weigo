@@ -98,6 +98,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
                 ->name('preselecting-payments');
 
     Route::delete('/weigo/delete-profile/{id}', [AccountsProfileController::class, 'deleteGuestUser'])->name('deleteId');
+    Route::delete('/weigo/delete-profile-guest/{uid}', [AccountsProfileController::class, 'deleteProfileGuest'])->name('deleteUId');
     Route::delete('/weigo/delete-client', [AccountsProfileController::class, 'deleteGuestClient'])->name('deleteIdClient');
     Route::post('/weigo/edit-profile', [AccountsProfileController::class, 'editGuestUser'])->name('updateProfile');
     Route::get('/weigo/profile/{uid}', [AccountsProfileController::class, 'getProfileUser'])->name('getProfile');
