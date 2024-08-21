@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import axios from "@/lib/axios/axios";
 import UrlService from "@/services/urlService";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { csrfTokenState } from "@/state/auth/csrf/useCsrf";
@@ -25,6 +25,7 @@ type Inputs = {
 };
 
 export const useRegister = () => {
+    const queryClient = useQueryClient();
     const { query } = useCsrfToken();
     const [csrfToken, setCsrfToken] = useRecoilState(csrfTokenState);
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(authLoginState);
@@ -86,6 +87,7 @@ export const useRegister = () => {
                 title: "Success!",
                 description: "Verfication Email has been sucessfully sent",
             });
+            queryClient.invalidateQueries();
         },
         onError: (err: Error) => {
             toast({
