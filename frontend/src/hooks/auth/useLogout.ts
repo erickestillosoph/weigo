@@ -11,11 +11,12 @@ import UrlService from "@/services/urlService";
 import { useMutation } from "@tanstack/react-query";
 import cookieService from "@/services/cookieService";
 import { useToast } from "@/components/ui/toast/use-toast";
+import LocalStorageService from "@/services/localStorageService";
 
 export const useLogout = () => {
     const cookieUuid = cookieService.getCookieData("uuid");
     const setAuthState = useSetRecoilState(authenticatedStateAtom);
-    const { state, destination } = useRecoilValue(authenticatedStateSelector);
+    const { state } = useRecoilValue(authenticatedStateSelector);
     const { toast } = useToast();
     const navigate = useNavigate();
 
@@ -53,9 +54,11 @@ export const useLogout = () => {
 
     useEffect(() => {
         if (state === true) {
-            navigate(destination);
+            window.location.replace("/");
+            cookieService.clearAll();
+            LocalStorageService.clear();
         }
-    }, [state, destination, navigate]);
+    }, [state, navigate]);
 
     return {
         mutate,

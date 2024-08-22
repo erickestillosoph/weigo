@@ -47,7 +47,7 @@ function Profile() {
         LocalStorageService.clear();
         mutateLogout();
         setIsAuthState({ authentication: true });
-        navigate("/");
+        window.location.replace("/");
     };
 
     const handleHome = () => {
@@ -56,17 +56,16 @@ function Profile() {
     };
 
     const handDelete = () => {
+        mutateDelete();
         cookieService.clearAll();
         LocalStorageService.clear();
-        mutateDelete();
         setIsAuthState({ authentication: true });
-        window.location.replace("/");
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-2 object-cover">
-                <img src={heroImage} className="w-[100vh]  h-[100vh]" alt="" />
+        <form onSubmit={handleSubmit} className=" h-[100vh]">
+            <div className="grid grid-cols-2  h-[100vh]">
+                <img src={heroImage} className="w-[50vw]  h-[100vh]" alt="" />
 
                 <div className="grid  h-[20vh] items-center justify-center">
                     <div className="w-full flex flex-row gap-2 mt-9 mb-8">
