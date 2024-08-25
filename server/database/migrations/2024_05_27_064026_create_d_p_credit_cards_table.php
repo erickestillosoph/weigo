@@ -14,20 +14,16 @@ return new class extends Migration
         Schema::create('d_p_credit_cards', function (Blueprint $table) {
             $table->id();
             $table->uuid('uid');
-            $table->string('amount');
-            $table->string('ccy');
-            $table->string('description')->nullable();
-            $table->string('email');           
-            
-            $table->string('firstName');
-            $table->string('lastName');
-            $table->string('address1');
-            $table->string('address2');
-            $table->string('city');
-            $table->string('state');
-            $table->string('country');
-            $table->string('zipCode');
-            $table->string('telNo');
+            $table->string('Amount');
+            $table->string('Currency');
+            $table->string('Description');
+            $table->string('Email');           
+            $table->string('ProcId');
+            $table->string('Param1');
+            $table->string('Param2');
+            $table->string('IpAddress');
+            $table->string('UserAgent');
+            $table->json('Billing_Details');                    
             $table->timestamps();
         });
     }

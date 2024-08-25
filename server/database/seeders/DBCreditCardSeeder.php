@@ -19,22 +19,31 @@ class DBCreditCardSeeder extends Seeder
         $faker = Faker::create();
         foreach (range(1, 5) as $index) {
             DB::table('d_p_credit_cards')->insert([
-            'uid' => Str::uuid(),
-            'amount' => $faker->word(),
-            'ccy' => $faker->word(),
-            'description' => $faker->sentence(),
-            'email' => $faker->unique()->safeEmail(),
-            'firstName' => $faker->word(),
-            'lastName' => $faker->word(),
-            'address1' => $faker->sentence(),
-            'address2' => $faker->sentence(),
-            'city' => $faker->word(),
-            'state' => $faker->word(),
-            'country' => $faker->word(),
-            'zipCode' => $faker->numberBetween(100000, 999999),
-            'telNo' => $faker->numberBetween(1000000000, 9999999999),
-            'created_at' => Carbon::instance($faker->dateTimeBetween('now')),
-            'updated_at' => Carbon::instance($faker->dateTimeBetween('now','+1 months'))
+                'uid' => $faker->uuid,
+                'Amount' => $faker->randomFloat(2, 1000, 1000000),
+                'Currency' => $faker->randomElement(['USD', 'EUR', 'GBP', 'JPY']),
+                'Description' => $faker->sentence(),
+                'Email' => $faker->unique()->safeEmail(),
+                'Param1' => $faker->sentence(),
+                'Param2' => $faker->sentence(),
+                'ProcId' => $faker->word(),
+                'IpAddress' => $faker->ipv4(),
+                'UserAgent' => $faker->userAgent(),
+                'Billing_Details' => json_encode([
+                    'FirstName' => $faker->firstName(),
+                    'MiddleName' => $faker->firstName(),
+                    'LastName' => $faker->lastName(),
+                    'Address1' => $faker->streetAddress(),
+                    'Address2' => $faker->secondaryAddress(),
+                    'City' => $faker->city(),
+                    'State' => $faker->state(),
+                    'Country' => $faker->country(),
+                    'ZipCode' => $faker->postcode(),
+                    'TelNo' => $faker->phoneNumber(),
+                    'Email' => $faker->unique()->safeEmail(),
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
             
             ]);
         }

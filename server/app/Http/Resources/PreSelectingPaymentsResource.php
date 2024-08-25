@@ -17,10 +17,11 @@ class PreSelectingPaymentResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'amount' => $this->amount,
-            'ccy' => $this->ccy,
-            'description' => $this->description,
-            'email' => $this->email,
+            'Amount' => $this->Amount,
+            'Currency' => $this->Currency,
+            'Description' => $this->Description,
+            'Email' => $this->Email,
+            'ProcId' => $this->ProcId,
             'created_at' => $this->created_at
         ];
     }

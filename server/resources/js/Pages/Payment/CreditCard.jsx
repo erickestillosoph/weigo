@@ -95,6 +95,7 @@ export default function CreditCard({ auth }) {
         return (
             <InformationModal
                 data={dataToModal}
+                modePay="credit-card"
                 onClickModal={(value) => setInfoData(value)}
             ></InformationModal>
         );
@@ -128,7 +129,7 @@ export default function CreditCard({ auth }) {
 
                 <div className="py-12">
                     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div className="bg-white shadow-sm sm:rounded-lg">
                             <div className="p-5">
                                 <div className="hidden space-x-8 sm:-my-px sm:flex">
                                     <Tabs
@@ -159,30 +160,24 @@ export default function CreditCard({ auth }) {
                                 <table className="min-w-full bg-white shadow-md rounded-xl text-[14px] relative">
                                     <thead className="relative">
                                         <tr className="border-b bg-slate-100 sticky top-0 w-full bg-blue-gray-100 text-gray-700">
-                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[120px] text-left">
-                                                Name
-                                            </th>
-
-                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[120px] text-left">
+                                     
+                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[180px] text-left">
                                                 Email
                                             </th>
+                                            
+                                            <th className="border-r py-3 px-4 min-w-[20px] max-w-[50px] text-left">
+                                                Currency
+                                            </th>                                       
 
                                             <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
                                                 Amount
                                             </th>
 
-                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
-                                                Telephone
+                                            <th className="border-r py-3 px-4 min-w-[20px] max-w-[60px] text-left">
+                                                ProcId
                                             </th>
 
-                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
-                                                Currency
-                                            </th>
-
-                                            <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
-                                                Description
-                                            </th>
-
+                                            
                                             <th className="border-r py-3 px-4 min-w-[40px] max-w-[90px] text-left">
                                                 Created At
                                             </th>
@@ -207,31 +202,24 @@ export default function CreditCard({ auth }) {
                                                     key={index}
                                                     className="max-w-xs break-words border-b border-blue-gray-200"
                                                 >
-                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px] ">
-                                                        {creditCard.firstName}{" "}
-                                                        {creditCard.lastName}
+                                   
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[180px]">
+                                                        {creditCard.Email}
                                                     </td>
 
-                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                        {creditCard.email}
+                                                    <td className="border-r py-3 px-4 min-w-[20px] max-w-[50px]">
+                                                        {creditCard.Currency}
                                                     </td>
 
-                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                        {creditCard.amount}
+                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">                                                        
+                                                        {creditCard.Amount} {" "} {creditCard.Currency} 
                                                     </td>
 
-                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                        {creditCard.telNo}
+                                                    <td className="border-r py-3 px-4 min-w-[20px] max-w-[60px]">
+                                                        {creditCard.ProcId}
                                                     </td>
 
-                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                        {creditCard.ccy}
-                                                    </td>
-
-                                                    <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
-                                                        {creditCard.description}
-                                                    </td>
-
+                                                    
                                                     <td className="border-r py-3 px-4 min-w-[40px] max-w-[90px]">
                                                         {creditCard.created_at}
                                                     </td>
@@ -275,296 +263,300 @@ export default function CreditCard({ auth }) {
                                 </table>
                             </div>
 
-                            <form onSubmit={handleSubmit} hidden={tabToggle}>
-                                <div className="p-6 grid grid-cols-3 gap-4 w-full">
-                                    <div className="">
-                                        <InputLabel
-                                            htmlFor="email"
-                                            value="Email"
-                                        />
-
-                                        <TextInput
-                                            id="email"
-                                            type="email"
-                                            className="mt-1 block w-full"
-                                            name="email"
-                                            onChange={handleChange}
-                                        />
-                                        {touched.email && errors.email && (
-                                            <InputError
-                                                message={errors.email}
-                                                className="mt-2"
+                          <div>
+                            {
+                                isRoleAdmin && (<form onSubmit={handleSubmit} hidden={tabToggle}>
+                                    <div className="p-6 grid grid-cols-3 gap-4 w-full">
+                                        <div className="">
+                                            <InputLabel
+                                                htmlFor="email"
+                                                value="Email"
                                             />
-                                        )}
-                                    </div>
-
-                                    <div className="">
-                                        <InputLabel
-                                            htmlFor="amount"
-                                            value="Amount"
-                                        />
-
-                                        <TextInput
-                                            id="amount"
-                                            type="text"
-                                            className="mt-1 block w-full"
-                                            name="amount"
-                                            onChange={handleChange}
-                                        />
-                                        {touched.amount && errors.amount && (
-                                            <InputError
-                                                message={errors.amount}
-                                                className="mt-2"
+    
+                                            <TextInput
+                                                id="email"
+                                                type="email"
+                                                className="mt-1 block w-full"
+                                                name="email"
+                                                onChange={handleChange}
                                             />
-                                        )}
-                                    </div>
-
-                                    <div className="">
-                                        <InputLabel htmlFor="ccy" value="CCY" />
-
-                                        <TextInput
-                                            id="ccy"
-                                            type="text"
-                                            className="mt-1 block w-full"
-                                            name="ccy"
-                                            onChange={handleChange}
-                                        />
-                                        {touched.ccy && errors.ccy && (
-                                            <InputError
-                                                message={errors.ccy}
-                                                className="mt-2"
-                                            />
-                                        )}
-                                    </div>
-
-                                    <div className="">
-                                        <InputLabel
-                                            htmlFor="description"
-                                            value="Description"
-                                        />
-
-                                        <TextInput
-                                            id="description"
-                                            type="text"
-                                            className="mt-1 block w-full"
-                                            name="description"
-                                            onChange={handleChange}
-                                        />
-                                        {touched.description &&
-                                            errors.description && (
+                                            {touched.email && errors.email && (
                                                 <InputError
-                                                    message={errors.description}
+                                                    message={errors.email}
                                                     className="mt-2"
                                                 />
                                             )}
-                                    </div>
-
-                                    <div className="">
-                                        <InputLabel
-                                            htmlFor="firstName"
-                                            value="FIRSTNAME"
-                                        />
-
-                                        <TextInput
-                                            id="firstName"
-                                            type="text"
-                                            className="mt-1 block w-full"
-                                            name="firstName"
-                                            onChange={handleChange}
-                                        />
-                                        {touched.firstName &&
-                                            errors.firstName && (
+                                        </div>
+    
+                                        <div className="">
+                                            <InputLabel
+                                                htmlFor="amount"
+                                                value="Amount"
+                                            />
+    
+                                            <TextInput
+                                                id="amount"
+                                                type="text"
+                                                className="mt-1 block w-full"
+                                                name="amount"
+                                                onChange={handleChange}
+                                            />
+                                            {touched.amount && errors.amount && (
                                                 <InputError
-                                                    message={errors.firstName}
+                                                    message={errors.amount}
                                                     className="mt-2"
                                                 />
                                             )}
-                                    </div>
-
-                                    <div className="">
-                                        <InputLabel
-                                            htmlFor="lastName"
-                                            value="LASTNAME"
-                                        />
-
-                                        <TextInput
-                                            id="lastName"
-                                            type="text"
-                                            className="mt-1 block w-full"
-                                            name="lastName"
-                                            onChange={handleChange}
-                                        />
-                                        {touched.lastName &&
-                                            errors.lastName && (
+                                        </div>
+    
+                                        <div className="">
+                                            <InputLabel htmlFor="ccy" value="CCY" />
+    
+                                            <TextInput
+                                                id="ccy"
+                                                type="text"
+                                                className="mt-1 block w-full"
+                                                name="ccy"
+                                                onChange={handleChange}
+                                            />
+                                            {touched.ccy && errors.ccy && (
                                                 <InputError
-                                                    message={errors.lastName}
+                                                    message={errors.ccy}
                                                     className="mt-2"
                                                 />
                                             )}
-                                    </div>
-
-                                    <div className="">
-                                        <InputLabel
-                                            htmlFor="address1"
-                                            value="ADDRESS1"
-                                        />
-
-                                        <TextInput
-                                            id="address1"
-                                            type="text"
-                                            className="mt-1 block w-full"
-                                            name="address1"
-                                            onChange={handleChange}
-                                        />
-
-                                        {touched.address1 &&
-                                            errors.address1 && (
+                                        </div>
+    
+                                        <div className="">
+                                            <InputLabel
+                                                htmlFor="description"
+                                                value="Description"
+                                            />
+    
+                                            <TextInput
+                                                id="description"
+                                                type="text"
+                                                className="mt-1 block w-full"
+                                                name="description"
+                                                onChange={handleChange}
+                                            />
+                                            {touched.description &&
+                                                errors.description && (
+                                                    <InputError
+                                                        message={errors.description}
+                                                        className="mt-2"
+                                                    />
+                                                )}
+                                        </div>
+    
+                                        <div className="">
+                                            <InputLabel
+                                                htmlFor="firstName"
+                                                value="FIRSTNAME"
+                                            />
+    
+                                            <TextInput
+                                                id="firstName"
+                                                type="text"
+                                                className="mt-1 block w-full"
+                                                name="firstName"
+                                                onChange={handleChange}
+                                            />
+                                            {touched.firstName &&
+                                                errors.firstName && (
+                                                    <InputError
+                                                        message={errors.firstName}
+                                                        className="mt-2"
+                                                    />
+                                                )}
+                                        </div>
+    
+                                        <div className="">
+                                            <InputLabel
+                                                htmlFor="lastName"
+                                                value="LASTNAME"
+                                            />
+    
+                                            <TextInput
+                                                id="lastName"
+                                                type="text"
+                                                className="mt-1 block w-full"
+                                                name="lastName"
+                                                onChange={handleChange}
+                                            />
+                                            {touched.lastName &&
+                                                errors.lastName && (
+                                                    <InputError
+                                                        message={errors.lastName}
+                                                        className="mt-2"
+                                                    />
+                                                )}
+                                        </div>
+    
+                                        <div className="">
+                                            <InputLabel
+                                                htmlFor="address1"
+                                                value="ADDRESS1"
+                                            />
+    
+                                            <TextInput
+                                                id="address1"
+                                                type="text"
+                                                className="mt-1 block w-full"
+                                                name="address1"
+                                                onChange={handleChange}
+                                            />
+    
+                                            {touched.address1 &&
+                                                errors.address1 && (
+                                                    <InputError
+                                                        message={errors.address1}
+                                                        className="mt-2"
+                                                    />
+                                                )}
+                                        </div>
+    
+                                        <div className="">
+                                            <InputLabel
+                                                htmlFor="address2"
+                                                value="ADDRESS2"
+                                            />
+    
+                                            <TextInput
+                                                id="address2"
+                                                type="text"
+                                                className="mt-1 block w-full"
+                                                name="address2"
+                                                onChange={handleChange}
+                                            />
+    
+                                            {touched.address2 &&
+                                                errors.address2 && (
+                                                    <InputError
+                                                        message={errors.address2}
+                                                        className="mt-2"
+                                                    />
+                                                )}
+                                        </div>
+    
+                                        <div className="">
+                                            <InputLabel
+                                                htmlFor="city"
+                                                value="CITY"
+                                            />
+    
+                                            <TextInput
+                                                id="city"
+                                                type="text"
+                                                className="mt-1 block w-full"
+                                                name="city"
+                                                onChange={handleChange}
+                                            />
+    
+                                            {touched.city && errors.city && (
                                                 <InputError
-                                                    message={errors.address1}
+                                                    message={errors.city}
                                                     className="mt-2"
                                                 />
                                             )}
-                                    </div>
-
-                                    <div className="">
-                                        <InputLabel
-                                            htmlFor="address2"
-                                            value="ADDRESS2"
-                                        />
-
-                                        <TextInput
-                                            id="address2"
-                                            type="text"
-                                            className="mt-1 block w-full"
-                                            name="address2"
-                                            onChange={handleChange}
-                                        />
-
-                                        {touched.address2 &&
-                                            errors.address2 && (
+                                        </div>
+    
+                                        <div className="">
+                                            <InputLabel
+                                                htmlFor="state"
+                                                value="STATE"
+                                            />
+    
+                                            <TextInput
+                                                id="state"
+                                                type="text"
+                                                className="mt-1 block w-full"
+                                                name="state"
+                                                onChange={handleChange}
+                                            />
+    
+                                            {touched.state && errors.state && (
                                                 <InputError
-                                                    message={errors.address2}
+                                                    message={errors.state}
                                                     className="mt-2"
                                                 />
                                             )}
-                                    </div>
-
-                                    <div className="">
-                                        <InputLabel
-                                            htmlFor="city"
-                                            value="CITY"
-                                        />
-
-                                        <TextInput
-                                            id="city"
-                                            type="text"
-                                            className="mt-1 block w-full"
-                                            name="city"
-                                            onChange={handleChange}
-                                        />
-
-                                        {touched.city && errors.city && (
-                                            <InputError
-                                                message={errors.city}
-                                                className="mt-2"
+                                        </div>
+    
+                                        <div className="">
+                                            <InputLabel
+                                                htmlFor="country"
+                                                value="COUNTRY"
                                             />
-                                        )}
-                                    </div>
-
-                                    <div className="">
-                                        <InputLabel
-                                            htmlFor="state"
-                                            value="STATE"
-                                        />
-
-                                        <TextInput
-                                            id="state"
-                                            type="text"
-                                            className="mt-1 block w-full"
-                                            name="state"
-                                            onChange={handleChange}
-                                        />
-
-                                        {touched.state && errors.state && (
-                                            <InputError
-                                                message={errors.state}
-                                                className="mt-2"
+    
+                                            <TextInput
+                                                id="country"
+                                                type="text"
+                                                className="mt-1 block w-full"
+                                                name="country"
+                                                onChange={handleChange}
                                             />
-                                        )}
-                                    </div>
-
-                                    <div className="">
-                                        <InputLabel
-                                            htmlFor="country"
-                                            value="COUNTRY"
-                                        />
-
-                                        <TextInput
-                                            id="country"
-                                            type="text"
-                                            className="mt-1 block w-full"
-                                            name="country"
-                                            onChange={handleChange}
-                                        />
-
-                                        {touched.country && errors.country && (
-                                            <InputError
-                                                message={errors.country}
-                                                className="mt-2"
+    
+                                            {touched.country && errors.country && (
+                                                <InputError
+                                                    message={errors.country}
+                                                    className="mt-2"
+                                                />
+                                            )}
+                                        </div>
+    
+                                        <div className="">
+                                            <InputLabel
+                                                htmlFor="zipCode"
+                                                value="ZIP CODE"
                                             />
-                                        )}
-                                    </div>
-
-                                    <div className="">
-                                        <InputLabel
-                                            htmlFor="zipCode"
-                                            value="ZIP CODE"
-                                        />
-
-                                        <TextInput
-                                            id="zipCode"
-                                            type="text"
-                                            className="mt-1 block w-full"
-                                            name="zipCode"
-                                            onChange={handleChange}
-                                        />
-
-                                        {touched.zipCode && errors.zipCode && (
-                                            <InputError
-                                                message={errors.zipCode}
-                                                className="mt-2"
+    
+                                            <TextInput
+                                                id="zipCode"
+                                                type="text"
+                                                className="mt-1 block w-full"
+                                                name="zipCode"
+                                                onChange={handleChange}
                                             />
-                                        )}
-                                    </div>
-
-                                    <div className="">
-                                        <InputLabel
-                                            htmlFor="telNo"
-                                            value="TEL NO"
-                                        />
-
-                                        <TextInput
-                                            id="telNo"
-                                            type="text"
-                                            className="mt-1 block w-full"
-                                            name="telNo"
-                                            onChange={handleChange}
-                                        />
-                                        {touched.telNo && errors.telNo && (
-                                            <InputError
-                                                message={errors.telNo}
-                                                className="mt-2"
+    
+                                            {touched.zipCode && errors.zipCode && (
+                                                <InputError
+                                                    message={errors.zipCode}
+                                                    className="mt-2"
+                                                />
+                                            )}
+                                        </div>
+    
+                                        <div className="">
+                                            <InputLabel
+                                                htmlFor="telNo"
+                                                value="TEL NO"
                                             />
-                                        )}
+    
+                                            <TextInput
+                                                id="telNo"
+                                                type="text"
+                                                className="mt-1 block w-full"
+                                                name="telNo"
+                                                onChange={handleChange}
+                                            />
+                                            {touched.telNo && errors.telNo && (
+                                                <InputError
+                                                    message={errors.telNo}
+                                                    className="mt-2"
+                                                />
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div className="pl-6 pb-6 ">
-                                    <PrimaryButton type="submit">
-                                        Submit
-                                    </PrimaryButton>
-                                </div>
-                            </form>
+    
+                                    <div className="pl-6 pb-6 ">
+                                        <PrimaryButton type="submit">
+                                            Submit
+                                        </PrimaryButton>
+                                    </div>
+                                </form>)
+                            }
+                          </div>
                         </div>
                     </div>
                 </div>

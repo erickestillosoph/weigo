@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('d_p_filtered_payments', function (Blueprint $table) {
             $table->id();
             $table->uuid('uid');
-            $table->string('amount');
-            $table->string('ccy');
-            $table->string('description')->nullable();
-            $table->string('email');
+            $table->string('Amount');
+            $table->string('Currency');
+            $table->string('Description')->nullable();
+            $table->string('Email');
+            $table->string('ProcId');
             $table->timestamps();
         });
     }

@@ -13,10 +13,11 @@ class DPFilteredPayments extends Model
 
     protected $fillable = [
             'uid',
-            'amount',
-            'ccy',
-            'description',
-            'email',
+            'Amount',
+            'Currency',
+            'Description',
+            'Email',
+            'ProcId'
     ];
 
     protected static function boot()

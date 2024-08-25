@@ -21,12 +21,13 @@ class DBPaymentSeeder extends Seeder
         foreach (range(1, 5) as $index) {
             DB::table('d_p_payments')->insert([
                 'uid' => Str::uuid(),
-                'amount' => $faker->word(),
-                'ccy' => $faker->word(),
-                'description' => $faker->sentence(),
-                'email' => $faker->unique()->safeEmail(),
-                'created_at' => Carbon::instance($faker->dateTimeBetween('now')),
-                'updated_at' => Carbon::instance($faker->dateTimeBetween('now','+1 months'))
+                'Amount' => $faker->randomFloat(2, 1000, 1000000),
+                'Currency' => $faker->randomElement(['USD', 'EUR', 'GBP', 'JPY']),
+                'Description' => $faker->sentence(),
+                'Email' => $faker->unique()->safeEmail(),
+                'ProcId' => $faker->word(),
+                'created_at' => now(),
+                'updated_at' => now(),
                 
             ]);
         }

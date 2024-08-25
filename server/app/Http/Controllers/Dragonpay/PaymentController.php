@@ -32,7 +32,14 @@ class PaymentController extends Controller
     public function create(StorePaymentRequest $request): JsonResponse
     {
         //
-        $payments = Payment::create($request->validated());
+        // $payments = Payment::create($request->validated());
+        $payments = Payment::create([
+            'Amount' => $request->input('Amount'),
+            'Currency' => $request->input('Currency'),
+            'Email' => $request->input('Email'),
+            'Description' => $request->input('Description'),
+            'ProcId' => $request->input('ProcId'),        
+        ]);
         $status = 'success';
         $code = 200;
         if (!$payments) {

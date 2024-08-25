@@ -29,7 +29,18 @@ class CreditCardController extends Controller
     public function create(StoreCreditCardRequest $request)
     {
         //
-        $creditCard = CreditCard::create($request->validated());
+        $creditCard = CreditCard::create([
+            'Amount' => $request->input('Amount'),
+            'Currency' => $request->input('Currency'),
+            'Email' => $request->input('Email'),
+            'Description' => $request->input('Description'),
+            'ProcId' => $request->input('ProcId'),
+            'Param1' => $request->input('Param1'),
+            'Param2' => $request->input('Param2'),
+            'IpAddress' => $request->ip(),
+            'UserAgent' => $request->header('User-Agent'),
+            'Billing_Details' => $request->input('BillingDetails'),
+        ]);
         $status = 'success';
         $code = 200;
         if (!$creditCard) {

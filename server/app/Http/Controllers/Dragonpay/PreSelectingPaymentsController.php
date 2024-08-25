@@ -29,7 +29,14 @@ class PreSelectingPaymentsController extends Controller
     public function create(StoreDPPreSelectingPaymentsRequest $request)
     {
         //
-        $preSelectingPayments = DPPreSelectingPayments::create($request->validated());
+        // $preSelectingPayments = DPPreSelectingPayments::create($request->validated());
+        $preSelectingPayments = DPPreSelectingPayments::create([
+            'Amount' => $request->input('Amount'),
+            'Currency' => $request->input('Currency'),
+            'Email' => $request->input('Email'),
+            'Description' => $request->input('Description'),
+            'ProcId' => $request->input('ProcId'),        
+        ]);
         $status = 'success';
         $code = 200;
         if (!$preSelectingPayments) {
