@@ -19,22 +19,31 @@ class StoreCreditCardRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'amount' => [ 'required', 'min:1', 'string'],
-            'ccy' => [ 'required', 'max:5', 'string' ],
-            'description' => [ 'required','max:255', 'string'],
-            'email' => [ 'required', 'max:255', 'email' ],
-            'firstName' => [ 'required', 'max:255', 'string'],
-            'lastName' => [ 'required', 'max:255', 'string' ],
-            'address1' => [ 'required', 'max:255', 'string'],
-            'address2' => [ 'required', 'max:255', 'string'],
-            'city' => [ 'required','max:255', 'string'],
-            'state' => [ 'required','max:255', 'string' ],
-            'country' => [ 'required','max:255', 'string' ],
-            'zipCode' => [ 'required', 'max:255', 'string' ], 
-            'telNo' => [ 'required', 'max:255', 'string' ]
+            'Amount' => 'required|numeric',
+            'Currency' => 'required|string',
+            'Description' => 'required|string',
+            'Email' => 'required|email',
+            'ProcId' => 'required|string',
+            'Param1' => 'required|string',
+            'Param2' => 'required|string',
+            'IpAddress' => 'required|string',
+            'UserAgent' => 'required|string',
+            'BillingDetails' => 'required|array',
+            'BillingDetails.FirstName' => 'required|string',
+            'BillingDetails.MiddleName' => 'required|string',
+            'BillingDetails.LastName' => 'required|string',
+            'BillingDetails.Address1' => 'required|string',
+            'BillingDetails.Address2' => 'required|string',
+            'BillingDetails.City' => 'required|string',
+            'BillingDetails.Province' => 'required|string',
+            'BillingDetails.Country' => 'required|string',            
+            'BillingDetails.ZipCode' => 'required|string',
+            'BillingDetails.TelNo' => 'required|string',
+            'BillingDetails.Email' => 'required|string',
+           
         ];
     }
 }

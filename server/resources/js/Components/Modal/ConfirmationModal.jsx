@@ -12,7 +12,7 @@ export default function ConfirmationModal({
             <h2 className="font-bold mb-6">Are you sure with the changes?</h2>
             {data && (
                 <p className="mb-6">
-                    {data.email} &nbsp; {data.amount}
+                    {data.Email} &nbsp; {data.Amount}
                 </p>
             )}
             <div className="flex justify-between">

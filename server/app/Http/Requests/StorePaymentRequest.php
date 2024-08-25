@@ -22,10 +22,11 @@ class StorePaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'amount' => [ 'required', 'min:1', 'string'],
-            'ccy' => [ 'required', 'max:5', 'string' ],
-            'description' => [ 'required','max:255', 'string'],
-            'email' => [ 'required', 'max:255', 'email' ],
+            'Amount' => 'required|numeric',
+            'Currency' => 'required|string',
+            'Description' => 'required|string',
+            'Email' => 'required|email',
+            'ProcId' => 'required|string',
         ];
     }
 }

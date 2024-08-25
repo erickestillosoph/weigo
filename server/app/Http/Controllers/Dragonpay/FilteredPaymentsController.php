@@ -28,7 +28,14 @@ class FilteredPaymentsController extends Controller
     public function create(StoreDPFilteredPaymentsRequest $request)
     {
         //
-        $filteredPayments = DPFilteredPayments::create($request->validated());
+        // $filteredPayments = DPFilteredPayments::create($request->validated());
+        $filteredPayments = DPFilteredPayments::create([
+            'Amount' => $request->input('Amount'),
+            'Currency' => $request->input('Currency'),
+            'Email' => $request->input('Email'),
+            'Description' => $request->input('Description'),
+            'ProcId' => $request->input('ProcId'),        
+        ]);
         $status = 'success';
         $code = 200;
         if (!$filteredPayments) {

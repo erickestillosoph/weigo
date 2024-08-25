@@ -17,19 +17,16 @@ class CreditCardResource extends JsonResource
         // return parent::toArray($request);
         return [
             'id' => $this->id,
-            'amount' => $this->amount,
-            'ccy' => $this->ccy,
-            'description' => $this->description,
-            'email' => $this->email,
-            'firstName' => $this->firstName,
-            'lastName' => $this->lastName,
-            'address1' => $this->address1,
-            'address2' => $this->address2,
-            'city' => $this->city,
-            'state' => $this->state,
-            'country' => $this->country,
-            'zipCode' => $this->zipCode,
-            'telNo' => $this->telNo,
+            'Amount' => $this->Amount,  
+            'Currency' => $this->Currency,
+            'Description' => $this->Description,
+            'Email' => $this->Email,
+            'ProcId' => $this->ProcId,
+            'Param1' => $this->Param1,
+            'Param2' => $this->Param2,
+            'IpAddress' => $this->IpAddress,
+            'UserAgent' => $this->UserAgent ,
+            'Billing_Details' => $this->Billing_Details,            
             'created_at' => $this->created_at
         ];
     }

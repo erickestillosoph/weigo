@@ -13,20 +13,20 @@ class CreditCard extends Model
 
     protected $fillable = [
             'uid',
-            'amount',
-            'ccy',
-            'description',
-            'email',
-            'firstName',
-            'lastName',
-            'address1',
-            'address2',
-            'city',
-            'state',
-            'country',
-            'zipCode',
-            'telNo',
-           
+            'Amount',
+            'Currency',
+            'Description',
+            'Email',
+            'ProcId',
+            'Param1',
+            'Param2',
+            'IpAddress',
+            'UserAgent',
+            'BillingDetails',          
+    ];
+
+    protected $casts = [
+        'BillingDetails' => 'array',        
     ];
 
     protected static function boot()

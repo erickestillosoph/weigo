@@ -3,15 +3,16 @@ import * as Yup from "yup";
 import { useEffect, useState } from "react";
 
 export const useValidationSchemaCommon = (values) => {
-    const { email, amount, ccy } = values;
+    const { Email, Amount, Currency, ProcId } = values;
 
     const [emailData, setEmailData] = useState("undefined");
     const [amountData, setAmountData] = useState("undefined");
     const [ccyData, setCCYData] = useState("undefined");
+    const [procIdData, setProcIdData] = useState("undefined");
 
     const validateEmail = () => {
         let response;
-        if (!email) {
+        if (!Email) {
             response = "Email is required";
         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
             response = "Invalid email address";
@@ -24,11 +25,11 @@ export const useValidationSchemaCommon = (values) => {
 
     const validateAmount = () => {
         let response;
-        if (!amount) {
+        if (!Amount) {
             response = "Amount is required";
         } else if (!/^[0-9]/i.test(amount)) {
             response = "Please enter numbers";
-        } else if (amount.length <= 2) {
+        } else if (Amount.length <= 2) {
             response = "Please input amount greater that  2 digit";
         } else {
             response = "Good!";
@@ -39,7 +40,7 @@ export const useValidationSchemaCommon = (values) => {
 
     const validateCurrency = () => {
         let response;
-        let valueToCheck = ccy;
+        let valueToCheck = Currency;
         let countryExists = false;
 
         for (let i = 0; i < currencyCode.length; i++) {
@@ -49,7 +50,7 @@ export const useValidationSchemaCommon = (values) => {
             }
         }
 
-        if (!ccy) {
+        if (!Currency) {
             response = "Currency is required";
         } else if (!/^[A-Z]/i.test(ccy)) {
             response = "Please enter numbers";
@@ -61,17 +62,31 @@ export const useValidationSchemaCommon = (values) => {
         setCCYData(response);
         return response;
     };
+    const validateProcIdData = () => {
+        let response;
+    
+        if (!ProcId) {
+            response = "ProcId is required";
+        } else {
+            response = "Good!";
+        }
+        setProcIdData(response);
+        return response;
+    };
     useEffect(() => {
         validateAmount();
         validateCurrency();
         validateEmail();
-    }, [amount, ccy, email]);
+        validateProcIdData();
+    }, [Amount, Currency, Email, ProcId]);
 
     const validationSchema = Yup.object({
-        email: Yup.string().required(`${emailData}`),
-        amount: Yup.string().required(`${amountData}`),
-        ccy: Yup.string().required(`${ccyData}`),
-        description: Yup.string(),
+        Email: Yup.string().required(`${emailData}`),
+        Amount: Yup.string().required(`${amountData}`),
+        Currency: Yup.string().required(`${ccyData}`),
+        ProcId: Yup.string().required(`${procIdData}`),
+        Description: Yup.string(),
+        
     });
 
     return {
