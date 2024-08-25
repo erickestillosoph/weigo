@@ -4,22 +4,31 @@ import { useEffect, useState } from "react";
 import * as Yup from "yup";
 export const useValidationSchemaCreditCard = (values) => {
     const {
-        address1,
-        address2,
-        amount,
-        ccy,
-        country,
-        city,
-        state,
-        firstName,
-        lastName,
-        email,
-        zipCode,
-        telNo,
+        Amount,
+        Email,
+        Description,
+        ProcId,
+        Currency,
+        Billing_Details: {
+            FirstName,
+            MiddleName,
+            LastName,
+            Email: EmailBD,
+            Address1,
+            Address2,
+            Country,
+            City,
+            State,
+            ZipCode,
+            TelNo,
+        }
+      
     } = values;
 
+    
+
     const [nameData, setNameData] = useState("undefined");
-    const [ccytData, setCCYData] = useState("undefined");
+    const [currecyData, setCurrencyData] = useState("undefined");
     const [countryData, setCountryData] = useState("undefined");
     const [cityData, setCityData] = useState("undefined");
     const [stateData, setStateData] = useState("undefined");
@@ -27,28 +36,46 @@ export const useValidationSchemaCreditCard = (values) => {
     const [zipCodeData, setZipCodeData] = useState("undefined");
     const [telNoData, setTelNoData] = useState("undefined");
     const [amountData, setAmountData] = useState("undefined");
+    const [procIdData, setProcIdData] = useState("undefined");
     const [addressData, setAddressData] = useState("undefined");
 
     const validateName = () => {
         let response;
-        if (!firstName || !lastName) {
+        if (!FirstName || !LastName || !MiddleName) {
             response = "Name is Required";
-        } else if (!/^[a-zA-Z]*$/i.test(firstName)) {
+        } else if (!/^[a-zA-Z]*$/i.test(FirstName)) {
             response = "Invalid Name. Please use alphabetical characters only";
-        } else if (!/^[a-zA-Z]*$/i.test(lastName)) {
+        } else if (!/^[a-zA-Z]*$/i.test(MiddleName)) {
             response = "Invalid Name. Please use alphabetical characters only";
-        } else {
+        } else if (!/^[a-zA-Z]*$/i.test(LastName)) {
+            response = "Invalid Name. Please use alphabetical characters only";
+        } 
+        else {
             response = "Good!";
         }
         setNameData(response);
         return response;
     };
 
+    const validateProcIdData = () => {
+        let response;
+    
+        if (!ProcId) {
+            response = "ProcId is required";
+        } else {
+            response = "Good!";
+        }
+        setProcIdData(response);
+        return response;
+    };
+
     const validateEmail = () => {
         let response;
-        if (!email) {
+        if (!Email || !EmailBD) {
             response = "Email is required";
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Email)) {
+            response = "Invalid email address";
+        }  else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(EmailBD)) {
             response = "Invalid email address";
         } else {
             response = "Good!";
@@ -60,11 +87,11 @@ export const useValidationSchemaCreditCard = (values) => {
 
     const validateAddress = () => {
         let response;
-        if (!address1 || !address2) {
+        if (!Address1 || !Address2) {
             response = "Address is required";
-        } else if (!/^[a-zA-Z0-9]*$/i.test(address1)) {
+        } else if (!/^[a-zA-Z0-9]*$/i.test(Address1)) {
             response = "Please enter letters and numbers";
-        } else if (!/^[a-zA-Z0-9]*$/i.test(address2)) {
+        } else if (!/^[a-zA-Z0-9]*$/i.test(Address2)) {
             response = "Please enter letters and numbers";
         } else {
             response = "Good!";
@@ -75,9 +102,9 @@ export const useValidationSchemaCreditCard = (values) => {
 
     const validateCity = () => {
         let response;
-        if (!city) {
+        if (!City) {
             response = "City is required";
-        } else if (!/^[a-zA-Z]*$/i.test(city)) {
+        } else if (!/^[a-zA-Z]*$/i.test(City)) {
             response = "Please enter letters";
         } else {
             response = "Good!";
@@ -88,9 +115,9 @@ export const useValidationSchemaCreditCard = (values) => {
 
     const validateState = () => {
         let response;
-        if (!state) {
+        if (!State) {
             response = "State is required";
-        } else if (!/^[a-zA-Z]*$/i.test(state)) {
+        } else if (!/^[a-zA-Z]*$/i.test(State)) {
             response = "Please enter letters";
         } else {
             response = "Good!";
@@ -102,9 +129,9 @@ export const useValidationSchemaCreditCard = (values) => {
 
     const validateCountry = () => {
         let response;
-        if (!country) {
+        if (!Country) {
             response = "Country is required";
-        } else if (!/^[a-zA-Z]*$/i.test(country)) {
+        } else if (!/^[a-zA-Z]*$/i.test(Country)) {
             response = "Please enter letters";
         } else {
             response = "Good!";
@@ -115,9 +142,9 @@ export const useValidationSchemaCreditCard = (values) => {
 
     const validateZipCode = () => {
         let response;
-        if (!zipCode) {
+        if (!ZipCode) {
             response = "ZipCode is required";
-        } else if (!/^[0-9 ]/i.test(zipCode)) {
+        } else if (!/^[0-9 ]/i.test(ZipCode)) {
             response = "Please enter numbers";
         } else {
             response = "Good!";
@@ -128,9 +155,9 @@ export const useValidationSchemaCreditCard = (values) => {
 
     const validateAmount = () => {
         let response;
-        if (!amount) {
+        if (!Amount) {
             response = "Amount is required";
-        } else if (!/^[0-9]/i.test(amount)) {
+        } else if (!/^[0-9]/i.test(Amount)) {
             response = "Please enter numbers";
         } else if (amount.length <= 2) {
             response = "Please input amount greater that 2 digit";
@@ -143,7 +170,7 @@ export const useValidationSchemaCreditCard = (values) => {
 
     const validateCurrency = () => {
         let response;
-        let valueToCheck = values.ccy;
+        let valueToCheck = values.Currency;
         let countryExists = false;
 
         for (let i = 0; i < currencyCode.length; i++) {
@@ -153,25 +180,25 @@ export const useValidationSchemaCreditCard = (values) => {
             }
         }
 
-        if (!ccy) {
+        if (!Currency) {
             response = "Currency Code is required";
-        } else if (!/^[A-Z]/i.test(ccy)) {
+        } else if (!/^[A-Z]/i.test(Currency)) {
             response = "Please enter numbers";
         } else if (countryExists) {
             response = "Valid currency code";
         } else {
             response = "Good!";
         }
-        setCCYData(response);
+        setCurrencyData(response);
         return response;
     };
 
     const validateTelephone = () => {
         let response;
 
-        if (!telNo) {
+        if (!TelNo) {
             response = "Telephone is required";
-        } else if (!/^[0-9 ]/i.test(telNo)) {
+        } else if (!/^[0-9 ]/i.test(TelNo)) {
             response = "Please enter numbers";
         } else {
             response = "Good!";
@@ -181,45 +208,54 @@ export const useValidationSchemaCreditCard = (values) => {
     };
 
     useEffect(() => {
-        validateAddress();
+        validateEmail();
         validateAmount();
+        validateCurrency();
+        validateProcIdData();
+        validateAddress();
         validateCity();
         validateCountry();
-        validateCurrency();
-        validateEmail();
-        validateName();
-        validateTelephone();
         validateState();
+        validateName();
         validateZipCode();
+        validateTelephone();
     }, [
-        address1,
-        address2,
-        amount,
-        ccy,
-        country,
-        city,
-        state,
-        firstName,
-        lastName,
-        email,
-        zipCode,
-        telNo,
+        Amount,
+        Currency,
+        ProcId,
+        Country,
+        Address1,
+        Address2,
+        City,
+        State,
+        FirstName,
+        MiddleName,
+        LastName,
+        Email,
+        EmailBD,
+        ZipCode,
+        TelNo,
     ]);
 
     const validationSchema = Yup.object({
-        amount: Yup.string().required(`${amountData}`),
-        ccy: Yup.string().required(`${ccytData}`),
-        description: Yup.string(),
-        email: Yup.string().required(`${emailData}`),
-        firstName: Yup.string().required(`${nameData}`),
-        lastName: Yup.string().required(`${nameData}`),
-        address1: Yup.string().required(`${addressData}`),
-        address2: Yup.string().required(`${addressData}`),
-        city: Yup.string().required(`${cityData}`),
-        state: Yup.string().required(`${stateData}`),
-        country: Yup.string().required(`${countryData}`),
-        zipCode: Yup.string().required(`${zipCodeData}`),
-        telNo: Yup.string().required(`${telNoData}`),
+        Amount: Yup.string().required(`${amountData}`),
+        Currency: Yup.string().required(`${currecyData}`),
+        Description: Yup.string(),
+        Email: Yup.string().required(`${emailData}`),       
+        ProcId: Yup.string().required(`${procIdData}`),
+        Billing_Details:  Yup.object().shape({
+            Email: Yup.string().required(`${emailData}`),
+            FirstName: Yup.string().required(`${nameData}`),
+            MiddleName: Yup.string().required(`${nameData}`),
+            LastName: Yup.string().required(`${nameData}`),
+            Address1: Yup.string().required(`${addressData}`),
+            Address2: Yup.string().required(`${addressData}`),
+            City: Yup.string().required(`${cityData}`),
+            State: Yup.string().required(`${stateData}`),
+            Country: Yup.string().required(`${countryData}`),
+            ZipCode: Yup.string().required(`${zipCodeData}`),
+            TelNo: Yup.string().required(`${telNoData}`),
+        })
     });
 
     return {

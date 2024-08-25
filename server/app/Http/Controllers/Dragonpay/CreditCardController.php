@@ -39,7 +39,7 @@ class CreditCardController extends Controller
             'Param2' => $request->input('Param2'),
             'IpAddress' => $request->ip(),
             'UserAgent' => $request->header('User-Agent'),
-            'Billing_Details' => $request->input('BillingDetails'),
+            'Billing_Details' => $request->input('Billing_Details'),
         ]);
         $status = 'success';
         $code = 200;

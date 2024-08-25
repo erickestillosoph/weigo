@@ -22,11 +22,11 @@ class CreditCard extends Model
             'Param2',
             'IpAddress',
             'UserAgent',
-            'BillingDetails',          
+            'Billing_Details',          
     ];
 
     protected $casts = [
-        'BillingDetails' => 'array',        
+        'Billing_Details' => 'array',        
     ];
 
     protected static function boot()
