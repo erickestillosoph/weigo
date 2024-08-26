@@ -143,7 +143,7 @@ export class WeigoGuest implements IWeigoGuest {
     }
 
     async deleteProfile(uid: string): Promise<DeleteProfile> {
-        const url = UrlService.delete();
+        const url = UrlService.delete("");
         return axios
             .post(url, uid, {
                 headers: {

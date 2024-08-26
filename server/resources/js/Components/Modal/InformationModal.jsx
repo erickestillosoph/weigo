@@ -105,10 +105,10 @@ export default function InformationModal({ data, onClickModal, modePay = "credit
                  </div>
 
                   <div className="grid grid-cols-3 gap-3 ">
-                    {billing_details.Email && (
+                    {billing_details.EmailBD && (
                         <div>
                             <p className="font-bold">Billing Email:</p>
-                            <p className="break-all"> {billing_details.Email}</p>
+                            <p className="break-all"> {billing_details.EmailBD}</p>
                         </div>
                     )}
                     {billing_details.TelNo && (
@@ -153,13 +153,7 @@ export default function InformationModal({ data, onClickModal, modePay = "credit
                      </div>
                  )}
                 
-                 {(data.city || data.country || data.state) && (
-                     <div className="flex gap-4">
-                         <p>{data.city && data.city}</p>
-                         <p>{data.country && data.country}</p>
-                         <p>{data.state && data.state}</p>
-                     </div>
-                 )}
+               
                  
              </div>
             ) }
