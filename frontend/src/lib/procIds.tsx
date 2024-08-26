@@ -27,3 +27,24 @@ export const procIdOptions = [
     { index: 22, code: "CTBC", name: "Chinatrust" },
     { index: 23, code: "PYMY", name: "Smart PayMaya" },
 ];
+
+export const procIdFiltered = [
+    { index: 1, code: "CEBL", name: "Cebuana Lhuillier Cash Pick-up" },
+    { index: 2, code: "LBC", name: "LBC Cash Pick-up" },
+    {
+        index: 3,
+        code: "PLWN",
+        name: "Palawan Pawnshop Cash Pick-up (reserved)",
+    },
+    { index: 4, code: "PRHB", name: "PeraHub Cash Pick-up" },
+    { index: 5, code: "RDP", name: "RD Pawnshop Cash Pickup (reserved)" },
+    { index: 6, code: "TRMY", name: "TrueMoney Cash Pick-up (reserved)" },
+    { index: 7, code: "BITC", name: "Coins.ph Wallet (reserved)" },
+    { index: 8, code: "GCSH", name: "Gcash" },
+    { index: 9, code: "SMRT", name: "Smart Money (reserved)" },
+    {
+        index: 10,
+        code: "DBP",
+        name: "Development Bank of the Philippines (reserved)",
+    },
+];

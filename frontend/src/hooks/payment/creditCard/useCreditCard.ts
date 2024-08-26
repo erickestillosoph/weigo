@@ -31,6 +31,7 @@ export const useCreditCard = () => {
     const {
         getValues,
         register,
+        setValue,
         handleSubmit,
         reset,
         formState: { errors, isSubmitSuccessful },
@@ -107,6 +108,7 @@ export const useCreditCard = () => {
         errorFormState: errors,
         reset,
         register,
+        setValue,
         handleSubmitForm: handleSubmit,
         onSubmit,
         isSubmitSuccessful,
