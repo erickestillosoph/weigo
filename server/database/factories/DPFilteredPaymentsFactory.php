@@ -20,11 +20,11 @@ class DPFilteredPaymentsFactory extends Factory
     {
         return [
             'uid' => (string) Str::uuid() ,
-            'Amount' => $this->faker->randomFloat(2, 1000, 1000000),
-            'Currency' => $this->faker->word(),
-            'Description' => $this->faker->sentence(),
-            'Email' => $this->faker->unique()->safeEmail(),
-            'ProcId' => $this->faker->word(),
+            'amount' => fake()->sentence(),
+            'ccy' => fake()->sentence(),
+            'description' => fake()->sentence(),
+            'email' => fake()->sentence(),
+            'procId' => fake()->word(),
             'created_at' => 1,
             'updated_at' => 1,
         ];

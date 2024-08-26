@@ -40,7 +40,7 @@ useEffect(() => {
              value={selectedOption?.name || ''}
              readOnly
              onClick={handleClick}
-             
+             placeholder="Click here"
              onKeyDown={handleKeyDown}
              
             ></TextInput>
