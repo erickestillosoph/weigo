@@ -1,18 +1,27 @@
 import Loader from "@/components/shared/loader/LoaderComponent";
+import { SelectScrollable } from "@/components/shared/selects";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCreditCard } from "@/hooks/payment/creditCard/useCreditCard";
+import { countriesInfo } from "@/lib/countryCodePhone";
+import { procIdOptions } from "@/lib/procIds";
 import { useSetUseIsAuthState } from "@/state/pages/useAuthApp";
 import { HomeIcon } from "@radix-ui/react-icons";
 import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 function CreditCard() {
     const navigate = useNavigate();
+
+    const countryData = countriesInfo;
+    const currencyData = countriesInfo;
+    const procIdData = procIdOptions;
+
     const setIsAuthState = useSetUseIsAuthState();
     const {
         register,
         reset,
+        setValue,
         onSubmit: { mutateAsync, isPending },
         handleSubmitForm,
     } = useCreditCard();
@@ -29,6 +38,21 @@ function CreditCard() {
                 console.error(e);
             }
         })();
+    };
+    const removeNumberFromString = (str: string) => {
+        return str.replace(/\d/g, "");
+    };
+    const handleChangeDataCurrency = (data: string) => {
+        const cleanedEvent = removeNumberFromString(data);
+        setValue("Currency", cleanedEvent);
+    };
+    const handleChangeDataProcId = (data: string) => {
+        const cleanedEvent = removeNumberFromString(data);
+        setValue("ProcId", cleanedEvent);
+    };
+    const handleChangeDataCountry = (data: string) => {
+        const cleanedEvent = removeNumberFromString(data);
+        setValue("Country", cleanedEvent);
     };
 
     return (
@@ -65,16 +89,24 @@ function CreditCard() {
                                         ></Input>
                                     </div>
                                     <div className="w-full">
-                                        <Input
+                                        <SelectScrollable
                                             {...register("Currency")}
+                                            dataCurrencyCode={currencyData}
                                             placeholder="Currency"
-                                        ></Input>
+                                            onSelect={(e) =>
+                                                handleChangeDataCurrency(e)
+                                            }
+                                        ></SelectScrollable>
                                     </div>
                                     <div className="w-full">
-                                        <Input
+                                        <SelectScrollable
                                             {...register("ProcId")}
+                                            dataProcId={procIdData}
                                             placeholder="ProcId"
-                                        ></Input>
+                                            onSelect={(e) =>
+                                                handleChangeDataProcId(e)
+                                            }
+                                        ></SelectScrollable>
                                     </div>
                                 </div>
 
@@ -134,11 +166,15 @@ function CreditCard() {
                                                 placeholder="State"
                                             ></Input>
                                         </div>
-                                        <div className="">
-                                            <Input
+                                        <div className="w-full">
+                                            <SelectScrollable
                                                 {...register("Country")}
+                                                dataCountryCode={countryData}
                                                 placeholder="Country"
-                                            ></Input>
+                                                onSelect={(e) =>
+                                                    handleChangeDataCountry(e)
+                                                }
+                                            ></SelectScrollable>
                                         </div>
                                         <div className="">
                                             <Input
