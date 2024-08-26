@@ -5,7 +5,7 @@ export default function InformationModal({ data, onClickModal, modePay = "credit
        
     const [billing_details, setBillingDetails] = useState({});
     useEffect(() => {
-        if(modePay === "credit-card") setBillingDetails(JSON.parse(data.Billing_Details));
+        if(modePay === "credit-card") setBillingDetails(data);
     },[setBillingDetails]);
 
     return (

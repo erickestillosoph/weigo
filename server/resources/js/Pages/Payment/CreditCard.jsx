@@ -17,6 +17,7 @@ import { useValidationSchemaCreditCard } from "@/hooks/validations/useValidation
 import InputError from "@/Components/InputError";
 import InputDropdown from "@/Components/InputDropdown/InputDropdown";
 import { procIdOptions } from "@/lib/codeListBanks";
+import { Inertia } from "@inertiajs/inertia";
 export default function CreditCard({ auth }) {
     const { current_user } = useAccounts();
     const { d_p_credit_cards, detected_ip, user_agent } = useDpCrediCards();
@@ -149,7 +150,7 @@ export default function CreditCard({ auth }) {
         validationSchema,
         onSubmit: () => {
             router.post("/credit-card", values);
-            // Inertia.reload({ only: ["d_p_credit_cards"] });
+            Inertia.reload({ only: ["d_p_credit_cards"] });
         },
     });
     console.log(values)
