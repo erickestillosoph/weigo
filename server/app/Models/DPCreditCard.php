@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-
-class CreditCard extends Model
+class DPCreditCard extends Model
 {
     use HasFactory;
     protected $table = 'd_p_credit_cards';
@@ -22,12 +22,20 @@ class CreditCard extends Model
             'Param2',
             'IpAddress',
             'UserAgent',
-            'Billing_Details',          
+            'FirstName',
+            'MiddleName',
+            'LastName',
+            'Address1',
+            'Address2',
+            'EmailBD',            
+            'City',
+            'State',
+            'Country',
+            'ZipCode',
+            'TelNo'                    
     ];
 
-    protected $casts = [
-        'Billing_Details' => 'array',        
-    ];
+  
 
     protected static function boot()
     {
@@ -38,4 +46,10 @@ class CreditCard extends Model
             }
         });
     }
+
+   public function billingDetails(): HasOne
+   {
+        return $this->hasOne(DPBillingDetails::class);
+   }
+
 }

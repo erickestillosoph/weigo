@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('d_p_credit_cards', function (Blueprint $table) {
-            $table->id();
+            $table->id();     
             $table->uuid('uid');
             $table->string('Amount');
             $table->string('Currency');
@@ -22,8 +22,18 @@ return new class extends Migration
             $table->string('Param1');
             $table->string('Param2');
             $table->string('IpAddress');
-            $table->string('UserAgent');
-            $table->json('Billing_Details');                    
+            $table->string('UserAgent');   
+            $table->string('FirstName');
+            $table->string('MiddleName')->nullable();
+            $table->string('LastName');
+            $table->string('Address1');
+            $table->string('Address2')->nullable();
+            $table->string('City');
+            $table->string('State');
+            $table->string('Country');
+            $table->string('ZipCode');
+            $table->string('TelNo');
+            $table->string('EmailBD');                                   
             $table->timestamps();
         });
     }

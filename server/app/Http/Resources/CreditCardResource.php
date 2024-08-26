@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Http\Resources\BillingDetailsResource;
 class CreditCardResource extends JsonResource
 {
     /**
@@ -14,9 +14,10 @@ class CreditCardResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // return parent::toArray($request);
+        
         return [
             'id' => $this->id,
+            'uid' => $this->uid,
             'Amount' => $this->Amount,  
             'Currency' => $this->Currency,
             'Description' => $this->Description,
@@ -25,9 +26,8 @@ class CreditCardResource extends JsonResource
             'Param1' => $this->Param1,
             'Param2' => $this->Param2,
             'IpAddress' => $this->IpAddress,
-            'UserAgent' => $this->UserAgent ,
-            'Billing_Details' => $this->Billing_Details,            
-            'created_at' => $this->created_at
+            'UserAgent' => $this->UserAgent,
+            'BillingDetails' => new BillingDetailsResource($this->whenLoaded('billingDetails'))            
         ];
     }
 }

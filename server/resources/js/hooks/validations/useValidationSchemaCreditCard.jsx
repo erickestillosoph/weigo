@@ -8,20 +8,20 @@ export const useValidationSchemaCreditCard = (values) => {
         Email,
         Description,
         ProcId,
+        Param1,
+        Param2,
         Currency,
-        Billing_Details: {
-            FirstName,
-            MiddleName,
-            LastName,
-            Email: EmailBD,
-            Address1,
-            Address2,
-            Country,
-            City,
-            State,
-            ZipCode,
-            TelNo,
-        }
+        FirstName,
+        MiddleName,
+        LastName,
+        Email: EmailBD,
+        Address1,
+        Address2,
+        Country,
+        City,
+        State,
+        ZipCode,
+        TelNo,
       
     } = values;
 
@@ -33,6 +33,7 @@ export const useValidationSchemaCreditCard = (values) => {
     const [cityData, setCityData] = useState("undefined");
     const [stateData, setStateData] = useState("undefined");
     const [emailData, setEmailData] = useState("undefined");
+    const [paramData, setParamData] = useState("undefined");
     const [zipCodeData, setZipCodeData] = useState("undefined");
     const [telNoData, setTelNoData] = useState("undefined");
     const [amountData, setAmountData] = useState("undefined");
@@ -66,6 +67,17 @@ export const useValidationSchemaCreditCard = (values) => {
             response = "Good!";
         }
         setProcIdData(response);
+        return response;
+    };
+    const validateParamData = () => {
+        let response;
+    
+        if (!Param1 || !Param2) {
+            response = "Param is required";
+        } else {
+            response = "Good!";
+        }
+        setParamData(response);
         return response;
     };
 
@@ -159,7 +171,7 @@ export const useValidationSchemaCreditCard = (values) => {
             response = "Amount is required";
         } else if (!/^[0-9]/i.test(Amount)) {
             response = "Please enter numbers";
-        } else if (amount.length <= 2) {
+        } else if (Amount.length <= 2) {
             response = "Please input amount greater that 2 digit";
         } else {
             response = "Good!";
@@ -219,6 +231,7 @@ export const useValidationSchemaCreditCard = (values) => {
         validateName();
         validateZipCode();
         validateTelephone();
+        validateParamData();
     }, [
         Amount,
         Currency,
@@ -235,6 +248,8 @@ export const useValidationSchemaCreditCard = (values) => {
         EmailBD,
         ZipCode,
         TelNo,
+        Param1,
+        Param2
     ]);
 
     const validationSchema = Yup.object({
@@ -242,20 +257,21 @@ export const useValidationSchemaCreditCard = (values) => {
         Currency: Yup.string().required(`${currecyData}`),
         Description: Yup.string(),
         Email: Yup.string().required(`${emailData}`),       
-        ProcId: Yup.string().required(`${procIdData}`),
-        Billing_Details:  Yup.object().shape({
-            Email: Yup.string().required(`${emailData}`),
-            FirstName: Yup.string().required(`${nameData}`),
-            MiddleName: Yup.string().required(`${nameData}`),
-            LastName: Yup.string().required(`${nameData}`),
-            Address1: Yup.string().required(`${addressData}`),
-            Address2: Yup.string().required(`${addressData}`),
-            City: Yup.string().required(`${cityData}`),
-            State: Yup.string().required(`${stateData}`),
-            Country: Yup.string().required(`${countryData}`),
-            ZipCode: Yup.string().required(`${zipCodeData}`),
-            TelNo: Yup.string().required(`${telNoData}`),
-        })
+        ProcId: Yup.string().required(`${procIdData}`),        
+        Param1: Yup.string(),        
+        Param2: Yup.string(),        
+        EmailBD: Yup.string().required(`${emailData}`),
+        FirstName: Yup.string().required(`${nameData}`),
+        MiddleName: Yup.string().required(`${nameData}`),
+        LastName: Yup.string().required(`${nameData}`),
+        Address1: Yup.string().required(`${addressData}`),
+        Address2: Yup.string().required(`${addressData}`),
+        City: Yup.string().required(`${cityData}`),
+        State: Yup.string().required(`${stateData}`),
+        Country: Yup.string().required(`${countryData}`),
+        ZipCode: Yup.string().required(`${zipCodeData}`),
+        TelNo: Yup.string().required(`${telNoData}`),
+    
     });
 
     return {

@@ -8,6 +8,7 @@ use App\Models\DBCreditCard;
 use App\Models\DPFilteredPayments;
 use App\Models\DPPreSelectingPayments;
 use App\Models\DPWeigoSetting;
+use App\Models\DBBillingDetails;
 use App\Models\User;
 use App\Models\Guest;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
             DBGuestSeeder::class,
             DBAdminSeeder::class,
             DBWeigoSettingSeeder::class,
+            DBBillingDetailsSeeder::class
         ]);
        
     }

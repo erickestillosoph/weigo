@@ -3,31 +3,24 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+use App\Models\DPBillingDetails;
 use App\Models\DPCreditCard;
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DPCreditCard>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DPBillingDetails>
  */
-class DPCreditCardFactory extends Factory
+class DPBillingDetailsFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-    protected $model = DPCreditCard::class;
+    protected $model = DPBillingDetails::class;
     public function definition(): array
     {
-        return [
-            'uid' => $this->faker->uuid,
-            'Amount' => $this->faker->randomFloat(2, 1000, 1000000),
-            'Currency' => $this->faker->word(),
-            'Description' => $this->faker->sentence(),
-            'Email' => $this->faker->unique()->safeEmail(),
-            'ProcId' => $this->faker->word(),
-            'Param1' => $this->faker->sentence(),
-            'Param2' => $this->faker->sentence(),
-            'IpAddress' => $this->faker->ipv4(),
-            'UserAgent' => $this->faker->userAgent(),            
+        return [                        
+            'credit_card_id' => DPCreditCard::factory(),
             'FirstName' => $this->faker->firstName(),
             'MiddleName' => $this->faker->firstName(),
             'LastName' => $this->faker->lastName(),

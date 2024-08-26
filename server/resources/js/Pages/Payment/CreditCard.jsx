@@ -17,10 +17,9 @@ import { useValidationSchemaCreditCard } from "@/hooks/validations/useValidation
 import InputError from "@/Components/InputError";
 import InputDropdown from "@/Components/InputDropdown/InputDropdown";
 import { procIdOptions } from "@/lib/codeListBanks";
-import { Inertia } from "@inertiajs/inertia";
 export default function CreditCard({ auth }) {
     const { current_user } = useAccounts();
-    const { d_p_credit_cards } = useDpCrediCards();
+    const { d_p_credit_cards, detected_ip, user_agent } = useDpCrediCards();
 
     const [creditCardData, setCreditCardData] = useState(d_p_credit_cards);
     const [tabToggle, setTabToggle] = useState(true);
@@ -31,6 +30,8 @@ export default function CreditCard({ auth }) {
     const [currencyValue, setCurrencyValue]= useState('');
     const [emailValue, setEmailValue]= useState('');
     const [procIdValue, setProcIdValue]= useState('');
+    const [param1Value, setParam1Value]= useState('');
+    const [param2Value, setParam2Value]= useState('');
     const [descriptionValue, setDescriptionValue]= useState('');
     const [firstNameValue, setFirstNameValue]= useState('');        
     const [middleNameValue, setMiddleNameValue]= useState('');        
@@ -54,20 +55,24 @@ export default function CreditCard({ auth }) {
         Currency: "",
         Description: "",
         Email: "",
-        ProcId: "",            
-        Billing_Details: {
-            FirstName: "",
-            MiddleName: "",
-            LastName: "",
-            Email: "",
-            Address1: "",
-            Address2: "",
-            City: "",
-            State: "",
-            Country: "",
-            ZipCode: "",
-            TelNo: "",            
-        }
+        ProcId: "",                    
+        Param1: "",                    
+        Param2: "",                    
+        FirstName: "",
+        MiddleName: "",
+        LastName: "",
+        EmailBD: "",
+        Address1: "",
+        Address2: "",
+        City: "",
+        State: "",
+        Country: "",
+        ZipCode: "",
+        TelNo: "",  
+        IpAddress:"",
+        UserAgent:"",
+                  
+        
     });
 
     const { validationSchema } = useValidationSchemaCreditCard(valuesData);
@@ -78,26 +83,30 @@ export default function CreditCard({ auth }) {
             Currency: currencyValue, 
             Email: emailValue, 
             ProcId: procIdValue, 
+            Param1: param1Value, 
+            Param2: param2Value, 
             Description: descriptionValue,
-            Billing_Details: {
-                FirstName: firstNameValue,
-                MiddleName: middleNameValue,
-                LastName: lastNameValue,
-                Address1: address1Value,
-                Address2: address2Value,
-                City: cityValue,
-                Country: countryValue,
-                State: stateValue,
-                Email: emailBDValue,
-                TelNo: telNoValue,
-                ZipCode: zipCodeValue
-            }
+            FirstName: firstNameValue,
+            MiddleName: middleNameValue,
+            LastName: lastNameValue,
+            Address1: address1Value,
+            Address2: address2Value,
+            City: cityValue,
+            Country: countryValue,
+            State: stateValue,
+            EmailBD: emailBDValue,
+            TelNo: telNoValue,
+            ZipCode: zipCodeValue,
+            IpAddress:detected_ip,
+            UserAgent:user_agent,
         });
     },[
         amountValue, 
         currencyValue, 
         emailValue, 
         procIdValue, 
+        param1Value,
+        param2Value,
         descriptionValue, 
         firstNameValue, 
         lastNameValue, 
@@ -109,7 +118,7 @@ export default function CreditCard({ auth }) {
         countryValue,
         emailBDValue,
         telNoValue,
-        zipCodeValue
+        zipCodeValue        
     ])
 
 
@@ -119,25 +128,28 @@ export default function CreditCard({ auth }) {
             Currency: "",
             Description: "",
             Email: "",
-            ProcId: "",            
-            Billing_Details: {
-                FirstName: "",
-                MiddleName: "",
-                LastName: "",
-                Email: "",
-                Address1: "",
-                Address2: "",
-                City: "",
-                State: "",
-                Country: "",
-                ZipCode: "",
-                TelNo: "",            
-            }
+            ProcId: "", 
+            Param1: "",                    
+            Param2: "",                    
+            FirstName: "",
+            MiddleName: "",
+            LastName: "",
+            Email: "",
+            Address1: "",
+            Address2: "",
+            City: "",
+            State: "",
+            Country: "",
+            ZipCode: "",
+            EmailBD: "",
+            TelNo: "",   
+            IpAddress:detected_ip,
+            UserAgent:user_agent, 
         },
         validationSchema,
         onSubmit: () => {
             router.post("/credit-card", values);
-            Inertia.reload({ only: ["d_p_credit_cards"] });
+            // Inertia.reload({ only: ["d_p_credit_cards"] });
         },
     });
     console.log(values)
@@ -370,7 +382,8 @@ export default function CreditCard({ auth }) {
                 
                                                         <TextInput
                                                             id="Amount"
-                                                            type="text"
+                                                            type="number"
+                                                            step="0.01"
                                                             className="mt-1 block w-full"
                                                             name="Amount"
                                                             onChange={(e) => {handleChange(e); setAmountValue(e.target.value)}}
@@ -417,7 +430,41 @@ export default function CreditCard({ auth }) {
                                                                     className="mt-2"
                                                                 />
                                                             )}
-                                                </div>
+                                                     </div>
+                                                     <div className="">
+                                                        <InputLabel htmlFor="Param1" value="Param1" />
+                
+                                                        <TextInput
+                                                            id="Param1"
+                                                            type="text"
+                                                            className="mt-1 block w-full"
+                                                            name="Param1"
+                                                            onChange={(e) => {handleChange(e); setParam1Value(e.target.value)}}
+                                                        />
+                                                        {touched.Param1 && errors.Param1 && (
+                                                            <InputError
+                                                                message={errors.Param1}
+                                                                className="mt-2"
+                                                            />
+                                                        )}
+                                                    </div>
+                                                    <div className="">
+                                                        <InputLabel htmlFor="Param2" value="Param2" />
+                
+                                                        <TextInput
+                                                            id="Param2"
+                                                            type="text"
+                                                            className="mt-1 block w-full"
+                                                            name="Currency"
+                                                            onChange={(e) => {handleChange(e); setParam2Value(e.target.value)}}
+                                                        />
+                                                        {touched.Param2 && errors.Param2 && (
+                                                            <InputError
+                                                                message={errors.Param2}
+                                                                className="mt-2"
+                                                            />
+                                                        )}
+                                                    </div>
                 
                                         
                                             </div>
@@ -448,7 +495,7 @@ export default function CreditCard({ auth }) {
                                             <div className="">
 
                                             </div>
-                                            <div className="grid gap-4 grid-cols-4">
+                                            <div className="grid gap-4 grid-cols-3">
                                                 <div className="">
                                                     <InputLabel
                                                         htmlFor="FirstName"
@@ -462,10 +509,10 @@ export default function CreditCard({ auth }) {
                                                         name="FirstName"
                                                         onChange={(e) => {handleChange(e); setFirstNameValue(e.target.value)}}
                                                     />
-                                                    {touched.Billing_Details?.FirstName &&
-                                                        errors.Billing_Details?.FirstName && (
+                                                    {touched.FirstName &&
+                                                        errors.FirstName && (
                                                             <InputError
-                                                                message={errors.Billing_Details.FirstName}
+                                                                message={errors.FirstName}
                                                                 className="mt-2"
                                                             />
                                                         )}
@@ -483,10 +530,10 @@ export default function CreditCard({ auth }) {
                                                         name="MiddleName"
                                                         onChange={(e) => {handleChange(e); setMiddleNameValue(e.target.value)}}
                                                     />
-                                                    {touched.Billing_Details?.MiddleName &&
-                                                        errors.Billing_Details?.MiddleName && (
+                                                    {touched.MiddleName &&
+                                                        errors.MiddleName && (
                                                             <InputError
-                                                                message={errors.Billing_Details.MiddleName}
+                                                                message={errors.MiddleName}
                                                                 className="mt-2"
                                                             />
                                                         )}
@@ -505,16 +552,20 @@ export default function CreditCard({ auth }) {
                                                         name="LastName"
                                                         onChange={(e) => {handleChange(e); setLastNameValue(e.target.value)}}
                                                     />
-                                                    {touched.Billing_Details?.LastName &&
-                                                        errors.Billing_Details?.LastName && (
+                                                    {touched.LastName &&
+                                                        errors.LastName && (
                                                             <InputError
-                                                                message={errors.Billing_Details.LastName}
+                                                                message={errors.LastName}
                                                                 className="mt-2"
                                                             />
                                                         )}
                                                 </div>
 
-                                                  <div className="">
+                                                
+                                               
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <div className="">
                                                     <InputLabel
                                                         htmlFor="TelNo"
                                                         value="Telephone Number"
@@ -527,14 +578,33 @@ export default function CreditCard({ auth }) {
                                                         name="TelNo"
                                                         onChange={(e) => {handleChange(e); setTelNoValue(e.target.value)}}
                                                     />
-                                                    {touched.Billing_Details?.TelNo && errors.Billing_Details?.TelNo && (
+                                                    {touched.TelNo && errors.TelNo && (
                                                         <InputError
-                                                            message={errors.Billing_Details.TelNo}
+                                                            message={errors.TelNo}
                                                             className="mt-2"
                                                         />
                                                     )}
                                                 </div>
-                                               
+                                                <div className="">
+                                                    <InputLabel
+                                                        htmlFor="EmailBD"
+                                                        value="Email Billing Details"
+                                                    />
+            
+                                                    <TextInput
+                                                        id="EmailBD"
+                                                        type="email"
+                                                        className="mt-1 block w-full"
+                                                        name="EmailBD"
+                                                        onChange={(e) => {handleChange(e); setEmailBDValue(e.target.value)}}
+                                                    />
+                                                    {touched.EmailBD && errors.EmailBD && (
+                                                        <InputError
+                                                            message={errors.EmailBD}
+                                                            className="mt-2"
+                                                        />
+                                                    )}
+                                                </div>
                                             </div>
                                             <div className="grid grid-cols-2 gap-4">
                                                  <div className="">
@@ -551,10 +621,10 @@ export default function CreditCard({ auth }) {
                                                         onChange={(e) => {handleChange(e); setAddress1Value(e.target.value)}}
                                                     />
             
-                                                    {touched.Billing_Details?.Address1 &&
-                                                        errors.Billing_Details?.Address1 && (
+                                                    {touched.Address1 &&
+                                                        errors.Address1 && (
                                                             <InputError
-                                                                message={errors.Billing_Details.Address1}
+                                                                message={errors.Address1}
                                                                 className="mt-2"
                                                             />
                                                         )}
@@ -574,10 +644,10 @@ export default function CreditCard({ auth }) {
                                                         onChange={(e) => {handleChange(e); setAddress2Value(e.target.value)}}
                                                     />
             
-                                                    {touched.Billing_Details?.Address2 &&
-                                                        errors.Billing_Details?.Address2 && (
+                                                    {touched.Address2 &&
+                                                        errors.Address2 && (
                                                             <InputError
-                                                                message={errors.Billing_Details.Address2}
+                                                                message={errors.Address2}
                                                                 className="mt-2"
                                                             />
                                                         )}
@@ -600,9 +670,9 @@ export default function CreditCard({ auth }) {
                                                             onChange={(e) => {handleChange(e); setCityValue(e.target.value)}}
                                                         />
                 
-                                                        {touched.Billing_Details?.City && errors.Billing_Details?.City && (
+                                                        {touched.City && errors.City && (
                                                             <InputError
-                                                                message={errors.Billing_Details.City}
+                                                                message={errors.City}
                                                                 className="mt-2"
                                                             />
                                                         )}
@@ -622,9 +692,9 @@ export default function CreditCard({ auth }) {
                                                             onChange={(e) => {handleChange(e); setStateValue(e.target.value)}}
                                                         />
                 
-                                                        {touched.Billing_Details?.State && errors.Billing_Details?.State && (
+                                                        {touched.State && errors.State && (
                                                             <InputError
-                                                                message={errors.Billing_Details.State}
+                                                                message={errors.State}
                                                                 className="mt-2"
                                                             />
                                                         )}
@@ -644,9 +714,9 @@ export default function CreditCard({ auth }) {
                                                             onChange={(e) => {handleChange(e); setCountryValue(e.target.value)}}
                                                         />
                 
-                                                        {touched.Billing_Details?.Country && errors.Billing_Details?.Country && (
+                                                        {touched.Country && errors.Country && (
                                                             <InputError
-                                                                message={errors.Billing_Details.Country}
+                                                                message={errors.Country}
                                                                 className="mt-2"
                                                             />
                                                         )}
@@ -666,9 +736,9 @@ export default function CreditCard({ auth }) {
                                                             onChange={(e) => {handleChange(e); setZipCodeValue(e.target.value)}}
                                                         />
                 
-                                                        {touched.Billing_Details?.ZipCode && errors.Billing_Details?.ZipCode && (
+                                                        {touched.ZipCode && errors.ZipCode && (
                                                             <InputError
-                                                                message={errors.Billing_Details.ZipCode}
+                                                                message={errors.ZipCode}
                                                                 className="mt-2"
                                                             />
                                                         )}
