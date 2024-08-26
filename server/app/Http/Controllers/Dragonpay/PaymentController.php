@@ -11,6 +11,7 @@ use App\Http\Resources\PaymentResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use App\Models\Guest;
 
 class PaymentController extends Controller
 {
@@ -106,5 +107,55 @@ class PaymentController extends Controller
     public function delete(Payment $request)
     {
         $request->delete();
+    }
+
+    public function createCreditCard(Request $request)
+    {
+
+        $messages = [        
+            'Amountrequired' => 'The Amount field is required.',
+            'Email.required' => 'The Email field is required.',
+            'Currency.required' => 'The Currency field is required.',        
+            'ProcId.required' => 'The ProcId field is required.'                   
+        ];
+
+        $data = $request->validate([     
+            'uid' => ['required', 'exists:guests,uid'],     
+            'Amount' => 'required|string|max:255',
+            'Email' => 'required|string|lowercase|email|max:255',                    
+            'Currency' => 'required|string|max:255',
+            'ProcId' => 'required|string|max:255',            
+            'Description' => 'nullable|string|max:255',
+        ], $messages);
+                             
+        $guestUidExistsDB = Guest::where('uid',  $data['uid'])->exists();
+
+       if ($guestUidExistsDB) {
+            $guest = Payment::create([
+                'Amount' => $request->Amount,
+                'Email' => $request->Email,
+                'Currency' => $request->Currency,
+                'ProcId' => $request->ProcId,               
+                'Description' => $request->Description,               
+            ]);
+
+            if ($guest) {
+                return response()->json([
+                    'payment' => $guest,        
+                    'message' => 'Payment Transaction is Successful',
+                    'status' => 'success'
+                ], 201);
+            } else {
+                return response()->json([
+                    'message' => 'Payment Transaction Failed',
+                    'status' => 'error'
+                ], 500);
+            }
+        } else {
+            return response()->json([
+                'message' => 'Payment UID or Email does not exist',
+                'status' => 'error'
+            ], 400);
+        }
     }
 }
