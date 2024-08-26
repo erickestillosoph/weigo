@@ -272,7 +272,7 @@ export default function FilteredPayment({ auth }) {
                                                 />
                                                 <TextInput
                                                     id="Amount"
-                                                    type="text"
+                                                    type="number"
                                                     className="mt-1 block w-full"
                                                     name="Amount"
                                                     onChange={(e) => {handleChange(e); setAmountValue(e.target.value)}}
