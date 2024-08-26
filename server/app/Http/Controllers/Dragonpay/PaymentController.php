@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use App\Models\Guest;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -109,7 +110,7 @@ class PaymentController extends Controller
         $request->delete();
     }
 
-    public function createCreditCard(Request $request)
+    public function createPaymentGuest(Request $request)
     {
 
         $messages = [        

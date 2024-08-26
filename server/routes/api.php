@@ -89,6 +89,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
                 ->name('credit-card');
     Route::post('/weigo/dp-payment', [PaymentController::class, 'create', HandlePrecognitiveRequests::class])
                 ->name('payment');
+    Route::post('/weigo/dp-payment-mode', [PaymentController::class, 'createPaymentGuest', HandlePrecognitiveRequests::class])
+                ->name('dppayment');
 
     Route::post('/weigo/dp-service-model', [ServiceModelController::class, 'create', HandlePrecognitiveRequests::class])
                 ->name('service-model');
