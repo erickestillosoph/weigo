@@ -17,6 +17,7 @@ import ResendLink from "@/pages/auth/resend";
 import ResetForm from "@/pages/auth/reset/Reset";
 import ResetEmail from "@/pages/auth/reset/ResetForm";
 import AuthGuard from "@/components/shared/authGuard/AuthGuard";
+import CreditCard from "@/pages/payment/creditCard";
 
 function BodyLayout() {
     return (
@@ -47,6 +48,14 @@ function BodyLayout() {
                     element={
                         <AuthGuard>
                             <Profile />
+                        </AuthGuard>
+                    }
+                />
+                <Route
+                    path="/payment/credit-card"
+                    element={
+                        <AuthGuard>
+                            <CreditCard />
                         </AuthGuard>
                     }
                 />

@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('Description');
             $table->string('Email');           
             $table->string('ProcId');
-            $table->string('Param1');
-            $table->string('Param2');
+            $table->string('Param1')->nullable();
+            $table->string('Param2')->nullable();
             $table->string('IpAddress');
             $table->string('UserAgent');   
             $table->string('FirstName');
