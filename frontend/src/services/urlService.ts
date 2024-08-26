@@ -30,7 +30,7 @@ class UrlService {
         return "api/weigo/edit-profile";
     }
     static dpPayment() {
-        return "api/weigo/dp-payment";
+        return "api/weigo/dp-payment-mode";
     }
     static dpCreditCard() {
         return "api/weigo/dp-credit-card";
