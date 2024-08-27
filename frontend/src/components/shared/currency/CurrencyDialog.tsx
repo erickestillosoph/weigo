@@ -1,16 +1,27 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import { countryCode } from "../../../lib/countryCode";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 import ReactCountryFlag from "react-country-flag";
-
+import { currencyOptions } from "@/lib/currencyCode";
+import { useSetUseCurrencyDataState } from "@/state/common/useCurrency";
 interface CurrencyProps {
     amount: number;
     currencyCode: string;
 }
 
+interface CurrencyOption {
+    code: string;
+    name: string;
+    countryCode: string;
+}
+
 function CurrencyDialog() {
+    const setUseCurrencyDataState = useSetUseCurrencyDataState();
+
+    const handleCurrencyChange = (currency: string, code: string) => {
+        setUseCurrencyDataState({ currency: currency, code: code });
+    };
     const countrySvgStyle = {
         width: "3em",
         height: "3em",
@@ -39,31 +50,45 @@ function CurrencyDialog() {
                         <ScrollArea.Root className="w-[100%] rounded overflow-hidden">
                             <ScrollArea.Viewport className="w-full max-h-[60vh] inline-block overflow-auto  rounded  pr-4 mb-4 ">
                                 <div className="grid  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-5 mb-16">
-                                    {countryCode.map((variable, index) => (
-                                        <div className="w-[100%]" key={index}>
-                                            <Dialog.Close className="w-[100%]">
-                                                <div className="border rounded-lg p-3 flex flex-row focus:shadow-[0_0_0_2px] outline-none focus:via-slate-300 text-left gap-4 ">
-                                                    <div className=" flex-row flex text-center gap-4">
-                                                        <ReactCountryFlag
-                                                            countryCode={
-                                                                variable.code
-                                                            }
-                                                            svg
-                                                            style={
-                                                                countrySvgStyle
-                                                            }
-                                                        />
-                                                        <CurrencyValue
-                                                            amount={100}
-                                                            currencyCode={
-                                                                variable.code2
-                                                            }
-                                                        ></CurrencyValue>
+                                    {currencyOptions.map(
+                                        (variable: CurrencyOption, index) => (
+                                            <div
+                                                className="w-[100%]"
+                                                key={index}
+                                            >
+                                                <Dialog.Close className="w-[100%]">
+                                                    <div
+                                                        className="border rounded-lg p-3 flex flex-row focus:shadow-[0_0_0_2px] outline-none focus:via-slate-300 text-left gap-4 "
+                                                        onClick={() =>
+                                                            handleCurrencyChange(
+                                                                variable.code,
+                                                                variable.countryCode,
+                                                            )
+                                                        }
+                                                    >
+                                                        <div className=" flex-row flex text-center gap-4">
+                                                            <ReactCountryFlag
+                                                                countryCode={
+                                                                    variable.countryCode
+                                                                }
+                                                                svg
+                                                                style={
+                                                                    countrySvgStyle
+                                                                }
+                                                            />
+
+                                                            <CurrencyValue
+                                                                amount={100}
+                                                                currencyCode={
+                                                                    variable.code
+                                                                }
+                                                            ></CurrencyValue>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </Dialog.Close>
-                                        </div>
-                                    ))}
+                                                </Dialog.Close>
+                                            </div>
+                                        ),
+                                    )}
                                 </div>
                             </ScrollArea.Viewport>
                             <ScrollArea.Scrollbar
