@@ -61,7 +61,7 @@ export const usePasswordReset = () => {
         },
         onError: (err: Error) => {
             toast({
-                variant: "default",
+                variant: "destructive",
                 draggable: true,
                 duration: 1500,
                 title: "Error!",

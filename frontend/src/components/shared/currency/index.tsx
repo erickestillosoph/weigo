@@ -1,2 +1,2 @@
-import Currency from "./Currency";
+import Currency from "@/components/shared/currency/Currency";
 export { Currency };

@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import CurrencyDialog from "./CurrencyDialog";
-// Define the props interface
+import { useCodeCurrencyLocalStorage } from "@/hooks/localStorage/useCodeCurrency";
 
 function Currency() {
-    const currencyCountryCode = "SGP";
+    // const isCurrencyDataState = useIsCurrencyDataState();
+
     const [isTextSize, setTextSize] = useState("text-[4em]");
     const [isCurrencyBG, setIsCurrencyBG] = useState("bg_header");
+    const { code } = useCodeCurrencyLocalStorage();
 
     useEffect(() => {
         const handleResize = () => {
@@ -32,7 +34,7 @@ function Currency() {
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-    }, []);
+    }, [code]);
 
     return (
         <div className="flex flex-row ">
@@ -51,7 +53,7 @@ function Currency() {
                                 isTextSize,
                             )}
                         >
-                            {currencyCountryCode}
+                            {code}
                         </h3>
                     </div>
 

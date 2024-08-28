@@ -2,8 +2,15 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import ReactCountryFlag from "react-country-flag";
-import { countryCode } from "../../../lib/countryCode";
+
 import * as ScrollArea from "@radix-ui/react-scroll-area";
+import { currencyOptions } from "@/lib/currencyCode";
+
+interface CurrencyOption {
+    code: string;
+    countryName: string;
+    countryCode: string;
+}
 
 function CountryDialog() {
     const countrySvgStyle = {
@@ -35,60 +42,68 @@ function CountryDialog() {
                         <ScrollArea.Root className="w-[100%] rounded overflow-hidden">
                             <ScrollArea.Viewport className="w-full max-h-[60vh] inline-block overflow-auto  rounded  pr-4 mb-4 ">
                                 <div className="grid  lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-5 mb-16">
-                                    {countryCode.map((variable) => (
-                                        <div
-                                            className="w-[100%]"
-                                            key={variable.code}
-                                        >
-                                            <Dialog.Close className="w-[100%]">
-                                                <div className="border rounded-lg p-3 flex flex-row focus:shadow-[0_0_0_2px] outline-none focus:via-slate-300 text-left gap-4 ">
-                                                    <div className=" flex-row gap-4 hidden">
-                                                        <ReactCountryFlag
-                                                            countryCode={
-                                                                variable.code
-                                                            }
-                                                            svg
-                                                            style={
-                                                                countrySvgStyle
-                                                            }
-                                                        ></ReactCountryFlag>
-                                                        <div className="">
-                                                            <p className="text_xs">
-                                                                {
-                                                                    variable.country
-                                                                }
-                                                            </p>
-
-                                                            <h3 className="leading-[1em] text-[1.5em] text-gray-600">
-                                                                {variable.code}
-                                                            </h3>
-                                                        </div>
-                                                    </div>
-                                                    <div className="grid">
-                                                        <div className="flex flox-row gap-6  focus:shadow-[0_0_0_2px]">
+                                    {currencyOptions.map(
+                                        (variable: CurrencyOption) => (
+                                            <div
+                                                className="w-[100%]"
+                                                key={variable.countryCode}
+                                            >
+                                                <Dialog.Close className="w-[100%]">
+                                                    <div className="border rounded-lg p-3 flex flex-row focus:shadow-[0_0_0_2px] outline-none focus:via-slate-300 text-left gap-4 ">
+                                                        <div className=" flex-row gap-4 hidden">
                                                             <ReactCountryFlag
                                                                 countryCode={
-                                                                    variable.code
+                                                                    variable.countryCode
                                                                 }
                                                                 svg
                                                                 style={
                                                                     countrySvgStyle
                                                                 }
                                                             ></ReactCountryFlag>
+                                                            <div className="">
+                                                                <p className="text_xs">
+                                                                    {
+                                                                        variable.countryName
+                                                                    }
+                                                                </p>
 
-                                                            <h3 className="leading-[1.1em] text-[2.6em] text-gray-500">
-                                                                {variable.code}
-                                                            </h3>
+                                                                <h3 className="leading-[1em] text-[1.5em] text-gray-600">
+                                                                    {
+                                                                        variable.countryCode
+                                                                    }
+                                                                </h3>
+                                                            </div>
                                                         </div>
+                                                        <div className="grid">
+                                                            <div className="flex flox-row gap-6  focus:shadow-[0_0_0_2px]">
+                                                                <ReactCountryFlag
+                                                                    countryCode={
+                                                                        variable.countryCode
+                                                                    }
+                                                                    svg
+                                                                    style={
+                                                                        countrySvgStyle
+                                                                    }
+                                                                ></ReactCountryFlag>
 
-                                                        <p className="text_xs text-gray-500">
-                                                            {variable.country}
-                                                        </p>
+                                                                <h3 className="leading-[1.1em] text-[2.6em] text-gray-500">
+                                                                    {
+                                                                        variable.countryCode
+                                                                    }
+                                                                </h3>
+                                                            </div>
+
+                                                            <p className="text_xs text-gray-500">
+                                                                {
+                                                                    variable.countryName
+                                                                }
+                                                            </p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </Dialog.Close>
-                                        </div>
-                                    ))}
+                                                </Dialog.Close>
+                                            </div>
+                                        ),
+                                    )}
                                 </div>
                             </ScrollArea.Viewport>
                             <ScrollArea.Scrollbar
