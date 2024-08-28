@@ -24,6 +24,7 @@ function Activity() {
                         title={activity.title}
                         subTitle={activity.subTitle}
                         description={activity.description}
+                        price={activity.price}
                     />
                 ))}
             </div>

@@ -7,7 +7,7 @@ export const useGeolocation = () => {
     const [convertedCurrency, setConvertedCurrency] = useState<{
         [key: string]: number;
     }>({ defaultKey: 0 });
-    const [countryCode, setCountryCode] = useState("PH");
+    const [countryCode, setCountryCode] = useState("PHP");
     const isCurrencyDataState = useIsCurrencyDataState();
 
     const fetchData = useCallback(async () => {

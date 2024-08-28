@@ -1,11 +1,9 @@
 import LocalStorageService from "@/services/localStorageService";
 import { useCallback, useEffect, useState } from "react";
-import { useGeolocation } from "../currencyGeolocation/useGeolocation";
 export const useCodeCurrencyLocalStorage = () => {
-    const { countryCode, currencyValue } = useGeolocation();
-    const [currency, setCurrency] = useState<string>(currencyValue);
-    const [code, setCode] = useState<string>(countryCode);
-    const [country, setCountry] = useState<string>(countryCode);
+    const [currency, setCurrency] = useState<string>("0");
+    const [code, setCode] = useState<string>("PH");
+    const [country, setCountry] = useState<string>("PH");
     const countryState = LocalStorageService.getItem("countryState");
     const currencyState = LocalStorageService.getItem("currencyState");
     const currencyCodeState = LocalStorageService.getItem("currencyCodeState");

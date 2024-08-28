@@ -6,6 +6,7 @@ export const products = [
         activity: "Tours, Sightseeing, and Activities",
         experience: "Nolvety and Speciality Tours",
         src: "/src/assets/images/product/singapore-placeholder.png",
+        price: 1000,
     },
     {
         id: 2,
@@ -14,6 +15,7 @@ export const products = [
         activity: "Tours, Sightseeing, and Activities",
         experience: "Nolvety and Speciality Tours",
         src: "/src/assets/images/product/singapore-placeholder.png",
+        price: 2000,
     },
     {
         id: 3,
@@ -22,6 +24,7 @@ export const products = [
         activity: "Tours, Sightseeing, and Activities",
         experience: "Nolvety and Speciality Tours",
         src: "/src/assets/images/product/singapore-placeholder.png",
+        price: 3000,
     },
     {
         id: 4,
@@ -30,6 +33,7 @@ export const products = [
         activity: "Tours, Sightseeing, and Activities",
         experience: "Nolvety and Speciality Tours",
         src: "/src/assets/images/product/singapore-placeholder.png",
+        price: 4000,
     },
     {
         id: 5,
@@ -38,6 +42,7 @@ export const products = [
         activity: "Tours, Sightseeing, and Activities",
         experience: "Nolvety and Speciality Tours",
         src: "/src/assets/images/product/singapore-placeholder.png",
+        price: 5000,
     },
     {
         id: 6,
@@ -46,5 +51,6 @@ export const products = [
         activity: "Tours, Sightseeing, and Activities",
         experience: "Nolvety and Speciality Tours",
         src: "/src/assets/images/product/singapore-placeholder.png",
+        price: 6000,
     },
 ];

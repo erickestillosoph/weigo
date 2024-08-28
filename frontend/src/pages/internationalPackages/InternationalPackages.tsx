@@ -51,9 +51,9 @@ function InternationalPackages() {
                         ></div>
                     </div>
                     <div className="relative z-30 flex flex-col gap-[16px] p-[24px] h-full ">
-                        <Button variant={"ghost"} className="bg-white w-fit">
+                        {/* <Button variant={"ghost"} className="bg-white w-fit">
                             Promo
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             </div>
@@ -68,6 +68,7 @@ function InternationalPackages() {
                             subTitle={product.subTitle}
                             activity={product.activity}
                             experience={product.experience}
+                            price={product.price}
                         />
                     ))}
                 </div>

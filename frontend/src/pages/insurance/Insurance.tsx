@@ -3,7 +3,10 @@ import { CardCommonDefault } from "@/components/shared/card";
 import { Button } from "@/components/ui/button";
 import image from "@/assets/images/titles/insurance_title.png";
 import { insurance } from "@/lib/placeholders/insurance";
+import { useCodeCurrencyLocalStorage } from "@/hooks/localStorage/useCodeCurrency";
 function Insurance() {
+    const { currency } = useCodeCurrencyLocalStorage();
+
     return (
         <div className="flex flex-col sm:gap-10 gap-32 h-[100%]">
             <TitleSection img={image} title="Insurance"></TitleSection>
@@ -21,7 +24,7 @@ function Insurance() {
                                         {insurance.insurance_id}
                                     </p>
                                     <p className="font_inter w_heading_primary text-[14px]">
-                                        {insurance.price}
+                                        {insurance.price * parseFloat(currency)}
                                     </p>
                                 </div>
                                 <h3 className="!font-extrabold font_inter w_heading_secondary text-[20px]">
