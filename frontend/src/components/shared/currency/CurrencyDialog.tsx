@@ -5,6 +5,9 @@ import * as ScrollArea from "@radix-ui/react-scroll-area";
 import ReactCountryFlag from "react-country-flag";
 import { currencyOptions } from "@/lib/currencyCode";
 import { useSetUseCurrencyDataState } from "@/state/common/useCurrency";
+import { countryState } from "@/state/currency/useCountryCode";
+import { useRecoilState } from "recoil";
+import { currencyCodeState } from "@/state/currency/useCurrencyCode";
 interface CurrencyProps {
     amount: number;
     currencyCode: string;
@@ -18,9 +21,16 @@ interface CurrencyOption {
 
 function CurrencyDialog() {
     const setUseCurrencyDataState = useSetUseCurrencyDataState();
+    const [, setCountryPersist] = useRecoilState(countryState);
+    const [, setCurrencyCodePersist] = useRecoilState(currencyCodeState);
 
-    const handleCurrencyChange = (currency: string, code: string) => {
-        setUseCurrencyDataState({ currency: currency, code: code });
+    const handleCurrencyChange = (
+        currencyCode: string,
+        countryCode: string,
+    ) => {
+        setUseCurrencyDataState({ currency: currencyCode, code: countryCode });
+        setCountryPersist(countryCode);
+        setCurrencyCodePersist(currencyCode);
     };
     const countrySvgStyle = {
         width: "3em",

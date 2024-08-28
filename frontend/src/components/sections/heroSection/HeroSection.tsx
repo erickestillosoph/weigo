@@ -11,7 +11,7 @@ import { useIsCurrencyDataState } from "@/state/common/useCurrency";
 
 function HeroSection() {
     const isCurrencyDataState = useIsCurrencyDataState();
-    // const countryCode = "SG";
+
     const images = [heroImage, heroImage2, heroImage3];
 
     return (
