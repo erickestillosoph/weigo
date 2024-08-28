@@ -7,10 +7,10 @@ import { Button } from "@/components/ui/button";
 import { CountryListDropdown } from "@/components/shared/countryListDropdown";
 import { Currency } from "@/components/shared/currency";
 import { Input } from "@/components/ui/input";
-import { useIsCurrencyDataState } from "@/state/common/useCurrency";
+import { useCodeCurrencyLocalStorage } from "@/hooks/localStorage/useCodeCurrency";
 
 function HeroSection() {
-    const isCurrencyDataState = useIsCurrencyDataState();
+    const { code } = useCodeCurrencyLocalStorage();
 
     const images = [heroImage, heroImage2, heroImage3];
 
@@ -91,7 +91,7 @@ function HeroSection() {
                         >
                             <motion.div className="md:pl-10 pl-0">
                                 <h1 className="lg:super_text_lg super_text_md text_stroke_h1 font-black leading-[1.2em]">
-                                    {isCurrencyDataState.code}
+                                    {code}
                                 </h1>
                             </motion.div>
                         </motion.div>

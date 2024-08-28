@@ -4,8 +4,6 @@ import CurrencyDialog from "./CurrencyDialog";
 import { useCodeCurrencyLocalStorage } from "@/hooks/localStorage/useCodeCurrency";
 
 function Currency() {
-    // const isCurrencyDataState = useIsCurrencyDataState();
-
     const [isTextSize, setTextSize] = useState("text-[4em]");
     const [isCurrencyBG, setIsCurrencyBG] = useState("bg_header");
     const { code } = useCodeCurrencyLocalStorage();

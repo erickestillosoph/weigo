@@ -22,6 +22,7 @@ function DomesticPackages() {
     //     };
     //     init();
     // }, []);
+
     return (
         <div className="flex flex-col sm:gap-10 gap-32 h-[100%]">
             <TitleSection img={image} title="Domestic Packages"></TitleSection>
@@ -63,9 +64,9 @@ function DomesticPackages() {
                         ></div>
                     </div>
                     <div className="relative z-30 flex flex-col gap-[16px] p-[24px] h-full ">
-                        <Button variant={"ghost"} className="bg-white w-fit">
+                        {/* <Button variant={"ghost"} className="bg-white w-fit">
                             Promo
-                        </Button>
+                        </Button> */}
                     </div>
                 </div>
             </div>
@@ -80,6 +81,7 @@ function DomesticPackages() {
                             subTitle={product.subTitle}
                             activity={product.activity}
                             experience={product.experience}
+                            price={product.price}
                         />
                     ))}
                 </div>
