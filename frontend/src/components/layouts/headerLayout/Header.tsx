@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { Navigation, NavigationEssential } from "../../shared/navigationLinks";
 import { useIsAuthState } from "@/state/pages/useAuthApp";
 import { useGeolocation } from "@/hooks/currencyGeolocation/useGeolocation";
-import { useRecoilState } from "recoil";
-import { currencyState } from "@/state/currency/useCurrency";
+import { useSetUseIsCurrencyState } from "@/state/common/useCurrency";
 
 function Header() {
-    const { currencyValue } = useGeolocation();
-    const [, setCurrencyPersist] = useRecoilState(currencyState);
+    const { convertedCurrency } = useGeolocation();
+
+    const setCurrencyPersist = useSetUseIsCurrencyState();
 
     useEffect(() => {
-        setCurrencyPersist(currencyValue);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currencyValue]);
+        setCurrencyPersist({ value: convertedCurrency });
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [convertedCurrency]);
     const [screenSize, setScreenSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight,

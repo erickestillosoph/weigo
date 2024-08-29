@@ -2,13 +2,11 @@ import axios from "axios";
 
 import Freecurrencyapi from "@everapi/freecurrencyapi-js";
 import { useCallback, useEffect, useState } from "react";
-import { useIsCurrencyDataState } from "@/state/common/useCurrency";
+import { useIsCurrencyCodeState } from "@/state/common/useCurrency";
+
 export const useGeolocation = () => {
-    const [convertedCurrency, setConvertedCurrency] = useState<{
-        [key: string]: number;
-    }>({ defaultKey: 0 });
-    const [countryCode, setCountryCode] = useState("PHP");
-    const isCurrencyDataState = useIsCurrencyDataState();
+    const isCurrencyData = useIsCurrencyCodeState();
+    const [convertedCurrency, setConvertedCurrency] = useState<string>("1");
 
     const fetchData = useCallback(async () => {
         const ipFreeCurrencyURL = process.env.REACT_APP_FREECURRENCYAPI_URL!;
@@ -26,29 +24,24 @@ export const useGeolocation = () => {
         url.searchParams.append("fields", "geo,currency");
 
         const getApiDataResponse = await axios.get(url.toString());
-        console.log(getApiDataResponse.data);
-        setCountryCode(getApiDataResponse.data.currency.symbol);
+
         const freecurrencyapi = new Freecurrencyapi(freeApiKey);
         freecurrencyapi
             .latest({
                 base_currency: getApiDataResponse.data.currency.code,
-                currencies: String(isCurrencyDataState.currency),
+                currencies: String(isCurrencyData.currency),
             })
             .then((data = response.data) => {
-                setConvertedCurrency(data);
+                const stringData = JSON.stringify(data).replace(/[^\d.-]/g, "");
+                setConvertedCurrency(stringData);
             });
-    }, [isCurrencyDataState.currency]);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isCurrencyData]);
 
     useEffect(() => {
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isCurrencyDataState.currency]);
-
-    return {
-        countryCode,
-        currencyValue: JSON.stringify(convertedCurrency).replace(
-            /[^\d.-]/g,
-            "",
-        ),
-    };
+    }, [isCurrencyData.currency]);
+    return { convertedCurrency };
 };

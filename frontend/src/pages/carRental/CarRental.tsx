@@ -2,7 +2,12 @@ import TitleSection from "@/components/sections/titleSection";
 import { CardCommonDefault } from "@/components/shared/card";
 import image from "@/assets/images/titles/car_rental_title.png";
 import { carRental } from "@/lib/placeholders/carRental";
+import { useGetCurrencyFromLocalStorage } from "@/hooks/localStorage/useGetCodeCurrency";
+import { useIsCurrencyState } from "@/state/common/useCurrency";
 function CarRental() {
+    const { symbol } = useGetCurrencyFromLocalStorage();
+    const isCurrencyState = useIsCurrencyState();
+
     return (
         <div className="flex flex-col sm:gap-10 gap-32 h-[100%]">
             <TitleSection img={image} title="Car Rental"></TitleSection>
@@ -20,7 +25,11 @@ function CarRental() {
                                         {car.type}
                                     </h3>
                                     <h3 className="!font-extrabold font_inter w_heading_primary text-[20px]">
-                                        Php {car.price}
+                                        {symbol}{" "}
+                                        {(
+                                            parseFloat(isCurrencyState.value) *
+                                            car.price
+                                        ).toFixed(2)}
                                     </h3>
                                 </div>
                                 <p className="w_text_color truncate text-wrap line-clamp-5">

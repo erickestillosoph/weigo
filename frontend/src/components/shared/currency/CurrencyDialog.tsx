@@ -4,10 +4,12 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import * as ScrollArea from "@radix-ui/react-scroll-area";
 import ReactCountryFlag from "react-country-flag";
 import { currencyOptions } from "@/lib/currencyCode";
-import { useSetUseCurrencyDataState } from "@/state/common/useCurrency";
-import { countryState } from "@/state/currency/useCountryCode";
-import { useRecoilState } from "recoil";
-import { currencyCodeState } from "@/state/currency/useCurrencyCode";
+import getSymbolFromCurrency from "currency-symbol-map";
+import {
+    useSetUseCountryCodeState,
+    useSetUseCurrencyCodeState,
+    useSetUseIsSymbolCodeState,
+} from "@/state/common/useCurrency";
 interface CurrencyProps {
     amount: number;
     currencyCode: string;
@@ -20,17 +22,17 @@ interface CurrencyOption {
 }
 
 function CurrencyDialog() {
-    const setUseCurrencyDataState = useSetUseCurrencyDataState();
-    const [, setCountryPersist] = useRecoilState(countryState);
-    const [, setCurrencyCodePersist] = useRecoilState(currencyCodeState);
+    const setCurrencyCode = useSetUseCurrencyCodeState();
+    const setCountryCode = useSetUseCountryCodeState();
+    const isSymbolData = useSetUseIsSymbolCodeState();
 
     const handleCurrencyChange = (
         currencyCode: string,
         countryCode: string,
     ) => {
-        setUseCurrencyDataState({ currency: currencyCode, code: countryCode });
-        setCountryPersist(countryCode);
-        setCurrencyCodePersist(currencyCode);
+        setCountryCode({ code: countryCode });
+        isSymbolData({ symbol: getSymbolFromCurrency(currencyCode) || "" });
+        setCurrencyCode({ currency: currencyCode });
     };
     const countrySvgStyle = {
         width: "3em",

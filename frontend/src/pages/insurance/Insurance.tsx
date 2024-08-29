@@ -3,9 +3,11 @@ import { CardCommonDefault } from "@/components/shared/card";
 import { Button } from "@/components/ui/button";
 import image from "@/assets/images/titles/insurance_title.png";
 import { insurance } from "@/lib/placeholders/insurance";
-import { useCodeCurrencyLocalStorage } from "@/hooks/localStorage/useCodeCurrency";
+import { useGetCurrencyFromLocalStorage } from "@/hooks/localStorage/useGetCodeCurrency";
+import { useIsCurrencyState } from "@/state/common/useCurrency";
 function Insurance() {
-    const { currency } = useCodeCurrencyLocalStorage();
+    const { symbol } = useGetCurrencyFromLocalStorage();
+    const isCurrencyState = useIsCurrencyState();
 
     return (
         <div className="flex flex-col sm:gap-10 gap-32 h-[100%]">
@@ -24,7 +26,11 @@ function Insurance() {
                                         {insurance.insurance_id}
                                     </p>
                                     <p className="font_inter w_heading_primary text-[14px]">
-                                        {insurance.price * parseFloat(currency)}
+                                        {symbol}{" "}
+                                        {(
+                                            insurance.price *
+                                            parseFloat(isCurrencyState.value)
+                                        ).toFixed(2)}
                                     </p>
                                 </div>
                                 <h3 className="!font-extrabold font_inter w_heading_secondary text-[20px]">

@@ -1,19 +1,43 @@
+import {
+    countryPersistEffect,
+    currencyCodePersistEffect,
+    currencyPersistEffect,
+    symbolPersistEffect,
+} from "@/lib/localStorage/recoilStatePersistence";
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 type currencyState = {
-    state: boolean;
+    value: string;
 };
-type currencyDataState = {
+type currencyCodeState = {
     currency: string;
+};
+type countryCodeState = {
     code: string;
+};
+type symbolCodeState = {
+    symbol: string;
 };
 export const isCurrencyState = atom<currencyState>({
     key: "isCurrencyState",
-    default: { state: true },
+    default: { value: "1" },
+    effects_UNSTABLE: [currencyPersistEffect],
 });
 
-export const isCurrencyDataState = atom<currencyDataState>({
-    key: "isCurrencyDataState",
-    default: { currency: "PHP", code: "PH" },
+export const isCurrencyCodeState = atom<currencyCodeState>({
+    key: "isCurrencyCodeState",
+    default: { currency: "PHP" },
+    effects_UNSTABLE: [currencyCodePersistEffect],
+});
+
+export const isCountryCodeState = atom<countryCodeState>({
+    key: "isCountryCodeState",
+    default: { code: "PH" },
+    effects_UNSTABLE: [countryPersistEffect],
+});
+export const isSymbolCodeState = atom<symbolCodeState>({
+    key: "isSymbolCodeState",
+    default: { symbol: "₱" },
+    effects_UNSTABLE: [symbolPersistEffect],
 });
 
 export const useIsCurrencyState = () => {
@@ -23,10 +47,24 @@ export const useIsCurrencyState = () => {
 export const useSetUseIsCurrencyState = () => {
     return useSetRecoilState(isCurrencyState);
 };
-export const useIsCurrencyDataState = () => {
-    return useRecoilValue(isCurrencyDataState);
+export const useIsCurrencyCodeState = () => {
+    return useRecoilValue(isCurrencyCodeState);
 };
 
-export const useSetUseCurrencyDataState = () => {
-    return useSetRecoilState(isCurrencyDataState);
+export const useSetUseCurrencyCodeState = () => {
+    return useSetRecoilState(isCurrencyCodeState);
+};
+export const useIsCountryCodeState = () => {
+    return useRecoilValue(isCountryCodeState);
+};
+
+export const useSetUseCountryCodeState = () => {
+    return useSetRecoilState(isCountryCodeState);
+};
+export const useIsSymbolCodeState = () => {
+    return useRecoilValue(isSymbolCodeState);
+};
+
+export const useSetUseIsSymbolCodeState = () => {
+    return useSetRecoilState(isSymbolCodeState);
 };
