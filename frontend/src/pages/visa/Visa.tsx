@@ -2,13 +2,14 @@ import TitleSection from "@/components/sections/titleSection";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import styled from "styled-components";
+import image from "@/assets/images/titles/insurance_title.png";
+import heroImage from "@/assets/images/hero/heroImage.png";
 
 function Visa() {
-    const imgBackground = "https://source.unsplash.com/900x1200/?airplane";
-    const image = "https://source.unsplash.com/200x200/?flag";
+    // const imageData = "https://source.unsplash.com/200x200/?flag";
     return (
         <div className="flex flex-col sm:gap-24 gap-32 h-[100%]">
-            <TitleSection img={imgBackground} title="Visa"></TitleSection>
+            <TitleSection img={image} title="Visa"></TitleSection>
             <div className="container grid gap-6">
                 <p>Search country for VISA</p>
                 <div className="grid xl:grid-cols-2 grid-cols-1 gap-24">
@@ -27,7 +28,7 @@ function Visa() {
                                 <div className="flex flex-row items-center p-3 gap-6">
                                     <img
                                         className="w-[120px] h-[120px] rounded-[14px]"
-                                        src={image}
+                                        src={heroImage}
                                         alt=""
                                     />
                                     <div className="flex flex-col gap-1 w-full">

@@ -4,6 +4,9 @@ import UrlService from "@/services/urlService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import cookieService from "@/services/cookieService";
 import { useToast } from "@/components/ui/toast/use-toast";
+import { useComputationAmount } from "../computations/useComputationAmount";
+import { useEffect, useState } from "react";
+import LocalStorageService from "@/services/localStorageService";
 type Inputs = {
     uid: string;
     Amount: string;
@@ -15,8 +18,10 @@ type Inputs = {
 
 export const usePayment = () => {
     const cookieUserId = cookieService.getCookieData("userId") || "";
+    const { amount } = useComputationAmount();
     const queryClient = useQueryClient();
     const { toast } = useToast();
+    const [urlState, setUrlState] = useState({ redirect: false });
     const {
         getValues,
         register,
@@ -27,7 +32,7 @@ export const usePayment = () => {
     } = useForm<Inputs>({
         defaultValues: {
             uid: "",
-            Amount: "",
+            Amount: amount,
             Email: "",
             Currency: "",
             ProcId: "",
@@ -39,7 +44,7 @@ export const usePayment = () => {
         mutationFn: async () => {
             const url = UrlService.dpPayment();
             const data = {
-                Amount: getValues("Amount"),
+                Amount: amount,
                 Email: getValues("Email"),
                 Currency: getValues("Currency"),
                 ProcId: getValues("ProcId"),
@@ -49,8 +54,11 @@ export const usePayment = () => {
             const response = await axios.post(url, data);
             return response.data;
         },
-        onSuccess: () => {
+        onSuccess: (data) => {
             queryClient.invalidateQueries();
+            if (data) {
+                setUrlState({ redirect: true });
+            }
             toast({
                 variant: "default",
                 draggable: true,
@@ -70,6 +78,16 @@ export const usePayment = () => {
             throw err;
         },
     });
+
+    useEffect(() => {
+        if (urlState.redirect === true) {
+            window.location.replace("/thank-you");
+            LocalStorageService.removeItem("productState");
+            LocalStorageService.removeItem("insuranceState");
+            LocalStorageService.removeItem("carRentalState");
+            LocalStorageService.removeItem("activityState");
+        }
+    }, [urlState]);
 
     return {
         errorFormState: errors,

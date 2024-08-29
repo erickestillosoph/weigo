@@ -7,8 +7,16 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { CardListThree } from "@/components/shared/card";
 import { products } from "@/lib/placeholders/products";
+import { useSetUseIsProductState } from "@/state/common/useBooking";
+import imagePackage from "@/assets/images/titles/activity_title_image.png";
+interface ProductClickParams {
+    type: string;
+    price: string;
+    symbol: string;
+    image: string;
+    title: string;
+}
 function DomesticPackages() {
-    const imgInternational = "https://source.unsplash.com/1600x900/?singapore";
     const imgPromo = "https://source.unsplash.com/1600x900/?yellow-person";
     // const [dataFetched, setDataFetched] = useState<GetCityList[]>([]);
     // const [dataFetched, setDataFetched] = useState<GetOptionsList[]>([]);
@@ -22,7 +30,23 @@ function DomesticPackages() {
     //     };
     //     init();
     // }, []);
-
+    const isProduct = useSetUseIsProductState();
+    const handleClick = ({
+        type,
+        price,
+        image,
+        title,
+        symbol,
+    }: ProductClickParams) => {
+        isProduct({
+            type: type,
+            price: price,
+            state: true,
+            image: image,
+            title: title,
+            symbol: symbol,
+        });
+    };
     return (
         <div className="flex flex-col sm:gap-10 gap-32 h-[100%]">
             <TitleSection img={image} title="Domestic Packages"></TitleSection>
@@ -31,7 +55,7 @@ function DomesticPackages() {
                     <div className="relative rounded-[16px]">
                         <img
                             className="w-full top-0 left-0 rounded-[16px] object-cover h-[296px] absolute z-10"
-                            src={imgInternational}
+                            src={imagePackage}
                             alt=""
                         />
                         <div
@@ -82,6 +106,15 @@ function DomesticPackages() {
                             activity={product.activity}
                             experience={product.experience}
                             price={product.price}
+                            onClick={({ price, type, image, title, symbol }) =>
+                                handleClick({
+                                    price,
+                                    type,
+                                    image,
+                                    title,
+                                    symbol,
+                                })
+                            }
                         />
                     ))}
                 </div>

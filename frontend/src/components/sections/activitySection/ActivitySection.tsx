@@ -1,7 +1,31 @@
 import { CardListThree } from "@/components/shared/card";
 import { activity } from "@/lib/placeholders/activity";
-
+import { useSetUseActivityState } from "@/state/common/useBooking";
+interface ActivityClickParams {
+    type: string;
+    price: string;
+    symbol: string;
+    image: string;
+    title: string;
+}
 function Activity() {
+    const isActivity = useSetUseActivityState();
+    const handleClick = ({
+        type,
+        price,
+        image,
+        title,
+        symbol,
+    }: ActivityClickParams) => {
+        isActivity({
+            type: type,
+            price: price,
+            state: true,
+            image: image,
+            title: title,
+            symbol: symbol,
+        });
+    };
     return (
         <div className="flex flex-col w-[100%] container gap-[28px]">
             <div className="flex sm:justify-between justify-center sm:items-end sm:flex-row flex-col sm:gap-4 gap-6">
@@ -25,6 +49,9 @@ function Activity() {
                         subTitle={activity.subTitle}
                         description={activity.description}
                         price={activity.price}
+                        onClick={({ price, type, image, title, symbol }) =>
+                            handleClick({ price, type, image, title, symbol })
+                        }
                     />
                 ))}
             </div>
