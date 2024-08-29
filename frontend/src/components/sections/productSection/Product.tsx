@@ -1,7 +1,32 @@
 import { CardListThree } from "@/components/shared/card";
 import { products } from "@/lib/placeholders/products";
+import { useSetUseIsProductState } from "@/state/common/useBooking";
 
+interface ProductClickParams {
+    type: string;
+    price: string;
+    symbol: string;
+    image: string;
+    title: string;
+}
 function Product() {
+    const isProduct = useSetUseIsProductState();
+    const handleClick = ({
+        type,
+        price,
+        image,
+        title,
+        symbol,
+    }: ProductClickParams) => {
+        isProduct({
+            type: type,
+            price: price,
+            state: true,
+            image: image,
+            title: title,
+            symbol: symbol,
+        });
+    };
     return (
         <div className="flex flex-col w-[100%] container gap-[28px]">
             <div className="flex sm:justify-between justify-center sm:items-end sm:flex-row flex-col sm:gap-4 gap-6">
@@ -26,6 +51,9 @@ function Product() {
                         activity={product.activity}
                         experience={product.experience}
                         price={product.price}
+                        onClick={({ price, type, image, title, symbol }) =>
+                            handleClick({ price, type, image, title, symbol })
+                        }
                     />
                 ))}
             </div>

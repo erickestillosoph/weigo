@@ -3,15 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/text-area";
-
+import image from "@/assets/images/titles/insurance_title.png";
+import heroImage2 from "@/assets/images/hero/heroImage2.png";
+import heroImage3 from "@/assets/images/hero/heroImage3.png";
 function Contact() {
-    const imgBackground = "https://source.unsplash.com/900x1200/?airplane";
-    const imgAboutLeft =
-        "https://source.unsplash.com/900x1200/?business-person";
-    const imgAboutRight = "https://source.unsplash.com/900x1200/?office";
     return (
         <div className="flex flex-col sm:gap-24 gap-32 h-[100%]">
-            <TitleSection img={imgBackground} title="Contact Us"></TitleSection>
+            <TitleSection img={image} title="Contact Us"></TitleSection>
             <div className="container grid xl:grid-cols-2 gap-12">
                 <div className="w-full flex flex-col gap-8">
                     <h3 className="text_section_h3_clamp w_heading_primary">
@@ -56,14 +54,14 @@ function Contact() {
                     <div className="md:mt-32">
                         <img
                             className="w-full rounded-[24px]"
-                            src={imgAboutLeft}
+                            src={heroImage2}
                             alt=""
                         />
                     </div>
                     <div>
                         <img
                             className="w-full rounded-[24px]"
-                            src={imgAboutRight}
+                            src={heroImage3}
                             alt=""
                         />
                     </div>

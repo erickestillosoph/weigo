@@ -4,10 +4,31 @@ import image from "@/assets/images/titles/car_rental_title.png";
 import { carRental } from "@/lib/placeholders/carRental";
 import { useGetCurrencyFromLocalStorage } from "@/hooks/localStorage/useGetCodeCurrency";
 import { useIsCurrencyState } from "@/state/common/useCurrency";
+import { useSetUseCarRentalState } from "@/state/common/useBooking";
+import { Button } from "@/components/ui/button";
+
+type CarRentalType = {
+    type: string;
+    price: string;
+    image: string;
+    title: string;
+    symbol: string;
+};
+
 function CarRental() {
     const { symbol } = useGetCurrencyFromLocalStorage();
     const isCurrencyState = useIsCurrencyState();
-
+    const setCarRental = useSetUseCarRentalState();
+    const handleDataOnchange = (data: CarRentalType) => {
+        setCarRental({
+            type: data.type,
+            price: data.price,
+            state: true,
+            image: data.image,
+            title: data.title,
+            symbol: data.symbol,
+        });
+    };
     return (
         <div className="flex flex-col sm:gap-10 gap-32 h-[100%]">
             <TitleSection img={image} title="Car Rental"></TitleSection>
@@ -18,6 +39,27 @@ function CarRental() {
                             key={car.id}
                             src={car.src}
                             subTitle={car.name}
+                            buttonElement={
+                                <Button
+                                    onClick={() => {
+                                        console.log("112312");
+                                        handleDataOnchange({
+                                            type: "car",
+                                            title: car.name,
+                                            image: car.src,
+                                            price: (
+                                                car.price *
+                                                parseFloat(
+                                                    isCurrencyState.value,
+                                                )
+                                            ).toFixed(2),
+                                            symbol: symbol,
+                                        });
+                                    }}
+                                >
+                                    Book This Car
+                                </Button>
+                            }
                         >
                             <div className="flex flex-col gap-[16px]">
                                 <div className="flex flex-row justify-between">

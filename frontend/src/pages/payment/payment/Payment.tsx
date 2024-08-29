@@ -10,12 +10,14 @@ import { useNavigate } from "react-router-dom";
 import { countriesInfo } from "@/lib/countryCodePhone";
 import { SelectScrollable } from "@/components/shared/selects";
 import { procIdOptions } from "@/lib/procIds";
+import { useComputationAmount } from "@/hooks/payment/computations/useComputationAmount";
 
 function Payment() {
     const navigate = useNavigate();
     const countryData = countriesInfo;
     const procIdData = procIdOptions;
     const setIsAuthState = useSetUseIsAuthState();
+    const { amount } = useComputationAmount();
     const {
         register,
         reset,
@@ -79,7 +81,7 @@ function Payment() {
                                     </div>
                                     <div className="w-full">
                                         <Input
-                                            {...register("Amount")}
+                                            value={amount}
                                             placeholder="Amount"
                                         ></Input>
                                     </div>

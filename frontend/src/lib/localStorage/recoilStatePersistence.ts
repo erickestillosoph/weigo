@@ -7,6 +7,11 @@ export const symbolStorageKey = "symbolState";
 export const currencyCodeStorageKey = "currencyCodeState";
 export const currencyCodeCountryDataStorageKey = "dataCodeCountry";
 
+export const productStorageKey = "productState";
+export const activityStorageKey = "activityState";
+export const insuranceStorageKey = "insuranceState";
+export const carRentalStorageKey = "carRentalState";
+
 export const { persistAtom: localStoragePersistEffect } = recoilPersist({
     key: recoilLocalStorageKey,
     storage: localStorage,
@@ -38,3 +43,25 @@ export const { persistAtom: isCurrencyCodeCountryDataPersistEffect } =
         storage: localStorage,
         converter: JSON,
     });
+
+// Booking Products Activity
+export const { persistAtom: productPersistEffect } = recoilPersist({
+    key: productStorageKey,
+    storage: localStorage,
+    converter: JSON,
+});
+export const { persistAtom: activityPersistEffect } = recoilPersist({
+    key: activityStorageKey,
+    storage: localStorage,
+    converter: JSON,
+});
+export const { persistAtom: insurancePersistEffect } = recoilPersist({
+    key: insuranceStorageKey,
+    storage: localStorage,
+    converter: JSON,
+});
+export const { persistAtom: carRentalPersistEffect } = recoilPersist({
+    key: carRentalStorageKey,
+    storage: localStorage,
+    converter: JSON,
+});

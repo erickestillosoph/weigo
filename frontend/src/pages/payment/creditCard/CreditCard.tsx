@@ -3,6 +3,7 @@ import { SelectScrollable } from "@/components/shared/selects";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useComputationAmount } from "@/hooks/payment/computations/useComputationAmount";
 import { useCreditCard } from "@/hooks/payment/creditCard/useCreditCard";
 import { countriesInfo } from "@/lib/countryCodePhone";
 import { procIdOptions } from "@/lib/procIds";
@@ -12,7 +13,7 @@ import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 function CreditCard() {
     const navigate = useNavigate();
-
+    const { amount } = useComputationAmount();
     const countryData = countriesInfo;
     const currencyData = countriesInfo;
     const procIdData = procIdOptions;
@@ -84,7 +85,7 @@ function CreditCard() {
                                     </div>
                                     <div className="w-full">
                                         <Input
-                                            {...register("Amount")}
+                                            value={amount}
                                             placeholder="Amount"
                                         ></Input>
                                     </div>

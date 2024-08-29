@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
     Card,
     CardContent,
@@ -18,6 +19,19 @@ type CardListThreeProps = {
     experience?: string;
     price: number;
     type: "product" | "activity";
+    onClick: ({
+        type,
+        price,
+        image,
+        title,
+        symbol,
+    }: {
+        type: string;
+        price: string;
+        image: string;
+        title: string;
+        symbol: string;
+    }) => void;
 };
 function CardListThree({
     src,
@@ -28,10 +42,10 @@ function CardListThree({
     description,
     type,
     price,
+    onClick,
 }: CardListThreeProps) {
     const { symbol } = useGetCurrencyFromLocalStorage();
     const isCurrencyState = useIsCurrencyState();
-
     const calculatedPrice = (parseFloat(isCurrencyState.value) * price).toFixed(
         2,
     );
@@ -62,6 +76,20 @@ function CardListThree({
                         <p className="w_text_color">Experience</p>
                         <p className="w_text_color">{experience}</p>
                     </div>
+                    <Button
+                        variant="outline"
+                        onClick={() =>
+                            onClick({
+                                type: type,
+                                price: calculatedPrice.toString(),
+                                image: src!,
+                                symbol: symbol,
+                                title: title!,
+                            })
+                        }
+                    >
+                        Book It
+                    </Button>
                 </CardContent>
             )) ||
                 (type === "activity" && (
@@ -71,6 +99,20 @@ function CardListThree({
                                 {description}
                             </p>
                         </div>
+                        <Button
+                            variant="outline"
+                            onClick={() =>
+                                onClick({
+                                    type: type,
+                                    price: calculatedPrice.toString(),
+                                    image: src!,
+                                    symbol: symbol,
+                                    title: title!,
+                                })
+                            }
+                        >
+                            Add Item
+                        </Button>
                     </CardContent>
                 ))}
         </Card>

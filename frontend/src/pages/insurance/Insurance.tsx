@@ -5,9 +5,30 @@ import image from "@/assets/images/titles/insurance_title.png";
 import { insurance } from "@/lib/placeholders/insurance";
 import { useGetCurrencyFromLocalStorage } from "@/hooks/localStorage/useGetCodeCurrency";
 import { useIsCurrencyState } from "@/state/common/useCurrency";
+import { useSetUseInsuranceState } from "@/state/common/useBooking";
+
+type InsuranceType = {
+    type: string;
+    price: string;
+    image: string;
+    title: string;
+    symbol: string;
+};
+
 function Insurance() {
     const { symbol } = useGetCurrencyFromLocalStorage();
     const isCurrencyState = useIsCurrencyState();
+    const setInsurance = useSetUseInsuranceState();
+    const handleDataOnchange = (data: InsuranceType) => {
+        setInsurance({
+            type: data.type,
+            price: data.price,
+            state: true,
+            image: data.image,
+            title: data.title,
+            symbol: data.symbol,
+        });
+    };
 
     return (
         <div className="flex flex-col sm:gap-10 gap-32 h-[100%]">
@@ -18,7 +39,27 @@ function Insurance() {
                         <CardCommonDefault
                             key={insurance.id}
                             src={insurance.src}
-                            buttonElement={<Button>Add Insurance</Button>}
+                            buttonElement={
+                                <Button
+                                    onClick={() => {
+                                        console.log("112312");
+                                        handleDataOnchange({
+                                            type: "insurance",
+                                            title: insurance.name,
+                                            image: insurance.src,
+                                            price: (
+                                                insurance.price *
+                                                parseFloat(
+                                                    isCurrencyState.value,
+                                                )
+                                            ).toFixed(2),
+                                            symbol: symbol,
+                                        });
+                                    }}
+                                >
+                                    Add Insurance
+                                </Button>
+                            }
                         >
                             <div className="flex flex-col gap-[16px]">
                                 <div className="flex flex-row justify-between">
