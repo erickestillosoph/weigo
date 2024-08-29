@@ -6,7 +6,8 @@ import {
     CardImage,
     CardSubTitle,
 } from "@/components/ui/card";
-import { useCodeCurrencyLocalStorage } from "@/hooks/localStorage/useCodeCurrency";
+import { useGetCurrencyFromLocalStorage } from "@/hooks/localStorage/useGetCodeCurrency";
+import { useIsCurrencyState } from "@/state/common/useCurrency";
 
 type CardListThreeProps = {
     src?: string;
@@ -28,9 +29,12 @@ function CardListThree({
     type,
     price,
 }: CardListThreeProps) {
-    const { currency } = useCodeCurrencyLocalStorage();
+    const { symbol } = useGetCurrencyFromLocalStorage();
+    const isCurrencyState = useIsCurrencyState();
 
-    const calculatedPrice = parseFloat(currency) * price;
+    const calculatedPrice = (parseFloat(isCurrencyState.value) * price).toFixed(
+        2,
+    );
 
     return (
         <Card className="gap-[12px] flex-1">
@@ -41,7 +45,7 @@ function CardListThree({
                         {subTitle}
                     </CardSubTitle>
                     <CardSubTitle className="font_inter text-bold w_heading_primary text-green-500 text-[20px]">
-                        {calculatedPrice}
+                        {symbol} {calculatedPrice}
                     </CardSubTitle>
                 </div>
                 <CardTitle className="font_inter w_heading_secondary text-[20px]">

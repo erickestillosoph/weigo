@@ -3,6 +3,6 @@ import { atom } from "recoil";
 
 export const currencyState = atom<string>({
     key: "currencyState",
-    default: "PH",
+    default: "1",
     effects_UNSTABLE: [currencyPersistEffect],
 });
